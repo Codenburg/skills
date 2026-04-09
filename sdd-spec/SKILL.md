@@ -21,26 +21,33 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Read and follow `skills/_shared/persistence-contract.md` for mode resolution rules.
+> Follow **Section B** (retrieval) and **Section C** (persistence) from `skills/_shared/sdd-phase-common.md`.
 
-- If mode is `engram`: Read and follow `skills/_shared/engram-convention.md`. Artifact type: `spec`. Retrieve `proposal` as dependency. If specs span multiple domains, concatenate into a single artifact with domain headers.
-- If mode is `openspec`: Read and follow `skills/_shared/openspec-convention.md`.
-- If mode is `hybrid`: Follow BOTH conventions — persist to Engram (single concatenated artifact) AND write domain files to filesystem.
-- If mode is `none`: Return result only. Never create or modify project files.
+- **engram**: Read `sdd/{change-name}/proposal` (required). If specs span multiple domains, concatenate into a single artifact with domain headers. Save as `sdd/{change-name}/spec`.
+- **openspec**: Read and follow `skills/_shared/openspec-convention.md`.
+- **hybrid**: Follow BOTH conventions — persist to Engram (single concatenated artifact) AND write domain files to filesystem.
+- **none**: Return result only. Never create or modify project files.
 
 ## What to Do
 
-### Step 1: Identify Affected Domains
+### Step 1: Load Skills
+Follow **Section A** from `skills/_shared/sdd-phase-common.md`.
+
+### Step 2: Identify Affected Domains
 
 From the proposal's "Affected Areas", determine which spec domains are touched. Group changes by domain (e.g., `auth/`, `payments/`, `ui/`).
 
-### Step 2: Read Existing Specs
+### Step 3: Read Existing Specs
 
-If `openspec/specs/{domain}/spec.md` exists, read it to understand CURRENT behavior. Your delta specs describe CHANGES to this behavior.
+**IF mode is `openspec` or `hybrid`:** If `openspec/specs/{domain}/spec.md` exists, read it to understand CURRENT behavior. Your delta specs describe CHANGES to this behavior.
 
-### Step 3: Write Delta Specs
+**IF mode is `engram`:** Existing specs were already retrieved from Engram in the Persistence Contract. Skip filesystem reads.
 
-Create specs inside the change folder:
+**IF mode is `none`:** Skip — no existing specs to read.
+
+### Step 4: Write Delta Specs
+
+**IF mode is `openspec` or `hybrid`:** Create specs inside the change folder:
 
 ```
 openspec/changes/{change-name}/
@@ -49,6 +56,8 @@ openspec/changes/{change-name}/
     └── {domain}/
         └── spec.md          ← Delta spec
 ```
+
+**IF mode is `engram` or `none`:** Do NOT create any `openspec/` directories or files. Compose the spec content in memory — you will persist it in Step 5.
 
 #### Delta Spec Format
 
@@ -120,7 +129,16 @@ The system {MUST/SHALL/SHOULD} {behavior}.
 - THEN {outcome}
 ```
 
-### Step 4: Return Summary
+### Step 5: Persist Artifact
+
+**This step is MANDATORY — do NOT skip it.**
+
+Follow **Section C** from `skills/_shared/sdd-phase-common.md`.
+- artifact: `spec`
+- topic_key: `sdd/{change-name}/spec`
+- type: `architecture`
+
+### Step 6: Return Summary
 
 Return to the orchestrator:
 
@@ -154,7 +172,8 @@ Ready for design (sdd-design). If design already exists, ready for tasks (sdd-ta
 - Keep scenarios TESTABLE — someone should be able to write an automated test from each one
 - DO NOT include implementation details in specs — specs describe WHAT, not HOW
 - Apply any `rules.specs` from `openspec/config.yaml`
-- Return a structured envelope with: `status`, `executive_summary`, `detailed_report` (optional), `artifacts`, `next_recommended`, and `risks`
+- **Size budget**: Spec artifact MUST be under 650 words. Prefer requirement tables over narrative descriptions. Each scenario: 3-5 lines max.
+- Return envelope per **Section D** from `skills/_shared/sdd-phase-common.md`.
 
 ## RFC 2119 Keywords Quick Reference
 

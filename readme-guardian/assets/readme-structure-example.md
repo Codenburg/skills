@@ -1,125 +1,190 @@
-# Project Name
+# readme-structure-example
 
-v1.0.0 | Last updated: YYYY-MM-DD
+Ejemplo de referencia para la estructura canónica del README.
+readme-guardian debe seguir este orden y estas convenciones al actualizar secciones.
 
-Brief project description (1-3 lines).
+---
+
+# Project Name · ![version](https://img.shields.io/badge/version-1.5.0-blue)
+
+Descripción técnica en 1-3 líneas. Qué hace, para quién, sin adjetivos de marketing.
+
+> Ejemplo: REST API para gestión de inventario de ropa con soporte multi-variante (talle + color), métricas de ventas y exportación PDF/Excel.
 
 ---
 
 ## Features
 
-### Public
-- Feature A
-- Feature B
+- Control de stock con variantes (talle, color)
+- Registro de ventas con historial
+- Métricas de ventas con filtros por período
+- Exportación a PDF y Excel
+- Operación offline-first con sincronización diferida
 
-### Admin
-- Feature C
-- Feature D
+> Regla: solo listar lo que existe en el código. Sin roadmap aquí.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js x.y.z |
-| Language | TypeScript ^5 |
-| Styles | Tailwind CSS ^4 |
-| State | Zustand ^5 |
-| Validation | Zod ^4 + React Hook Form ^7 |
-| ORM | Prisma ^5 |
-| Database | PostgreSQL 18 |
-| Auth | Better Auth ^2 |
-| Testing | Playwright ^1.58 |
+| Layer | Tecnología |
+|---|---|
+| Frontend | React 18 + Vite + TypeScript |
+| Estilos | Tailwind CSS |
+| Estado | Zustand |
+| Local DB | Dexie.js / IndexedDB |
+| Backend | NestJS + Prisma |
+| Base de datos | PostgreSQL |
+| Exportación | jsPDF + SheetJS |
 
 ---
 
 ## Installation
 
 ```bash
-# Clone
-git clone <repo>
-cd <project>
+# Clonar repositorio
+git clone https://github.com/org/project.git
+cd project
 
-# Install dependencies
+# Instalar dependencias
 npm install
 
-# Configure environment
+# Configurar variables de entorno
 cp .env.example .env
-
-# Generate Prisma client
-npm run db:generate
-
-# Push schema to database
-npm run db:push
-
-# (Optional) Seed data
-npm run db:seed
-
-# Start dev server
-npm run dev
 ```
 
 ---
 
 ## Configuration
 
-```env
-# Database
-DATABASE_URL="postgresql://user:pass@localhost:5432/dbname"
+| Variable | Default | Descripción |
+|---|---|---|
+| `DATABASE_URL` | — | Connection string PostgreSQL |
+| `PORT` | `3000` | Puerto del servidor |
+| `JWT_SECRET` | — | Clave secreta para tokens |
+| `STORAGE_PATH` | `./uploads` | Directorio para archivos |
 
-# Auth
-BETTER_AUTH_SECRET="your-32-char-secret"
-BETTER_AUTH_URL="http://localhost:3000"
+> Regla: documentar TODAS las variables de `.env.example`. Nunca hardcodear valores reales.
+
+---
+
+## Usage
+
+```bash
+# Desarrollo
+npm run dev
+
+# Build producción
+npm run build
+
+# Producción
+npm start
+```
+
+Descripción breve del flujo principal si aplica:
+
+```
+1. Autenticarse en /auth/login
+2. Crear productos con variantes en /products
+3. Registrar ventas en /sales
+4. Consultar métricas en /metrics
 ```
 
 ---
 
-## Scripts
+## Available Scripts
 
-```bash
-npm run dev        # Dev server
-npm run build      # Production build
-npm run start      # Start production
-npm run lint       # ESLint
-npm run test       # Playwright tests
-npm run db:seed    # Seed database
-npm run db:generate # Generate Prisma client
-npm run db:push    # Push schema
-npm run db:studio  # Open Prisma Studio
-```
+| Script | Descripción |
+|---|---|
+| `npm run dev` | Servidor de desarrollo con hot reload |
+| `npm run build` | Compilación para producción |
+| `npm run test` | Ejecutar suite de tests |
+| `npm run lint` | Linter + format check |
+| `npm run db:migrate` | Ejecutar migraciones pendientes |
+| `npm run db:seed` | Poblar base de datos con datos de prueba |
 
 ---
 
 ## Project Structure
 
 ```
-src/
-├── app/           # Next.js App Router
-├── components/    # React components
-├── lib/           # Utilities and schemas
-├── store/         # Zustand stores
-└── types/         # Shared types
+project/
+├── src/
+│   ├── modules/          # Módulos de dominio (products, sales, auth)
+│   │   └── [module]/
+│   │       ├── dto/
+│   │       ├── entities/
+│   │       ├── [module].controller.ts
+│   │       ├── [module].service.ts
+│   │       └── [module].module.ts
+│   ├── common/           # Guards, pipes, interceptors compartidos
+│   ├── config/           # Configuración de la app
+│   └── main.ts
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+├── openspec/
+│   └── CHANGELOG.md
+├── .env.example
+└── package.json
 ```
+
+> Regla: actualizar esta sección solo si cambia la estructura real de carpetas.
 
 ---
 
-## API
+## API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| /api/resource | GET | List resources |
-| /api/resource | POST | Create resource |
+### Auth
+| Método | Ruta | Descripción |
+|---|---|---|
+| `POST` | `/auth/login` | Autenticación, retorna JWT |
+| `POST` | `/auth/refresh` | Refresh de token |
+
+### Products
+| Método | Ruta | Descripción |
+|---|---|---|
+| `GET` | `/products` | Listar productos con variantes |
+| `POST` | `/products` | Crear producto |
+| `PATCH` | `/products/:id` | Actualizar producto |
+| `DELETE` | `/products/:id` | Eliminar producto |
+
+### Sales
+| Método | Ruta | Descripción |
+|---|---|---|
+| `GET` | `/sales` | Listar ventas con filtros |
+| `POST` | `/sales` | Registrar venta |
+
+> Regla: documentar solo endpoints que existen. Omitir esta sección si el proyecto no tiene API pública.
 
 ---
 
 ## Roadmap
 
-- [ ] TODO item
-- [x] Done item
+- [ ] Soporte multi-sucursal
+- [ ] Notificaciones de stock bajo
+- [ ] Dashboard de métricas en tiempo real
+
+> Regla: mover ítems a Features cuando estén implementados.
 
 ---
 
-## Changelog
+<!-- NOTAS PARA readme-guardian
 
-See CHANGELOG.md for full history.
+SECCIONES OBLIGATORIAS (siempre presentes):
+  - Nombre + badge de versión
+  - Descripción
+  - Installation
+  - Configuration
+  - Usage
+
+SECCIONES CONDICIONALES (incluir si aplica):
+  - Features → solo si el proyecto tiene features documentables
+  - API Endpoints → solo si hay API pública
+  - Roadmap → solo si hay ítems planificados concretos
+  - Tech Stack → siempre recomendado
+
+BADGE DE VERSIÓN:
+  Actualizar x.y.z en el badge cada vez que cambie package.json version.
+  Formato: https://img.shields.io/badge/version-x.y.z-blue
+-->

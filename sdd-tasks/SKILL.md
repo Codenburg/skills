@@ -21,25 +21,28 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Read and follow `skills/_shared/persistence-contract.md` for mode resolution rules.
+> Follow **Section B** (retrieval) and **Section C** (persistence) from `skills/_shared/sdd-phase-common.md`.
 
-- If mode is `engram`: Read and follow `skills/_shared/engram-convention.md`. Artifact type: `tasks`. Retrieve `proposal`, `spec`, and `design` as dependencies.
-- If mode is `openspec`: Read and follow `skills/_shared/openspec-convention.md`.
-- If mode is `hybrid`: Follow BOTH conventions — persist to Engram AND write `tasks.md` to filesystem. Retrieve dependencies from Engram (primary) with filesystem fallback.
-- If mode is `none`: Return result only. Never create or modify project files.
+- **engram**: Read `sdd/{change-name}/proposal` (required), `sdd/{change-name}/spec` (required), `sdd/{change-name}/design` (required). Save as `sdd/{change-name}/tasks`.
+- **openspec**: Read and follow `skills/_shared/openspec-convention.md`.
+- **hybrid**: Follow BOTH conventions — persist to Engram AND write `tasks.md` to filesystem. Retrieve dependencies from Engram (primary) with filesystem fallback.
+- **none**: Return result only. Never create or modify project files.
 
 ## What to Do
 
-### Step 1: Analyze the Design
+### Step 1: Load Skills
+Follow **Section A** from `skills/_shared/sdd-phase-common.md`.
+
+### Step 2: Analyze the Design
 
 From the design document, identify:
 - All files that need to be created/modified/deleted
 - The dependency order (what must come first)
 - Testing requirements per component
 
-### Step 2: Write tasks.md
+### Step 3: Write tasks.md
 
-Create the task file:
+**IF mode is `openspec` or `hybrid`:** Create the task file:
 
 ```
 openspec/changes/{change-name}/
@@ -48,6 +51,8 @@ openspec/changes/{change-name}/
 ├── design.md
 └── tasks.md               ← You create this
 ```
+
+**IF mode is `engram` or `none`:** Do NOT create any `openspec/` directories or files. Compose the tasks content in memory — you will persist it in Step 4.
 
 #### Task File Format
 
@@ -113,7 +118,16 @@ Phase 5: Cleanup (if needed)
   └─ Documentation, remove dead code, polish
 ```
 
-### Step 3: Return Summary
+### Step 4: Persist Artifact
+
+**This step is MANDATORY — do NOT skip it.**
+
+Follow **Section C** from `skills/_shared/sdd-phase-common.md`.
+- artifact: `tasks`
+- topic_key: `sdd/{change-name}/tasks`
+- type: `architecture`
+
+### Step 5: Return Summary
 
 Return to the orchestrator:
 
@@ -121,7 +135,7 @@ Return to the orchestrator:
 ## Tasks Created
 
 **Change**: {change-name}
-**Location**: openspec/changes/{change-name}/tasks.md
+**Location**: `openspec/changes/{change-name}/tasks.md` (openspec/hybrid) | Engram `sdd/{change-name}/tasks` (engram) | inline (none)
 
 ### Breakdown
 | Phase | Tasks | Focus |
@@ -148,4 +162,5 @@ Ready for implementation (sdd-apply).
 - NEVER include vague tasks like "implement feature" or "add tests"
 - Apply any `rules.tasks` from `openspec/config.yaml`
 - If the project uses TDD, integrate test-first tasks: RED task (write failing test) → GREEN task (make it pass) → REFACTOR task (clean up)
-- Return a structured envelope with: `status`, `executive_summary`, `detailed_report` (optional), `artifacts`, `next_recommended`, and `risks`
+- **Size budget**: Tasks artifact MUST be under 530 words. Each task: 1-2 lines max. Use checklist format, not paragraphs.
+- Return envelope per **Section D** from `skills/_shared/sdd-phase-common.md`.

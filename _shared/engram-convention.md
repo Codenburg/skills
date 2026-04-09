@@ -1,4 +1,6 @@
-# Engram Artifact Convention (shared across all SDD skills)
+# Engram Artifact Convention (reference documentation)
+
+NOTE: Critical engram calls (`mem_search`, `mem_save`, `mem_get_observation`) are inlined directly in each skill's SKILL.md. This document is supplementary reference — sub-agents do NOT need to read it to function.
 
 ## Naming Rules
 
@@ -12,7 +14,7 @@ project:   {detected or current project name}
 scope:     project
 ```
 
-### Artifact Types (exact strings)
+### Artifact Types
 
 | Artifact Type | Produced By | Description |
 |---------------|-------------|-------------|
@@ -26,11 +28,9 @@ scope:     project
 | `archive-report` | sdd-archive | Archive closure with lineage |
 | `state` | orchestrator | DAG state for recovery after compaction |
 
-**Exception**: `sdd-init` uses `sdd-init/{project-name}` as both title and topic_key (it's project-scoped, not change-scoped).
+Exception: `sdd-init` uses `sdd-init/{project-name}` as both title and topic_key.
 
 ### State Artifact
-
-The orchestrator persists DAG state after each phase transition to enable recovery after context compaction:
 
 ```
 mem_save(
@@ -42,66 +42,38 @@ mem_save(
 )
 ```
 
-Recovery: `mem_search("sdd/{change-name}/state")` → `mem_get_observation(id)` → parse YAML → restore orchestrator state.
+Recovery: `mem_search("sdd/{change-name}/state")` → `mem_get_observation(id)` → parse YAML → restore state.
 
-### Example
-
-```
-mem_save(
-  title: "sdd/add-dark-mode/proposal",
-  topic_key: "sdd/add-dark-mode/proposal",
-  type: "architecture",
-  project: "my-app",
-  content: "# Proposal: Add Dark Mode\n\n..."
-)
-```
-
-## Recovery Protocol (2 steps — MANDATORY)
-
-To retrieve an artifact, ALWAYS use this two-step process:
+## Recovery Protocol (2 steps)
 
 ```
-Step 1: Search by topic_key pattern
-  mem_search(query: "sdd/{change-name}/{artifact-type}", project: "{project}")
-  → Returns a truncated preview with an observation ID
-
-Step 2: Get full content (REQUIRED)
-  mem_get_observation(id: {observation-id from step 1})
-  → Returns complete, untruncated content
+Step 1: mem_search(query: "sdd/{change-name}/{artifact-type}", project: "{project}") → truncated preview + ID
+Step 2: mem_get_observation(id: {observation-id}) → complete content
 ```
 
-NEVER use `mem_search` results directly as the full artifact — they are truncated previews.
-ALWAYS call `mem_get_observation` to get the complete content.
-
-### Retrieving Multiple Artifacts
-
-When a skill needs multiple artifacts (e.g., sdd-tasks needs proposal + spec + design):
+When retrieving multiple artifacts, group all searches first, then all retrievals:
 
 ```
-1. mem_search(query: "sdd/{change-name}/proposal", project: "{project}") → get ID
-2. mem_search(query: "sdd/{change-name}/spec", project: "{project}") → get ID
-3. mem_search(query: "sdd/{change-name}/design", project: "{project}") → get ID
-4. mem_get_observation(id) for EACH → full content
+STEP A — SEARCH (get IDs only):
+  mem_search(query: "sdd/{change-name}/proposal", ...) → save ID
+  mem_search(query: "sdd/{change-name}/spec", ...) → save ID
+  mem_search(query: "sdd/{change-name}/design", ...) → save ID
+
+STEP B — RETRIEVE FULL CONTENT (mandatory):
+  mem_get_observation(id: {proposal_id})
+  mem_get_observation(id: {spec_id})
+  mem_get_observation(id: {design_id})
 ```
 
-### Loading Project Context
-
+Loading project context:
 ```
 mem_search(query: "sdd-init/{project}", project: "{project}") → get ID
 mem_get_observation(id) → full project context
 ```
 
-### Browsing All Artifacts for a Change
-
-```
-mem_search(query: "sdd/{change-name}/", project: "{project}")
-→ Returns all artifacts for that change
-```
-
 ## Writing Artifacts
 
-### Standard Write (new artifact)
-
+Standard write:
 ```
 mem_save(
   title: "sdd/{change-name}/{artifact-type}",
@@ -112,23 +84,35 @@ mem_save(
 )
 ```
 
-### Update Existing Artifact
-
-When updating an artifact you already retrieved (e.g., marking tasks complete):
-
+Concrete example — saving a proposal for `add-dark-mode`:
 ```
-mem_update(
-  id: {observation-id},
-  content: "{updated full content}"
+mem_save(
+  title: "sdd/add-dark-mode/proposal",
+  topic_key: "sdd/add-dark-mode/proposal",
+  type: "architecture",
+  project: "my-app",
+  content: "## Proposal\n\nAdd dark mode toggle..."
 )
 ```
 
-Use `mem_update` when you have the exact observation ID. Use `mem_save` with the same `topic_key` for upserts (Engram deduplicates by topic_key).
+Update existing artifact (when you have the observation ID):
+```
+mem_update(id: {observation-id}, content: "{updated full content}")
+```
 
-## Why This Convention Exists
+Use `mem_update` when you have the exact ID. Use `mem_save` with same `topic_key` for upserts.
 
-- **Deterministic titles** → recovery works by exact match, not fuzzy search
-- **`topic_key`** → enables upserts (updating same artifact without creating duplicates)
-- **`sdd/` prefix** → namespaces all SDD artifacts away from other Engram observations
-- **Two-step recovery** → `mem_search` previews are always truncated; `mem_get_observation` is the only way to get full content
-- **Lineage** → archive-report includes all observation IDs for complete traceability
+### Browsing All Artifacts for a Change
+
+```
+mem_search(query: "sdd/{change-name}/", project: "{project}")
+→ Returns all artifacts for that change
+```
+
+## Why This Convention
+
+- Deterministic titles → recovery works by exact match
+- `topic_key` → enables upserts without duplicates
+- `sdd/` prefix → namespaces all SDD artifacts
+- Two-step recovery → search previews are always truncated; `mem_get_observation` is the only way to get full content
+- Lineage → archive-report includes all observation IDs for complete traceability

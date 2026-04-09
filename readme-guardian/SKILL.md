@@ -1,117 +1,191 @@
 ---
 name: readme-guardian
 description: >
-  Maintain README as single source of truth with automatic versioning and changelog.
-  Trigger: After commits affecting features, config, structure, or when /readme-guardian sync is invoked.
+  Mantiene README, CHANGELOG y package.json como única fuente de verdad con versionado semver automático.
+  Activar: después de commits que afecten features, config, estructura, dependencias, o cuando se invoque
+  /readme-guardian sync. Usar siempre que el usuario pida actualizar documentación del proyecto, sincronizar
+  el README, bumpar versión, o registrar cambios en el changelog.
 license: Apache-2.0
 metadata:
   author: gentleman-programming
-  version: "1.0"
+  version: "2.0"
 ---
 
-## When to Use
+## Flujo de Ejecución (Seguir en Orden)
 
-- After any commit that modifies features, configuration, or structure
-- When `/readme-guardian sync` is invoked manually
-- As part of CI/CD post-commit hooks
-- When release workflow is triggered
+### Paso 1 — Recolectar contexto actual
 
-## Critical Patterns
+Leer estos archivos ANTES de escribir cualquier cosa:
 
-### Versioning (Semver Strict)
+```bash
+# Versión actual
+cat package.json | grep '"version"'
 
-| Change Type | Version Bump |
-|-------------|--------------|
-| Breaking changes | MAJOR |
-| New compatible features | MINOR |
-| Bug fixes, docs, refactors without external impact | PATCH |
+# Últimas entradas del changelog
+head -40 openspec/CHANGELOG.md 2>/dev/null || echo "CHANGELOG no existe aún"
 
-### README Structure (Enforced)
+# README actual (secciones a detectar)
+cat README.md
 
-1. Project name
-2. Clear description (1-3 lines)
-3. Main features
-4. Tech stack
-5. Installation
-6. Configuration (env)
-7. Usage
-8. Available scripts
-9. Project structure
-10. API / endpoints (if applicable)
-11. Roadmap / next steps
+# Diff de los cambios (si es post-commit)
+git diff HEAD~1 HEAD --stat
+git log -1 --pretty="%s%n%b"
+```
 
-**Note**: Changelog lives in `openspec/CHANGELOG.md`, NOT in README.
+### Paso 2 — Clasificar el cambio (Semver Estricto)
 
-### Changelog Format
+| Tipo de cambio | Bump |
+|---|---|
+| Breaking change en API/contrato público | MAJOR |
+| Feature nueva compatible, endpoint nuevo, módulo nuevo | MINOR |
+| Fix, refactor interno, docs, tests, deps patch | PATCH |
+
+**Reglas de desempate:**
+- Si hay duda entre MINOR y PATCH → usar MINOR
+- Si el commit message tiene `BREAKING CHANGE:` → siempre MAJOR
+- Cambios solo en README/docs sin tocar código → PATCH
+
+### Paso 3 — Calcular nueva versión
+
+```bash
+# Leer versión actual
+CURRENT=$(node -p "require('./package.json').version")
+# Ejemplo: 1.4.2
+
+# Calcular nueva según clasificación:
+# MAJOR: 2.0.0
+# MINOR: 1.5.0
+# PATCH: 1.4.3
+```
+
+### Paso 4 — Actualizar package.json
+
+```bash
+# Con git tag automático:
+npm version patch   # o minor / major
+
+# Sin git tag:
+npm version minor --no-git-tag-version
+```
+
+O editar manualmente solo el campo `"version"` sin tocar el resto del archivo.
+
+### Paso 5 — Actualizar CHANGELOG
+
+Archivo: `openspec/CHANGELOG.md`
+
+**Si no existe**, crear con este header:
+
+```markdown
+# Changelog
+
+All notable changes to this project will be documented here.
+Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+---
+```
+
+**Prepend** (agregar al principio, después del header) la nueva entrada:
 
 ```markdown
 ## [x.y.z] - YYYY-MM-DD
+
 ### Added
--
+- Descripción concreta de lo agregado (qué hace, dónde impacta)
+
 ### Changed
--
+- Qué cambió y por qué
+
 ### Fixed
--
+- Qué bug se resolvió y en qué contexto
+
 ### Removed
--
+- Qué se eliminó
+
+---
 ```
 
-## Behavior
+**Reglas del changelog:**
+- Solo incluir secciones que apliquen (omitir `### Fixed` si no hay fixes)
+- Usar verbos en pasado: "Added", "Fixed", "Removed"
+- Una línea por cambio, concisa y técnica
+- NO incluir el changelog dentro del README
 
-1. **Analyze diff** — Read commit diff, commit message, and changed files
-2. **Classify change** — Determine if MAJOR, MINOR, or PATCH
-3. **Decide impact** — Check if README sections are affected
-4. **Update only affected sections** — Never rewrite entire README unless necessary
-5. **Increment version** — Update `package.json` version following semver
-6. **Add changelog entry** — Prepend new entry to `openspec/CHANGELOG.md` (NOT README)
-7. **Maintain consistency** — Eliminate duplication, keep technical language
+### Paso 6 — Actualizar README (solo secciones afectadas)
 
-## Update Heuristics
+**Mapa de cambios → secciones:**
 
-| Change Detected | README Section to Update |
-|-----------------|--------------------------|
-| New file in `/features` | Features |
-| Script changes | Scripts |
-| New env variable | Configuration |
-| Route changes | Usage / API |
-| Structural refactor | Project Structure |
-| Dependency changes | Tech Stack |
-| New feature | Features + Changelog (openspec/CHANGELOG.md) |
-| Bug fix | Changelog (openspec/CHANGELOG.md) |
+| Cambio detectado | Sección del README |
+|---|---|
+| Nuevo archivo en `/features` o módulo | Features |
+| Cambio en scripts de `package.json` | Available Scripts |
+| Variable de entorno nueva/modificada | Configuration |
+| Ruta o endpoint nuevo/modificado | Usage / API Endpoints |
+| Refactor estructural de carpetas | Project Structure |
+| Dependencia agregada/removida | Tech Stack |
+| Nueva feature visible al usuario | Features + descripción breve |
 
-## Policies
+**Estructura del README (mantener este orden):**
 
-- **NEVER** rewrite entire README if only specific sections changed
-- **DON'T** invent features — only document what exists
-- **DO** maintain technical language, no marketing fluff
-- **DO** prioritize clarity over length
-- **DO** detect and remove obsolete sections
-- **Changelog lives in `openspec/CHANGELOG.md`**, NOT in README
+1. Nombre del proyecto + badge de versión
+2. Descripción (1-3 líneas, técnica)
+3. Features principales
+4. Tech Stack
+5. Instalación
+6. Configuración (variables de entorno con tabla: `VARIABLE | default | descripción`)
+7. Uso
+8. Scripts disponibles
+9. Estructura del proyecto
+10. API / Endpoints (si aplica)
+11. Roadmap (si existe)
 
-## Commands
+**Políticas de edición:**
+- NUNCA reescribir el README completo si solo cambiaron 1-2 secciones
+- NO inventar features — solo documentar lo que existe en el código
+- NO agregar marketing fluff ("powerful", "robust", "seamless")
+- SÍ eliminar secciones obsoletas si ya no corresponden
+
+### Paso 7 — Verificación final
+
+Antes de terminar, confirmar:
+
+```
+✓ package.json version actualizado a x.y.z
+✓ openspec/CHANGELOG.md tiene entrada [x.y.z] al inicio
+✓ README.md secciones afectadas actualizadas
+✓ No hay referencias a versión vieja en README
+✓ Changelog NO está duplicado en README
+```
+
+Reportar al usuario:
+
+```
+README Guardian — sync completado
+Versión: 1.4.2 → 1.5.0 (MINOR)
+Archivos modificados:
+  - package.json (version bump)
+  - openspec/CHANGELOG.md (nueva entrada prepended)
+  - README.md (secciones: Features, API Endpoints)
+```
+
+---
+
+## Comandos
 
 ```bash
-# Manual sync mode
+# Sync manual
 /readme-guardian sync
 
-# Expected output: diff of README, new version, change summary
+# Sync con tipo de bump explícito
+/readme-guardian sync --bump minor
+/readme-guardian sync --bump major
 ```
 
-## Inputs (from context)
+---
 
-- Commit diff
-- Commit message
-- Current README state
-- package.json
-- config files (env, scripts, build)
+## Políticas Globales
 
-## Outputs
-
-- Updated README.md (only affected sections)
-- Version incremented in package.json
-- Changelog entry prepended to `openspec/CHANGELOG.md`
-
-## Resources
-
-- **Template**: See [assets/changelog-template.md](assets/changelog-template.md)
-- **Example**: See [assets/readme-structure-example.md](assets/readme-structure-example.md)
+- El changelog vive en `openspec/CHANGELOG.md`, NUNCA en README
+- Un solo bump por invocación (no acumular varios sin sync)
+- Si hay ambigüedad en el tipo de bump, preguntar antes de escribir
+- En modo CI/CD, asumir PATCH si no hay indicación explícita

@@ -22,30 +22,39 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Read and follow `skills/_shared/persistence-contract.md` for mode resolution rules.
+> Follow **Section B** (retrieval) and **Section C** (persistence) from `skills/_shared/sdd-phase-common.md`.
 
-- If mode is `engram`: Read and follow `skills/_shared/engram-convention.md`. Artifact type: `proposal`. Retrieve `explore` and `sdd-init/{project}` as dependencies.
-- If mode is `openspec`: Read and follow `skills/_shared/openspec-convention.md`.
-- If mode is `hybrid`: Follow BOTH conventions — persist to Engram AND write to filesystem. Retrieve dependencies from Engram (primary) with filesystem fallback.
-- If mode is `none`: Return result only. Never create or modify project files.
+- **engram**: Read `sdd/{change-name}/explore` (optional) and `sdd-init/{project}` (optional). Save artifact as `sdd/{change-name}/proposal`.
+- **openspec**: Read and follow `skills/_shared/openspec-convention.md`.
+- **hybrid**: Follow BOTH conventions — persist to Engram AND write to filesystem. Retrieve dependencies from Engram (primary) with filesystem fallback.
+- **none**: Return result only. Never create or modify project files.
 - Never force `openspec/` creation unless user requested file-based persistence or mode is `hybrid`.
 
 ## What to Do
 
-### Step 1: Create Change Directory
+### Step 1: Load Skills
+Follow **Section A** from `skills/_shared/sdd-phase-common.md`.
 
-Create the change folder structure:
+### Step 2: Create Change Directory
+
+**IF mode is `openspec` or `hybrid`:** create the change folder structure:
 
 ```
 openspec/changes/{change-name}/
 └── proposal.md
 ```
 
-### Step 2: Read Existing Specs
+**IF mode is `engram` or `none`:** Do NOT create any `openspec/` directories. Skip this step.
 
-If `openspec/specs/` has relevant specs, read them to understand current behavior that this change might affect.
+### Step 3: Read Existing Specs
 
-### Step 3: Write proposal.md
+**IF mode is `openspec` or `hybrid`:** If `openspec/specs/` has relevant specs, read them to understand current behavior that this change might affect.
+
+**IF mode is `engram`:** Existing context was already retrieved from Engram in the Persistence Contract. Skip filesystem reads.
+
+**IF mode is `none`:** Skip — no existing specs to read.
+
+### Step 4: Write proposal.md
 
 ```markdown
 # Proposal: {Change Title}
@@ -97,7 +106,16 @@ Reference the recommended approach from exploration if available.}
 - [ ] {Measurable outcome}
 ```
 
-### Step 4: Return Summary
+### Step 5: Persist Artifact
+
+**This step is MANDATORY — do NOT skip it.**
+
+Follow **Section C** from `skills/_shared/sdd-phase-common.md`.
+- artifact: `proposal`
+- topic_key: `sdd/{change-name}/proposal`
+- type: `architecture`
+
+### Step 6: Return Summary
 
 Return to the orchestrator:
 
@@ -105,7 +123,7 @@ Return to the orchestrator:
 ## Proposal Created
 
 **Change**: {change-name}
-**Location**: openspec/changes/{change-name}/proposal.md
+**Location**: `openspec/changes/{change-name}/proposal.md` (openspec/hybrid) | Engram `sdd/{change-name}/proposal` (engram) | inline (none)
 
 ### Summary
 - **Intent**: {one-line summary}
@@ -126,4 +144,5 @@ Ready for specs (sdd-spec) or design (sdd-design).
 - Every proposal MUST have success criteria
 - Use concrete file paths in "Affected Areas" when possible
 - Apply any `rules.proposal` from `openspec/config.yaml`
-- Return a structured envelope with: `status`, `executive_summary`, `detailed_report` (optional), `artifacts`, `next_recommended`, and `risks`
+- **Size budget**: Proposal artifact MUST be under 400 words. Use bullet points and tables over prose. Headers organize, not explain.
+- Return envelope per **Section D** from `skills/_shared/sdd-phase-common.md`.

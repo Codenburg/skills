@@ -22,16 +22,19 @@ From the orchestrator:
 
 ## Execution and Persistence Contract
 
-Read and follow `skills/_shared/persistence-contract.md` for mode resolution rules.
+> Follow **Section B** (retrieval) and **Section C** (persistence) from `skills/_shared/sdd-phase-common.md`.
 
-- If mode is `engram`: Read and follow `skills/_shared/engram-convention.md`. Artifact type: `apply-progress`. Retrieve `proposal`, `spec`, `design`, and `tasks` as dependencies. Also use `mem_update` to mark completed tasks in the `tasks` artifact.
-- If mode is `openspec`: Read and follow `skills/_shared/openspec-convention.md`. Update `tasks.md` with `[x]` marks.
-- If mode is `hybrid`: Follow BOTH conventions — persist progress to Engram (`mem_update` for tasks) AND update `tasks.md` with `[x]` marks on filesystem.
-- If mode is `none`: Return progress only. Do not update project artifacts.
+- **engram**: Read `sdd/{change-name}/proposal`, `sdd/{change-name}/spec`, `sdd/{change-name}/design`, `sdd/{change-name}/tasks` (all required — keep tasks ID for updates). Mark tasks complete via `mem_update(id: {tasks-observation-id}, content: "...")`. Save progress as `sdd/{change-name}/apply-progress`.
+- **openspec**: Read and follow `skills/_shared/openspec-convention.md`. Update `tasks.md` with `[x]` marks.
+- **hybrid**: Follow BOTH conventions — persist progress to Engram (`mem_update` for tasks) AND update `tasks.md` with `[x]` marks on filesystem.
+- **none**: Return progress only. Do not update project artifacts.
 
 ## What to Do
 
-### Step 1: Read Context
+### Step 1: Load Skills
+Follow **Section A** from `skills/_shared/sdd-phase-common.md`.
+
+### Step 2: Read Context
 
 Before writing ANY code:
 1. Read the specs — understand WHAT the code must do
@@ -39,7 +42,7 @@ Before writing ANY code:
 3. Read existing code in affected files — understand current patterns
 4. Check the project's coding conventions from `config.yaml`
 
-### Step 2: Detect Implementation Mode
+### Step 3: Detect Implementation Mode
 
 Before writing code, determine if the project uses TDD:
 
@@ -50,11 +53,11 @@ Detect TDD mode from (in priority order):
 ├── Existing test patterns in the codebase (test files alongside source)
 └── Default: standard mode (write code first, then verify)
 
-IF TDD mode is detected → use Step 2a (TDD Workflow)
-IF standard mode → use Step 2b (Standard Workflow)
+IF TDD mode is detected → use Step 3a (TDD Workflow)
+IF standard mode → use Step 3b (Standard Workflow)
 ```
 
-### Step 2a: Implement Tasks (TDD Workflow — RED → GREEN → REFACTOR)
+### Step 3a: Implement Tasks (TDD Workflow — RED → GREEN → REFACTOR)
 
 When TDD is active, EVERY task follows this cycle:
 
@@ -98,7 +101,7 @@ Detect test runner from:
 
 **Important**: If any user coding skills are installed (e.g., `tdd/SKILL.md`, `pytest/SKILL.md`, `vitest/SKILL.md`), read and follow those skill patterns for writing tests.
 
-### Step 2b: Implement Tasks (Standard Workflow)
+### Step 3b: Implement Tasks (Standard Workflow)
 
 When TDD is not active:
 
@@ -113,7 +116,7 @@ FOR EACH TASK:
 └── Note any issues or deviations
 ```
 
-### Step 3: Mark Tasks Complete
+### Step 4: Mark Tasks Complete
 
 Update `tasks.md` — change `- [ ]` to `- [x]` for completed tasks:
 
@@ -125,7 +128,17 @@ Update `tasks.md` — change `- [ ]` to `- [x]` for completed tasks:
 - [ ] 1.3 Add auth routes to `internal/server/server.go`  ← still pending
 ```
 
-### Step 4: Return Summary
+### Step 5: Persist Progress
+
+**This step is MANDATORY — do NOT skip it.**
+
+Follow **Section C** from `skills/_shared/sdd-phase-common.md`.
+- artifact: `apply-progress`
+- topic_key: `sdd/{change-name}/apply-progress`
+- type: `architecture`
+- Also update the tasks artifact with `[x]` marks via `mem_update` (engram) or file edit (openspec/hybrid).
+
+### Step 6: Return Summary
 
 Return to the orchestrator:
 
@@ -178,8 +191,8 @@ If none, say "None."}
 - If you discover the design is wrong or incomplete, NOTE IT in your return summary — don't silently deviate
 - If a task is blocked by something unexpected, STOP and report back
 - NEVER implement tasks that weren't assigned to you
-- Load and follow any relevant coding skills for the project stack (e.g., react-19, typescript, django-drf, tdd, pytest, vitest) if available in the user's skill set
+- Skill loading is handled in Step 1 — follow any loaded skills strictly when writing code
 - Apply any `rules.apply` from `openspec/config.yaml`
-- If TDD mode is detected (Step 2), ALWAYS follow the RED → GREEN → REFACTOR cycle — never skip RED (writing the failing test first)
+- If TDD mode is detected (Step 3), ALWAYS follow the RED → GREEN → REFACTOR cycle — never skip RED (writing the failing test first)
 - When running tests during TDD, run ONLY the relevant test file/suite, not the entire test suite (for speed)
-- Return a structured envelope with: `status`, `executive_summary`, `detailed_report` (optional), `artifacts`, `next_recommended`, and `risks`
+- Return envelope per **Section D** from `skills/_shared/sdd-phase-common.md`.
