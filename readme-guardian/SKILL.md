@@ -145,7 +145,45 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - NO agregar marketing fluff ("powerful", "robust", "seamless")
 - SÍ eliminar secciones obsoletas si ya no corresponden
 
-### Paso 7 — Verificación final
+### Paso 7 — Actualizar Roadmap
+
+Archivo de referencia: `assets/roadmap-template.md`
+
+El roadmap vive en dos lugares que deben mantenerse sincronizados:
+- **`openspec/ROADMAP.md`** — fuente de verdad completa
+- **`README.md` sección Roadmap** — versión resumida (máximo 5-7 ítems)
+
+**Triggers para actualizar el roadmap:**
+
+| Evento | Acción |
+|---|---|
+| Feature implementada que estaba en roadmap | Mover de `[ ]` a `[x]` + mover a sección Completed |
+| Nueva feature planificada mencionada en commit/PR | Agregar como `[ ]` en la categoría correspondiente |
+| Ítem cancelado o descartado | Remover sin dejar rastro (ya queda en CHANGELOG) |
+| Release MINOR o MAJOR | Revisar si algún ítem pendiente debe promoverse |
+
+**Estructura de `openspec/ROADMAP.md`:**
+
+```markdown
+## In Progress
+- [ ] Descripción del ítem — contexto breve
+
+## Planned
+- [ ] Ítem planificado con prioridad alta
+- [ ] Ítem planificado con prioridad media
+
+## Completed
+- [x] Feature implementada — versión en que se completó (v1.5.0)
+- [x] Fix importante completado (v1.4.3)
+```
+
+**Reglas del roadmap:**
+- Solo incluir ítems concretos y accionables — nada vago como "mejorar performance"
+- Completados: mantener los últimos 10, archivar el resto
+- README solo muestra ítems de `In Progress` y los primeros 3-4 de `Planned`
+- NO duplicar ítems ya registrados en CHANGELOG
+
+### Paso 8 — Verificación final
 
 Antes de terminar, confirmar:
 
@@ -155,6 +193,8 @@ Antes de terminar, confirmar:
 ✓ README.md secciones afectadas actualizadas
 ✓ No hay referencias a versión vieja en README
 ✓ Changelog NO está duplicado en README
+✓ openspec/ROADMAP.md sincronizado (ítems completados marcados, nuevos agregados)
+✓ README sección Roadmap refleja openspec/ROADMAP.md (resumida)
 ```
 
 Reportar al usuario:
@@ -165,7 +205,8 @@ Versión: 1.4.2 → 1.5.0 (MINOR)
 Archivos modificados:
   - package.json (version bump)
   - openspec/CHANGELOG.md (nueva entrada prepended)
-  - README.md (secciones: Features, API Endpoints)
+  - openspec/ROADMAP.md (1 ítem completado, 1 ítem agregado)
+  - README.md (secciones: Features, API Endpoints, Roadmap)
 ```
 
 ---
