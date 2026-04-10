@@ -2,13 +2,14 @@
 name: readme-guardian
 description: >
   Mantiene README, CHANGELOG y package.json como única fuente de verdad con versionado semver automático.
-  Activar: después de commits que afecten features, config, estructura, dependencias, o cuando se invoque
-  /readme-guardian sync. Usar siempre que el usuario pida actualizar documentación del proyecto, sincronizar
-  el README, bumpar versión, o registrar cambios en el changelog.
+  Activar: (1) automáticamente después de commits que afecten features, config, estructura o dependencias —
+  inferir bump desde el tipo de commit convencional; (2) manualmente cuando se invoque /readme-guardian sync.
+  Usar siempre que el usuario pida actualizar documentación del proyecto, sincronizar el README, bumpar
+  versión, o registrar cambios en el changelog.
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "2.0"
+  author: Codenburg
+  version: "2.1"
 ---
 
 ## Flujo de Ejecución (Seguir en Orden)
@@ -44,6 +45,12 @@ git log -1 --pretty="%s%n%b"
 - Si hay duda entre MINOR y PATCH → usar MINOR
 - Si el commit message tiene `BREAKING CHANGE:` → siempre MAJOR
 - Cambios solo en README/docs sin tocar código → PATCH
+
+**En modo automático (post-commit), inferir bump desde conventional commits:**
+- `feat:` → MINOR
+- `fix:` / `refactor:` / `docs:` / `test:` / `chore:` → PATCH
+- `BREAKING CHANGE:` en el body → MAJOR
+- Si hay ambigüedad o el mensaje no sigue conventional commits → pausar y preguntar antes de escribir
 
 ### Paso 3 — Calcular nueva versión
 
@@ -127,27 +134,29 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 **Estructura del README (mantener este orden):**
 
-1. Nombre del proyecto + badge de versión
+1. Nombre del proyecto + versión en texto plano (formato: `vX.Y.Z · <stack summary>`)
 2. Descripción (1-3 líneas, técnica)
-3. Features principales
+3. Features principales (si aplica)
 4. Tech Stack
-5. Instalación
+5. Instalación / Setup
 6. Configuración (variables de entorno con tabla: `VARIABLE | default | descripción`)
-7. Uso
+7. Uso (si aplica)
 8. Scripts disponibles
 9. Estructura del proyecto
 10. API / Endpoints (si aplica)
-11. Roadmap (si existe)
+11. Roadmap (versión resumida — ver Paso 7)
+12. Contribución (link a CONTRIBUTING.md si existe)
+13. Troubleshooting (si aplica)
 
 **Políticas de edición:**
 - NUNCA reescribir el README completo si solo cambiaron 1-2 secciones
 - NO inventar features — solo documentar lo que existe en el código
 - NO agregar marketing fluff ("powerful", "robust", "seamless")
 - SÍ eliminar secciones obsoletas si ya no corresponden
+- NO agregar badge de versión — usar versión en texto plano en el título
+- Las secciones marcadas "si aplica" son opcionales — incluirlas solo si el proyecto las necesita
 
 ### Paso 7 — Actualizar Roadmap
-
-Archivo de referencia: `assets/roadmap-template.md`
 
 El roadmap vive en dos lugares que deben mantenerse sincronizados:
 - **`openspec/ROADMAP.md`** — fuente de verdad completa
@@ -206,7 +215,7 @@ Archivos modificados:
   - package.json (version bump)
   - openspec/CHANGELOG.md (nueva entrada prepended)
   - openspec/ROADMAP.md (1 ítem completado, 1 ítem agregado)
-  - README.md (secciones: Features, API Endpoints, Roadmap)
+  - README.md (secciones: Features, Roadmap)
 ```
 
 ---
@@ -229,4 +238,4 @@ Archivos modificados:
 - El changelog vive en `openspec/CHANGELOG.md`, NUNCA en README
 - Un solo bump por invocación (no acumular varios sin sync)
 - Si hay ambigüedad en el tipo de bump, preguntar antes de escribir
-- En modo CI/CD, asumir PATCH si no hay indicación explícita
+- En modo automático (post-commit), inferir bump desde el tipo de commit convencional; si el mensaje no es convencional, preguntar
