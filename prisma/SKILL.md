@@ -1,71 +1,70 @@
 ---
 name: prisma
-description: Expert in Prisma ORM with type-safe database operations and schema design
+description: "Trigger: Prisma ORM, schema design, type-safe database operations, Prisma Client, migrations. Expert in Prisma ORM with type-safe database operations and schema design."
+license: Apache-2.0
+metadata:
+  author: Codenburg
+  version: "1.1"
 ---
 
-# Prisma
+## Activation Contract
 
-You are an expert in Prisma ORM with deep knowledge of database schema design, type-safe operations, and performance optimization.
+Load this skill when designing Prisma schemas, writing Prisma Client queries, setting up migrations, or optimizing database performance with Prisma.
 
-## Core Principles
+## Hard Rules
 
-- Always declare explicit types for variables and functions. Avoid using 'any'
-- Use PascalCase for classes/interfaces, camelCase for variables/functions, kebab-case for files
-- Write functions under 20 lines with single responsibility
-- Always use type-safe Prisma client operations
+- Use `prisma-client` generator (Prisma 7+) with explicit `output` path, not `prisma-client-js`.
+- Always use driver adapters (`PrismaPg`, `PrismaMySQL`, etc.) for SQL providers in Prisma 7.
+- Prefer type-safe Prisma Client operations over raw queries.
+- Separate data access from business logic (repository pattern).
+- Use `select` to fetch only needed fields — never `include` everything.
 
-## Schema Design
+## Decision Gates
 
-- Employ domain-driven model naming conventions
-- Utilize decorators like @id, @unique, and @relation
-- Implement soft deletes using deletedAt timestamps
-- Maintain normalized, DRY schemas
-- Define proper relationships between models
-- Use appropriate field types and constraints
+| Situation | Pattern |
+|-----------|---------|
+| New project | Define schema with proper relations, generators, datasource |
+| Complex queries | Use transactions for multi-step operations |
+| Performance issue | Check N+1, missing indexes, over-fetching |
+| Error handling | Catch `PrismaClientKnownRequestError` and `PrismaClientValidationError` |
+| Testing | Use in-memory database or mock Prisma Client |
 
-## Client Usage
+## Execution Steps
 
-- Leverage transactions for multi-step operations
-- Apply middleware for logging, soft deletes, and auditing
-- Handle optional relations explicitly
-- Use select and include for efficient queries
-- Implement pagination for large datasets
+1. Define schema in `prisma/schema.prisma` with domain-driven model naming.
+2. Configure generator (`prisma-client` with explicit output) and datasource.
+3. Generate Prisma Client: `npx prisma generate`.
+4. Instantiate with driver adapter for SQL providers.
+5. Use `select`/`include` for efficient queries, pagination for large datasets.
+6. Handle errors with specific Prisma error types.
 
-## Error Management
+## Schema Design Rules
 
-- Catch specific errors:
-  - PrismaClientKnownRequestError
-  - PrismaClientValidationError
-- Provide contextual, user-friendly messages
-- Log detailed debugging information
-- Handle unique constraint violations gracefully
+- Employ domain-driven model naming (PascalCase).
+- Use `@id`, `@unique`, `@relation`, `@default` decorators.
+- Implement soft deletes using `deletedAt` timestamps.
+- Maintain normalized, DRY schemas.
+- Define proper relationships between models.
 
-## Architecture
+## Performance Rules
 
-- Separate data access from business logic
-- Implement repository patterns
-- Use dependency injection
-- Follow SOLID principles
-- Prefer composition over inheritance
+- Use `select` to fetch only needed fields.
+- Implement proper indexing in schema.
+- Use batch operations for bulk updates.
+- Avoid N+1 queries with proper `include`.
+- Use connection pooling in production.
 
-## Performance
+## Security Rules
 
-- Use select to fetch only needed fields
-- Implement proper indexing in schema
-- Use batch operations for bulk updates
-- Avoid N+1 queries with proper includes
-- Use connection pooling in production
+- Implement input validation at application level.
+- Rely on Prisma's built-in SQL injection protection.
+- Validate data at both schema and application level.
 
-## Testing
+## Output Contract
 
-- Use in-memory databases for testing
-- Implement comprehensive scenario coverage
-- Mock Prisma client for unit tests
-- Use database transactions for test isolation
+Return schema changes, Prisma Client usage patterns, and any migration steps needed.
 
-## Security
+## References
 
-- Implement input validation
-- Use Row Level Security patterns
-- Rely on Prisma's built-in SQL injection protection
-- Validate data at both schema and application level
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [Prisma 7 Migration](https://www.prisma.io/docs/orm/prisma-7)

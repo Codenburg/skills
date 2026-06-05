@@ -1,11 +1,38 @@
 ---
 name: react-hook-form
-description: React Hook Form performance optimization for client-side form validation using useForm, useWatch, useController, and useFieldArray. This skill should be used when building client-side controlled forms with React Hook Form library. This skill does NOT cover React 19 Server Actions, useActionState, or server-side form handling (use react-19 skill for those).
+description: "Trigger: client-side forms with React Hook Form, useForm, useWatch, useController, useFieldArray. React Hook Form performance optimization for client-side controlled forms. Does NOT cover React 19 Server Actions or server-side forms (use react-19 skill for those)."
+license: Apache-2.0
+metadata:
+  author: Codenburg
+  version: "1.1"
 ---
 
-# React Hook Form Best Practices
+## Activation Contract
 
-Comprehensive performance optimization guide for React Hook Form applications. Contains 41 rules across 8 categories, prioritized by impact to guide form development, automated refactoring, and code generation.
+Load this skill when building client-side controlled forms with React Hook Form, configuring `useForm` options, integrating controlled UI components (MUI, shadcn), or managing dynamic field arrays.
+
+## Hard Rules
+
+- Use `useWatch` over `watch` for isolated re-renders.
+- Always provide `defaultValues` to `useForm`.
+- Define schemas outside the component for resolver caching.
+- Use `useController` for re-render isolation in controlled components.
+- Prefer `onSubmit` validation mode for performance.
+
+## Decision Gates
+
+| Priority | Category | Impact |
+|----------|----------|--------|
+| 1 | Form Configuration | CRITICAL |
+| 2 | Field Subscription | CRITICAL |
+| 3 | Controlled Components | HIGH |
+| 4 | Validation Patterns | HIGH |
+| 5 | Field Arrays | MEDIUM-HIGH |
+| 6 | State Management | MEDIUM |
+| 7 | Integration Patterns | MEDIUM |
+| 8 | Advanced Patterns | LOW |
+
+## Quick Reference — Top Rules
 
 ## When to Apply
 
@@ -105,12 +132,8 @@ Read individual reference files for detailed explanations and code examples:
 - [Rule template](assets/templates/_template.md) - Template for adding new rules
 - Reference files: `references/{prefix}-{slug}.md`
 
-## Related Skills
+## References
 
-- For schema validation with Zod resolver, see `zod` skill
-- For React 19 server actions, see `react-19` skill
-- For UI/UX form design, see `frontend-design` skill
-
-## Full Compiled Document
-
-For the complete guide with all rules expanded: `AGENTS.md`
+- [React Hook Form Documentation](https://react-hook-form.com/docs)
+- [React Hook Form Advanced Usage](https://react-hook-form.com/advanced-usage)
+- Individual rule files in `references/` for detailed explanations and code examples

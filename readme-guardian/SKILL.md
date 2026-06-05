@@ -1,15 +1,10 @@
 ---
 name: readme-guardian
-description: >
-  Mantiene README, CHANGELOG y package.json como única fuente de verdad con versionado semver automático.
-  Activar: (1) automáticamente después de commits que afecten features, config, estructura o dependencias —
-  inferir bump desde el tipo de commit convencional; (2) manualmente cuando se invoque /readme-guardian sync.
-  Usar siempre que el usuario pida actualizar documentación del proyecto, sincronizar el README, bumpar
-  versión, o registrar cambios en el changelog.
+description: "Trigger: update README, sync changelog, bump version, /readme-guardian sync. Mantiene README, CHANGELOG y package.json como fuente de verdad con versionado semver automático."
 license: Apache-2.0
 metadata:
   author: Codenburg
-  version: "2.1"
+  version: "2.2"
 ---
 
 ## Flujo de Ejecución (Seguir en Orden)

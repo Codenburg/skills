@@ -1,10 +1,26 @@
 ---
 name: shadcn
-description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".
-user-invocable: false
+description: "Trigger: shadcn init, add components, create app with --preset, switch preset. Manages shadcn/ui components and projects — adding, searching, fixing, debugging, styling, and composing UI."
+license: Apache-2.0
+metadata:
+  author: Codenburg
+  version: "1.1"
+  user-invocable: false
 ---
 
-# shadcn/ui
+## Activation Contract
+
+Load this skill when working with shadcn/ui — adding components, initializing projects with presets, switching presets, updating components, or debugging component issues. Works with any project that has a `components.json` file.
+
+## Hard Rules
+
+- Always run `npx shadcn@latest docs <component>` before creating or fixing a component — get real API docs, don't guess.
+- Never decode or fetch preset codes manually. Pass them directly to `npx shadcn@latest init --preset <code>`.
+- Use `npx shadcn@latest add --dry-run` and `--diff` for smart merging before overwriting.
+- Always review added/updated component files for missing sub-components, wrong imports, and icon library mismatches.
+- When the registry is ambiguous (user says "add a login block"), ASK which registry before proceeding.
+
+## shadcn/ui
 
 A framework for building ui, components and design systems. Components are added as source code to the user's project via the CLI.
 

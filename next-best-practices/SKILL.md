@@ -1,12 +1,26 @@
 ---
 name: next-best-practices
-description: Next.js best practices - file conventions, RSC boundaries, data patterns, async APIs, metadata, error handling, route handlers, image/font optimization, bundling
-user-invocable: false
+description: "Trigger: Next.js App Router, RSC, API routes, caching, metadata, error handling, image/font optimization. Next.js best practices — file conventions, RSC boundaries, data patterns, async APIs."
+license: Apache-2.0
+metadata:
+  author: Codenburg
+  version: "1.1"
+  user-invocable: false
 ---
 
-# Next.js Best Practices
+## Activation Contract
 
-Apply these rules when writing or reviewing Next.js code.
+Load this skill when writing or reviewing Next.js code with App Router, React Server Components, API routes, or metadata. Covers file conventions, RSC boundaries, data fetching patterns, error handling, and optimization.
+
+## Hard Rules
+
+- Default to Node.js runtime unless Edge is explicitly required.
+- Use `next/image` over `<img>` always — configure remote images, responsive sizes, and blur placeholders.
+- Prefer Server Components by default; use `'use client'` only when interactivity (state, events, browser APIs) is needed.
+- Async `params` and `searchParams` are required in Next.js 15+.
+- Use `redirect`, `notFound`, `forbidden`, `unauthorized` for navigation outcomes — not manual error handling.
+
+## Section Index
 
 ## File Conventions
 

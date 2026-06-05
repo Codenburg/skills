@@ -1,13 +1,15 @@
 ---
 name: zod-4
-description: >
-  Zod 4 schema validation patterns.
-  Trigger: When using Zod for validation - breaking changes from v3.
+description: "Trigger: When using Zod for validation - breaking changes from v3. Zod 4 schema validation patterns with new top-level validators."
 license: Apache-2.0
 metadata:
-  author: gentleman-programming
-  version: "1.0"
+  author: Codenburg
+  version: "1.1"
 ---
+
+## Activation Contract
+
+Load this skill when writing Zod 4 schemas, migrating from Zod 3, or using TypeScript-first validation with React Hook Form or other resolvers.
 
 ## Breaking Changes from Zod 3
 
@@ -38,10 +40,25 @@ const numberSchema = z.number();
 const booleanSchema = z.boolean();
 const dateSchema = z.date();
 
-// Top-level validators (Zod 4)
+// Top-level validators (Zod 4 — deprecated method forms replaced)
 const emailSchema = z.email();
 const uuidSchema = z.uuid();
 const urlSchema = z.url();
+const emojiSchema = z.emoji();
+const base64Schema = z.base64();
+const base64urlSchema = z.base64url();
+const nanoidSchema = z.nanoid();
+const cuidSchema = z.cuid();
+const cuid2Schema = z.cuid2();
+const ulidSchema = z.ulid();
+const ipv4Schema = z.ipv4();
+const ipv6Schema = z.ipv6();
+const cidrv4Schema = z.cidrv4();
+const cidrv6Schema = z.cidrv6();
+const isoDateSchema = z.iso.date();
+const isoTimeSchema = z.iso.time();
+const isoDatetimeSchema = z.iso.datetime();
+const isoDurationSchema = z.iso.duration();
 
 // With constraints
 const nameSchema = z.string().min(1).max(100);
@@ -212,5 +229,7 @@ function Form() {
 }
 ```
 
-## Keywords
-zod, validation, schema, typescript, forms, parsing
+## References
+
+- [Zod 4 Migration Guide](https://zod.dev/v4/changelog)
+- [Zod 4 API Reference](https://zod.dev/v4)
