@@ -112,46 +112,46 @@ When **updating the skill registry** after adding or removing skills, read `~/sk
 
 ---
 
-## Available Skills (37)
+## Available Skills (36)
 
 | Skill | Description |
 |-------|-------------|
-| `branch-pr` | PR creation workflow for Agent Teams Lite |
-| `chained-pr` | Split oversized changes into reviewable PRs |
-| `cognitive-doc-design` | Documentation with reduced cognitive load |
-| `comment-writer` | Warm, direct collaboration comments |
+| `branch-pr` | Create Gentle AI pull requests with issue-first checks |
+| `chained-pr` | Split oversized changes into chained/stacked PRs |
+| `cognitive-doc-design` | Design docs that reduce cognitive load |
+| `comment-writer` | Write warm, direct collaboration comments |
 | `find-skills` | Discover and install agent skills |
-| `frontend-design` | Production-grade frontend interfaces |
+| `frontend-design` | Create distinctive production-grade frontend interfaces |
 | `go-testing` | Go testing patterns (Bubbletea TUI) |
-| `issue-creation` | GitHub issue creation workflow |
-| `judgment-day` | Parallel adversarial review protocol |
-| `next-best-practices` | Next.js best practices |
-| `next-cache-components` | Next.js 16 Cache Components |
-| `playwright` | Playwright E2E testing patterns |
-| `prisma` | Prisma ORM with type-safe operations |
-| `prisma-database-setup` | Prisma database configuration |
-| `react-19` | React 19 patterns with React Compiler |
-| `react-hook-form` | React Hook Form optimization |
-| `readme-guardian` | README/CHANGELOG semver versioning |
-| `sdd-apply` | Implement SDD tasks |
+| `issue-creation` | Create GitHub issues with issue-first workflow |
+| `judgment-day` | Blind dual adversarial review protocol |
+| `next-best-practices` | Next.js best practices for App Router and RSC |
+| `next-cache-components` | Next.js 16 Cache Components with PPR |
+| `playwright` | Playwright E2E testing with Page Object Model |
+| `prisma` | Prisma ORM with type-safe operations and schema design |
+| `prisma-database-setup` | Configure Prisma with any database provider |
+| `react-19` | React 19 patterns with Compiler, Server Components, Actions |
+| `react-hook-form` | React Hook Form optimization for client-side forms |
+| `readme-guardian` | Maintain README/CHANGELOG with semver versioning |
+| `sdd-apply` | Implement SDD tasks from specs and design |
 | `sdd-archive` | Archive completed SDD changes |
-| `sdd-design` | SDD technical design |
-| `sdd-explore` | Explore codebase and ideas |
-| `sdd-init` | Initialize SDD context |
-| `sdd-onboard` | Guided SDD onboarding walkthrough |
-| `sdd-propose` | Create SDD proposals |
-| `sdd-spec` | Write SDD specifications |
-| `sdd-tasks` | Break down SDD into tasks |
-| `sdd-verify` | Verify SDD implementation |
-| `shadcn` | shadcn/ui component management |
-| `skill-creator` | Create new AI agent skills |
-| `skill-improver` | Audit and upgrade existing skills |
+| `sdd-design` | Create SDD technical design and architecture |
+| `sdd-explore` | Explore SDD ideas before committing to a change |
+| `sdd-init` | Initialize SDD context and project configuration |
+| `sdd-onboard` | Guided walkthrough of the full SDD cycle |
+| `sdd-propose` | Create SDD change proposals with intent and scope |
+| `sdd-spec` | Write SDD delta specs with requirements and scenarios |
+| `sdd-tasks` | Break SDD changes into implementation tasks |
+| `sdd-verify` | Validate implementation against SDD specs |
+| `shadcn` | Manage shadcn/ui components, presets, and projects |
+| `skill-creator` | Create LLM-first skills with valid frontmatter |
+| `skill-improver` | Audit and upgrade existing AI agent skills |
 | `skill-registry` | Index available skills by trigger and path |
-| `tailwind-design-system` | Tailwind CSS v4 design systems |
-| `tanstack-table` | Headless table UI |
+| `tailwind-design-system` | Build scalable design systems with Tailwind v4 |
+| `tanstack-table` | Headless UI for powerful tables and datagrids |
 | `work-unit-commits` | Plan commits as reviewable work units |
-| `zod-4` | Zod 4 schema validation |
-| `zustand-5` | Zustand 5 state management |
+| `zod-4` | Zod 4 schema validation with new top-level validators |
+| `zustand-5` | Zustand 5 state management with persist and slices |
 
 ---
 
