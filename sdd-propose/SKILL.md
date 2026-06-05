@@ -1,13 +1,24 @@
 ---
 name: sdd-propose
-description: >
-  Create a change proposal with intent, scope, and approach.
-  Trigger: When the orchestrator launches you to create or update a proposal for a change.
+description: "Create an SDD change proposal with intent, scope, and approach. Trigger: orchestrator launches proposal work for a change."
+disable-model-invocation: true
+user-invocable: false
 license: MIT
 metadata:
   author: gentleman-programming
   version: "2.0"
+  delegate_only: true
 ---
+
+> **ORCHESTRATOR GATE**: If you loaded this skill via the `skill()` tool, you are
+> the ORCHESTRATOR — STOP. Do NOT execute these instructions inline. Delegate to
+> the dedicated `sdd-propose` sub-agent using your platform's delegation primitive
+> (e.g., `task(...)`, sub-agent invocation, etc.). This skill is for EXECUTORS
+> only.
+
+## Executor Override
+
+If you ARE the `sdd-propose` sub-agent (NOT the orchestrator), the gate above does NOT apply to you. Continue with the phase work below. Do NOT delegate. Do NOT call the Skill tool. You are the executor — execute.
 
 ## Purpose
 
@@ -74,6 +85,24 @@ Be specific about the user need or technical debt being addressed.}
 ### Out of Scope
 - {What we're explicitly NOT doing}
 - {Future work that's related but deferred}
+
+## Capabilities
+
+> This section is the CONTRACT between proposal and specs phases.
+> The sdd-spec agent reads this to know exactly which spec files to create or update.
+> Research `openspec/specs/` before filling this in.
+
+### New Capabilities
+<!-- Capabilities being introduced. Each becomes a new `openspec/specs/<name>/spec.md`.
+     Use kebab-case names (e.g., user-auth, data-export, api-rate-limiting).
+     Leave empty if no new capabilities. -->
+- `<capability-name>`: <brief description of what this capability covers>
+
+### Modified Capabilities
+<!-- Existing capabilities whose REQUIREMENTS are changing (not just implementation).
+     Only list here if spec-level behavior changes. Each needs a delta spec.
+     Use existing spec names from openspec/specs/. Leave empty if none. -->
+- `<existing-capability-name>`: <what requirement is changing>
 
 ## Approach
 
@@ -144,5 +173,9 @@ Ready for specs (sdd-spec) or design (sdd-design).
 - Every proposal MUST have success criteria
 - Use concrete file paths in "Affected Areas" when possible
 - Apply any `rules.proposal` from `openspec/config.yaml`
-- **Size budget**: Proposal artifact MUST be under 400 words. Use bullet points and tables over prose. Headers organize, not explain.
+- **ALWAYS fill in the Capabilities section** — this is the contract with sdd-spec. Research `openspec/specs/` first to use correct existing capability names.
+- New Capabilities → each will become `openspec/specs/<name>/spec.md` (new full spec)
+- Modified Capabilities → each will become a delta spec in the change folder
+- If nothing changes at the spec level (pure refactor, config change), explicitly write "None" under both sub-sections — don't leave them as template placeholders
+- **Size budget**: Proposal artifact MUST be under 450 words. Use bullet points and tables over prose. Headers organize, not explain.
 - Return envelope per **Section D** from `skills/_shared/sdd-phase-common.md`.

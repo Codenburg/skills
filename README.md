@@ -72,7 +72,15 @@ When **archiving a completed SDD change**, read `~/skills/sdd-archive/SKILL.md` 
 
 When **exploring codebase or thinking through ideas**, read `~/skills/sdd-explore/SKILL.md` first.
 
+When **onboarding to SDD** (guided walkthrough), read `~/skills/sdd-onboard/SKILL.md` first.
+
 When doing **Code Review** (adversarial, dual-judge), read `~/skills/judgment-day/SKILL.md` first.
+
+When **splitting oversized changes** into chained or stacked PRs, read `~/skills/chained-pr/SKILL.md` first.
+
+When **planning commits** as reviewable work units, read `~/skills/work-unit-commits/SKILL.md` first.
+
+When **designing documentation** with reduced cognitive load, read `~/skills/cognitive-doc-design/SKILL.md` first.
 
 ---
 
@@ -81,6 +89,8 @@ When doing **Code Review** (adversarial, dual-judge), read `~/skills/judgment-da
 When **creating GitHub issues** or **reporting bugs**, read `~/skills/issue-creation/SKILL.md` first.
 
 When **creating pull requests**, read `~/skills/branch-pr/SKILL.md` first.
+
+When **writing collaboration comments** (PR feedback, reviews, messages), read `~/skills/comment-writer/SKILL.md` first.
 
 ---
 
@@ -96,13 +106,20 @@ When **creating new AI agent skills**, read `~/skills/skill-creator/SKILL.md` fi
 
 When **searching for available skills**, read `~/skills/find-skills/SKILL.md` first.
 
+When **improving or auditing** existing AI agent skills, read `~/skills/skill-improver/SKILL.md` first.
+
+When **updating the skill registry** after adding or removing skills, read `~/skills/skill-registry/SKILL.md` first.
+
 ---
 
-## Available Skills (30)
+## Available Skills (37)
 
 | Skill | Description |
 |-------|-------------|
 | `branch-pr` | PR creation workflow for Agent Teams Lite |
+| `chained-pr` | Split oversized changes into reviewable PRs |
+| `cognitive-doc-design` | Documentation with reduced cognitive load |
+| `comment-writer` | Warm, direct collaboration comments |
 | `find-skills` | Discover and install agent skills |
 | `frontend-design` | Production-grade frontend interfaces |
 | `go-testing` | Go testing patterns (Bubbletea TUI) |
@@ -121,14 +138,18 @@ When **searching for available skills**, read `~/skills/find-skills/SKILL.md` fi
 | `sdd-design` | SDD technical design |
 | `sdd-explore` | Explore codebase and ideas |
 | `sdd-init` | Initialize SDD context |
+| `sdd-onboard` | Guided SDD onboarding walkthrough |
 | `sdd-propose` | Create SDD proposals |
 | `sdd-spec` | Write SDD specifications |
 | `sdd-tasks` | Break down SDD into tasks |
 | `sdd-verify` | Verify SDD implementation |
 | `shadcn` | shadcn/ui component management |
 | `skill-creator` | Create new AI agent skills |
+| `skill-improver` | Audit and upgrade existing skills |
+| `skill-registry` | Index available skills by trigger and path |
 | `tailwind-design-system` | Tailwind CSS v4 design systems |
 | `tanstack-table` | Headless table UI |
+| `work-unit-commits` | Plan commits as reviewable work units |
 | `zod-4` | Zod 4 schema validation |
 | `zustand-5` | Zustand 5 state management |
 
