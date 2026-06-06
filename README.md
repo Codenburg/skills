@@ -112,6 +112,27 @@ When **updating the skill registry** after adding or removing skills, read `~/sk
 
 ---
 
+## Using as AGENTS.md
+
+Each Quick Reference entry is a self-contained block you can copy directly into any project's `AGENTS.md`. When the AI encounters that context, it knows exactly which `SKILL.md` to load.
+
+File: [`AGENTS.md.example`](./AGENTS.md.example) — contains all skills in ready-to-use format.
+
+**How to use it:**
+
+1. Clone this repo to `~/skills/` (or wherever you prefer)
+2. Copy `AGENTS.md.example` or the relevant sections into your project's `AGENTS.md`
+3. The AI reads `AGENTS.md` at session start and loads matching skills on demand
+
+The goal: a project's `AGENTS.md` becomes a lightweight symlink — it doesn't duplicate skill content, it just tells the AI where to find it.
+
+```bash
+cp ~/skills/AGENTS.md.example my-project/AGENTS.md
+# Then edit it: keep only the sections relevant to your project
+```
+
+---
+
 ## Available Skills (36)
 
 | Skill | Description |
