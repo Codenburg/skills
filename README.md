@@ -16,6 +16,8 @@ When working with **Next.js** (App Router, RSC, API routes, caching), read `~/sk
 
 When working with **Next.js 16 Cache Components** (PPR, use cache, cacheLife, cacheTag), read `~/skills/next-cache-components/SKILL.md` first.
 
+When working with **Vercel React/Next.js best practices** (performance, data fetching, bundle optimization), read `~/skills/vercel-react-best-practices/SKILL.md` first.
+
 When working with **React Hook Form** (useForm, useWatch, useController, useFieldArray), read `~/skills/react-hook-form/SKILL.md` first.
 
 When working with **Zustand 5** (state management, slices, persist), read `~/skills/zustand-5/SKILL.md` first.
@@ -26,11 +28,15 @@ When working with **TanStack Table** (headless tables, sorting, filtering), read
 
 When working with **Zod 4** (schema validation, breaking changes from v3), read `~/skills/zod-4/SKILL.md` first.
 
+When working with **TypeScript advanced types** (generics, conditional types, mapped types, template literals), read `~/skills/typescript-advanced-types/SKILL.md` first.
+
 ---
 
 ### Styling & Design
 
 When working with **Tailwind CSS v4** (design tokens, component libraries, responsive), read `~/skills/tailwind-design-system/SKILL.md` first.
+
+When working with **Expo + Tailwind** (NativeWind v5, Tailwind v4.1, react-native-css, import rewrite), read `~/skills/expo-tailwind-setup/SKILL.md` first.
 
 When working with **Frontend Design** (production-grade interfaces, landing pages, dashboards), read `~/skills/frontend-design/SKILL.md` first.
 
@@ -47,6 +53,8 @@ When working with **Prisma Database Setup** (PostgreSQL, MySQL, SQLite, MongoDB)
 ### Testing
 
 When working with **Playwright** (E2E tests, Page Objects, selectors), read `~/skills/playwright/SKILL.md` first.
+
+When working with **Web App Testing** (Playwright-based toolkit for local apps, screenshots, logs), read `~/skills/webapp-testing/SKILL.md` first.
 
 When working with **Go Testing** (Bubbletea TUI, teatest patterns), read `~/skills/go-testing/SKILL.md` first.
 
@@ -75,6 +83,8 @@ When **exploring codebase or thinking through ideas**, read `~/skills/sdd-explor
 When **onboarding to SDD** (guided walkthrough), read `~/skills/sdd-onboard/SKILL.md` first.
 
 When doing **Code Review** (adversarial, dual-judge), read `~/skills/judgment-day/SKILL.md` first.
+
+When doing **TypeScript + React code review** (anti-patterns, state management, useEffect, type safety), read `~/skills/typescript-react-reviewer/SKILL.md` first.
 
 When **splitting oversized changes** into chained or stacked PRs, read `~/skills/chained-pr/SKILL.md` first.
 
@@ -133,7 +143,7 @@ cp ~/skills/AGENTS.md.example my-project/AGENTS.md
 
 ---
 
-## Available Skills (36)
+## Available Skills (41)
 
 | Skill | Description |
 |-------|-------------|
@@ -141,6 +151,7 @@ cp ~/skills/AGENTS.md.example my-project/AGENTS.md
 | `chained-pr` | Split oversized changes into chained/stacked PRs |
 | `cognitive-doc-design` | Design docs that reduce cognitive load |
 | `comment-writer` | Write warm, direct collaboration comments |
+| `expo-tailwind-setup` | Set up NativeWind v5 + Tailwind v4.1 in Expo (import rewrite or useCssElement) |
 | `find-skills` | Discover and install agent skills |
 | `frontend-design` | Create distinctive production-grade frontend interfaces |
 | `go-testing` | Go testing patterns (Bubbletea TUI) |
@@ -170,6 +181,10 @@ cp ~/skills/AGENTS.md.example my-project/AGENTS.md
 | `skill-registry` | Index available skills by trigger and path |
 | `tailwind-design-system` | Build scalable design systems with Tailwind v4 |
 | `tanstack-table` | Headless UI for powerful tables and datagrids |
+| `typescript-advanced-types` | Master TypeScript's advanced type system (generics, conditional, mapped, template literal) |
+| `typescript-react-reviewer` | Expert code reviewer for TypeScript + React 19 applications |
+| `vercel-react-best-practices` | React/Next.js performance guidelines from Vercel Engineering |
+| `webapp-testing` | Playwright toolkit for testing local web apps (screenshots, logs) |
 | `work-unit-commits` | Plan commits as reviewable work units |
 | `zod-4` | Zod 4 schema validation with new top-level validators |
 | `zustand-5` | Zustand 5 state management with persist and slices |

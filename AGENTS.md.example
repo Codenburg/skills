@@ -14,6 +14,8 @@ When working with **Next.js** (App Router, RSC, API routes, caching), read `~/sk
 
 When working with **Next.js 16 Cache Components** (PPR, use cache, cacheLife, cacheTag), read `~/skills/next-cache-components/SKILL.md` first.
 
+When working with **Vercel React/Next.js best practices** (performance, data fetching, bundle optimization), read `~/skills/vercel-react-best-practices/SKILL.md` first.
+
 When working with **React Hook Form** (useForm, useWatch, useController, useFieldArray), read `~/skills/react-hook-form/SKILL.md` first.
 
 When working with **Zustand 5** (state management, persist, immer, devtools, slices), read `~/skills/zustand-5/SKILL.md` first.
@@ -24,11 +26,15 @@ When working with **TanStack Table** (headless tables, sorting, filtering, pagin
 
 When working with **Zod 4** (schema validation, breaking changes from v3, top-level validators), read `~/skills/zod-4/SKILL.md` first.
 
+When working with **TypeScript advanced types** (generics, conditional types, mapped types, template literals), read `~/skills/typescript-advanced-types/SKILL.md` first.
+
 ---
 
 ### Styling & Design
 
 When working with **Tailwind CSS v4** (design tokens, component libraries, responsive, dark mode), read `~/skills/tailwind-design-system/SKILL.md` first.
+
+When working with **Expo + Tailwind** (NativeWind v5, Tailwind v4.1, react-native-css, import rewrite), read `~/skills/expo-tailwind-setup/SKILL.md` first.
 
 When working with **Frontend Design** (production-grade interfaces, landing pages, dashboards, components), read `~/skills/frontend-design/SKILL.md` first.
 
@@ -45,6 +51,8 @@ When working with **Prisma Database Setup** (PostgreSQL, MySQL, SQLite, MongoDB,
 ### Testing
 
 When working with **Playwright** (E2E tests, Page Objects, locators, test structure), read `~/skills/playwright/SKILL.md` first.
+
+When working with **Web App Testing** (Playwright toolkit for local apps, screenshots, browser logs), read `~/skills/webapp-testing/SKILL.md` first.
 
 When working with **Go Testing** (Bubbletea TUI, teatest, golden files), read `~/skills/go-testing/SKILL.md` first.
 
@@ -73,6 +81,8 @@ When **exploring codebase or thinking through ideas**, read `~/skills/sdd-explor
 When **onboarding to SDD** (guided walkthrough), read `~/skills/sdd-onboard/SKILL.md` first.
 
 When doing **Code Review** (adversarial, dual-judge, fix and re-judge), read `~/skills/judgment-day/SKILL.md` first.
+
+When doing **TypeScript + React code review** (anti-patterns, state management, useEffect, type safety, code smells), read `~/skills/typescript-react-reviewer/SKILL.md` first.
 
 When **splitting oversized changes** into chained or stacked PRs, read `~/skills/chained-pr/SKILL.md` first.
 
