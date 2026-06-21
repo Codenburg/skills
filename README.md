@@ -40,7 +40,7 @@ Project AGENTS.md  →  points to skill paths  →  AI loads SKILL.md on demand
 | **Testing** | 3 | Playwright, webapp testing, Go/TUI testing |
 | **Development Workflows** | 15 | SDD pipeline, code review, PR splits, work units |
 | **GitHub & Issues** | 3 | Issues, PRs, collaboration comments |
-| **Project Maintenance** | 1 | README/CHANGELOG with semver |
+| **Project Maintenance** | 1 | ROADMAP/CHANGELOG with semver (pending only, severity 🔴/🟡/🟢) |
 | **Skill Development** | 4 | Create, find, improve, registry skills |
 
 ---
@@ -105,7 +105,7 @@ When **writing collaboration comments** (PR feedback, reviews, messages), read `
 
 ### Project Maintenance
 
-When **maintaining README/CHANGELOG** with semver versioning, read `~/skills/readme-guardian/SKILL.md` first.
+When **maintaining ROADMAP/CHANGELOG/package.json/README** with semver versioning (ROADMAP pending only, severity 🔴/🟡/🟢, multi-fix + reverts + pre-release + optional tests, force-bump audit, tier-filtered §Pendiente matching, heuristic language detection, CHANGELOG validation), read `~/skills/docs-guardian/SKILL.md` first. Supersedes `readme-guardian`.
 
 ### Skill Development
 
@@ -226,7 +226,7 @@ cp ~/skills/AGENTS.md.example my-project/AGENTS.md
 
 | Skill | Description |
 |-------|-------------|
-| `readme-guardian` | Maintain README/CHANGELOG with semver versioning |
+| `docs-guardian` | Maintain ROADMAP/CHANGELOG/package.json/README with semver (ROADMAP pending only, severity 🔴/🟡/🟢, multi-fix + reverts + pre-release + optional tests, force-bump audit, tier-filtered §Pendiente matching). Supersedes readme-guardian. |
 
 </details>
 

@@ -104,7 +104,7 @@ When **writing collaboration comments** (PR feedback, reviews, Slack, GitHub com
 
 ### Project Maintenance
 
-When **maintaining README/CHANGELOG** with semver versioning, read `~/skills/readme-guardian/SKILL.md` first.
+When **maintaining ROADMAP/CHANGELOG/package.json/README** with semver versioning (ROADMAP pending only, severity 🔴/🟡/🟢, multi-fix + reverts + pre-release + optional tests, force-bump audit, tier-filtered §Pendiente matching, heuristic language detection, CHANGELOG validation), read `~/skills/docs-guardian/SKILL.md` first. Supersedes `readme-guardian`.
 
 ---
 
