@@ -67,34 +67,6 @@ If any implementation task remains unchecked (`- [ ]`):
 
 The archived audit trail MUST NOT contain stale unchecked tasks for completed work. Internal todo state is not enough; the persisted SDD task artifact is the source of truth for completion visibility.
 
-### Readme-Guardian Sync Gate
-
-Before syncing specs or moving any archive folder, verify that the `docs-guardian` sync was performed for this cycle's commits. The sync is the orchestrator's (or `sdd-apply` sub-agent's) responsibility — this gate catches the case where it was skipped.
-
-**How to verify:**
-
-1. **Read the cycle's commits**:
-   ```bash
-   git -C <repo> log <prev-tag-or-sha>..HEAD --pretty="%s"
-   ```
-2. **Detect sync trigger**: if ANY commit message starts with `fix:`, `feat:`, or contains `BREAKING CHANGE:`, the sync was required.
-3. **Check sync artifacts** (in order):
-   - [ ] `package.json` `"version"` was bumped (compare to previous release tag)
-   - [ ] `openspec/CHANGELOG.md` has a new entry at the top with today's date and the bumped version
-   - [ ] `README.md` version badge matches the bumped version
-   - [ ] `openspec/ROADMAP.md` §Completado has the corresponding `vX.Y.Z` entry, AND the patch bump table at the end of the file has the matching row(s) (🔴 / 🟡 / 🟢) with the right SHAs
-4. **If `docs:` / `chore:` / `refactor:` / `test:` / `style:` / `perf:` only**: the sync is OPTIONAL but recommended (cumulative CHANGELOG entry). If skipped, record why in the archive report.
-
-**If any required check fails:**
-
-1. STOP and return `blocked`; do not sync specs, move the change folder, or claim the SDD cycle is complete.
-2. Report which file is out of sync, what value it currently has, and what value it should have (e.g., "package.json is at 1.0.0, expected 1.0.1 per the cycle's `fix:` commits").
-3. Recommend the orchestrator load `~/.config/opencode/skills/docs-guardian/SKILL.md` and run a sync, then re-invoke this archive sub-agent.
-
-**If the user explicitly approves skipping the sync** (e.g., they confirm the change does not warrant a user-facing release), record the exact reason in the archive report and mark the archive as `intentional-with-warnings`. Do NOT silently skip the sync — the user must opt out.
-
-This gate exists because the project's `AGENTS.md` §"Project Maintenance" has a HARD RULE making the sync mandatory after any `fix:` / `feat:` commit, and the orchestrator (or apply sub-agent) is the one that runs it. Archive is the last line of defense before the cycle is closed.
-
 ### Strict-vs-OpenSpec Archive Policy
 
 OpenSpec permits archiving with incomplete artifacts or tasks after a user confirmation. gentle-ai is stricter by default:
