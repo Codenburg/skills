@@ -8,7 +8,7 @@ Drop-in `AGENTS.md` blocks · Lazy context loading · Pure markdown
 
 [Install](#install) · [Skills](#skills) · [Contributing](#contributing)
 
-![Skills](https://img.shields.io/badge/skills-41-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
+![Skills](https://img.shields.io/badge/skills-42-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
 ![Categories](https://img.shields.io/badge/categories-8-10b981?style=for-the-badge)
 ![Format](https://img.shields.io/badge/format-markdown-f59e0b?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/runtime-none-ef4444?style=for-the-badge)
@@ -85,7 +85,7 @@ Project AGENTS.md  →  points to skill paths  →  AI loads SKILL.md on demand
 | `webapp-testing` | Playwright toolkit for local web apps, screenshots, logs |
 | `go-testing` | Bubbletea TUI, teatest patterns |
 
-### Development Workflows (15)
+### Development Workflows (16)
 
 | Load this skill | When working with |
 |----------------|-------------------|
@@ -104,6 +104,7 @@ Project AGENTS.md  →  points to skill paths  →  AI loads SKILL.md on demand
 | `chained-pr` | Split oversized changes into chained/stacked PRs |
 | `work-unit-commits` | Plan commits as reviewable work units |
 | `cognitive-doc-design` | Design docs that reduce cognitive load |
+| `graphify` | Turn code/docs/papers into queryable knowledge graphs |
 
 ### GitHub & Issues (3)
 
