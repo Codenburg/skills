@@ -2,14 +2,14 @@
 
 # Agent Skills Registry
 
-**41 specialized skills that AI agents load on demand**
+**21 specialized skills that AI agents load on demand**
 
 Drop-in `AGENTS.md` blocks · Lazy context loading · Pure markdown
 
 [Install](#install) · [Skills](#skills) · [Contributing](#contributing)
 
-![Skills](https://img.shields.io/badge/skills-42-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
-![Categories](https://img.shields.io/badge/categories-8-10b981?style=for-the-badge)
+![Skills](https://img.shields.io/badge/skills-21-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
+![Categories](https://img.shields.io/badge/categories-7-10b981?style=for-the-badge)
 ![Format](https://img.shields.io/badge/format-markdown-f59e0b?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/runtime-none-ef4444?style=for-the-badge)
 
@@ -31,6 +31,8 @@ cp ~/skills/AGENTS.md.example my-project/AGENTS.md
 ```
 
 The AI reads `AGENTS.md` at session start and loads matching `SKILL.md` on demand.
+
+This project uses [Gentle AI and its respective skills](https://github.com/Gentleman-Programming/gentle-ai).
 
 ---
 
@@ -85,34 +87,11 @@ Project AGENTS.md  →  points to skill paths  →  AI loads SKILL.md on demand
 | `webapp-testing` | Playwright toolkit for local web apps, screenshots, logs |
 | `go-testing` | Bubbletea TUI, teatest patterns |
 
-### Development Workflows (16)
+### Development Workflows (1)
 
 | Load this skill | When working with |
 |----------------|-------------------|
-| `sdd-init` | Initialize SDD context and project configuration |
-| `sdd-propose` | Create SDD change proposals |
-| `sdd-spec` | Write SDD delta specs |
-| `sdd-design` | Create SDD technical design |
-| `sdd-tasks` | Break changes into implementation tasks |
-| `sdd-apply` | Implement SDD tasks |
-| `sdd-verify` | Validate against specs |
-| `sdd-archive` | Archive completed changes |
-| `sdd-explore` | Explore ideas before committing to a change |
-| `sdd-onboard` | Guided walkthrough of the full SDD cycle |
-| `judgment-day` | Blind dual adversarial code review |
 | `typescript-react-reviewer` | TypeScript + React 19 code review |
-| `chained-pr` | Split oversized changes into chained/stacked PRs |
-| `work-unit-commits` | Plan commits as reviewable work units |
-| `cognitive-doc-design` | Design docs that reduce cognitive load |
-| `graphify` | Turn code/docs/papers into queryable knowledge graphs |
-
-### GitHub & Issues (3)
-
-| Load this skill | When working with |
-|----------------|-------------------|
-| `issue-creation` | Creating GitHub issues, bug reports, feature requests |
-| `branch-pr` | Creating pull requests with issue-first checks |
-| `comment-writer` | PR feedback, reviews, collaboration comments |
 
 ### Project Maintenance (1)
 
@@ -120,14 +99,11 @@ Project AGENTS.md  →  points to skill paths  →  AI loads SKILL.md on demand
 |----------------|-------------------|
 | `docs-guardian` | ROADMAP/CHANGELOG/package.json/README with semver versioning |
 
-### Skill Development (4)
+### Skill Development (1)
 
 | Load this skill | When working with |
 |----------------|-------------------|
-| `skill-creator` | Creating new AI agent skills |
 | `find-skills` | Discovering and installing agent skills |
-| `skill-improver` | Auditing and upgrading existing skills |
-| `skill-registry` | Indexing available skills by trigger and path |
 
 ---
 
@@ -139,8 +115,6 @@ To add a new skill:
 2. Add a `SKILL.md` with valid frontmatter (name, description, trigger)
 3. Add it to the **Skills** table for its category above
 4. Update the count in the badges and in `AGENTS.md.example`
-
-To audit or improve an existing skill, use the [`skill-improver`](./skill-improver/SKILL.md) workflow.
 
 ---
 

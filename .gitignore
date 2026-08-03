@@ -1,2 +1,25 @@
 # Auto-generated skill registry cache
 .atl/
+
+# Skills provided by Gentle AI
+/sdd-init/
+/sdd-propose/
+/sdd-spec/
+/sdd-design/
+/sdd-tasks/
+/sdd-apply/
+/sdd-verify/
+/sdd-archive/
+/sdd-explore/
+/sdd-onboard/
+/judgment-day/
+/branch-pr/
+/chained-pr/
+/work-unit-commits/
+/cognitive-doc-design/
+/graphify/
+/issue-creation/
+/comment-writer/
+/skill-creator/
+/skill-improver/
+/skill-registry/

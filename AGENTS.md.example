@@ -4,6 +4,7 @@ AGENTS.md — Skill references for AI agents.
 Copy this file into any project as AGENTS.md (or merge relevant sections).
 Each block tells the AI: "when this context appears, load the matching SKILL.md first."
 Paths assume skills are cloned to ~/skills/. Adjust if using a different location.
+The Gentle AI skill references below are intentionally included because Gentle AI installs them and this template is meant to be copied into projects.
 -->
 
 ### Frameworks & Libraries
@@ -60,37 +61,11 @@ When working with **Go Testing** (Bubbletea TUI, teatest, golden files), read `~
 
 ### Development Workflows
 
-When working with **Spec-Driven Development** (SDD), read `~/skills/sdd-init/SKILL.md` first.
-
-When creating a **new SDD change proposal**, read `~/skills/sdd-propose/SKILL.md` first.
-
-When **writing SDD specifications**, read `~/skills/sdd-spec/SKILL.md` first.
-
-When **creating SDD technical design**, read `~/skills/sdd-design/SKILL.md` first.
-
-When **breaking down SDD into tasks**, read `~/skills/sdd-tasks/SKILL.md` first.
-
-When **implementing SDD tasks**, read `~/skills/sdd-apply/SKILL.md` first.
-
-When **verifying SDD implementation**, read `~/skills/sdd-verify/SKILL.md` first.
-
-When **archiving a completed SDD change**, read `~/skills/sdd-archive/SKILL.md` first.
-
-When **exploring codebase or thinking through ideas**, read `~/skills/sdd-explore/SKILL.md` first.
-
-When **onboarding to SDD** (guided walkthrough), read `~/skills/sdd-onboard/SKILL.md` first.
-
-When doing **Code Review** (adversarial, dual-judge, fix and re-judge), read `~/skills/judgment-day/SKILL.md` first.
-
 When doing **TypeScript + React code review** (anti-patterns, state management, useEffect, type safety, code smells), read `~/skills/typescript-react-reviewer/SKILL.md` first.
-
-When **splitting oversized changes** into chained or stacked PRs, read `~/skills/chained-pr/SKILL.md` first.
 
 When **planning commits** as reviewable work units, read `~/skills/work-unit-commits/SKILL.md` first.
 
 When **designing documentation** with reduced cognitive load, read `~/skills/cognitive-doc-design/SKILL.md` first.
-
-When **building knowledge graphs** from code, docs, papers, or images (queryable graph, community detection, god nodes), read `~/skills/graphify/SKILL.md` first.
 
 ---
 
