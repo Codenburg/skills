@@ -1,104 +1,242 @@
 ---
 name: docs-guardian
-description: "Trigger: fix: or feat: commit lands, SDD cycle closes, or /docs-guardian sync. Maintain ROADMAP (pending only) + CHANGELOG + package.json + README with semantic versioning."
+description: "Resolve release/versioning and documentation for completed Gymflow work before the final commit. Recommends BUMP, NO_BUMP, or BYPASS; maintains package version, CHANGELOG, README, and pending-only ROADMAP."
 license: MIT
 metadata:
   author: Codenburg
-  version: "1.1"
+  version: "1.3"
   supersedes: readme-guardian
 ---
 
+# Docs Guardian
+
+Keep Gymflow release documentation aligned with completed work without turning documentation into a second task after the commit.
+
 ## Activation Contract
 
-Use this skill when: `fix:` / `feat:` commit lands, `BREAKING CHANGE:` in body, SDD cycle closes (sdd-archive), or user invokes `/docs-guardian sync` explicitly.
+Run this skill when implementation is complete, verification/review is complete, and the intended conventional commit is known, **before the final commit is created**, when any of these apply:
+
+- intended commit starts with `fix:` or `feat:`;
+- intended commit body contains `BREAKING CHANGE:`;
+- intended commit starts with `revert:`;
+- an SDD cycle is about to archive;
+- the user explicitly invokes `/docs-guardian sync`.
+
+Post-commit execution is recovery-only: use it only when a qualifying commit already landed without a Docs-Guardian resolution.
+
+Do not trigger automatically for `docs:`, `chore:`, `refactor:`, `test:`, `style:`, or `perf:` unless the user explicitly invokes the skill or the change materially affects release documentation.
+
+## Core Principle
+
+**Versioning is judgment-based, not threshold-based. Docs-Guardian recommends; the user decides.**
+
+There is no patch bump table, severity quota, accumulated-fix threshold, or automatic release.
+
+## Resolution Actions
+
+Every qualifying task resolves to exactly one action:
+
+### 1. `BUMP`
+
+Use when the change should produce a release/version transition.
+
+- Stable `fix:` normally recommends PATCH.
+- Stable `feat:` normally recommends MINOR.
+- `BREAKING CHANGE:` normally recommends MAJOR.
+- A current pre-release stays on its existing release train unless the user explicitly starts a new train.
+- `BUMP` always creates/promotes a versioned CHANGELOG entry.
+- Update `package.json`, README version text/badge, CHANGELOG, and ROADMAP version metadata if present.
+
+### 2. `NO_BUMP`
+
+Keep the current package version.
+
+Docs-Guardian recommends one of:
+
+- `NO_BUMP + CHANGELOG` — noteworthy to users/product/history; add it under `## [Unreleased]`.
+- `NO_BUMP + SKIP_CHANGELOG` — trivial/internal; do not add it to CHANGELOG.
+
+A confirmed completed ROADMAP pending item may still be removed under either `NO_BUMP` variant.
+
+### 3. `BYPASS`
+
+Skip Docs-Guardian changes for this task.
+
+- Requires explicit user authorization.
+- Do not modify package version, CHANGELOG, README, or ROADMAP.
+- Do not reinterpret BYPASS as NO_BUMP.
+- Downstream workflow may continue once the bypass is recorded in the current task context.
 
 ## Hard Rules
 
-1. **ROADMAP is pending only** — never add `[x]` markers. §Pendiente removals need user confirmation.
-2. **Severity needs user confirmation** — never auto-classify 🔴/🟡/🟢. Default 🟢 Baja if unsure.
-3. **Force-bumps need user opt-in + audit note** in CHANGELOG.
-4. **Patch bump table clears per cycle** — entries move to CHANGELOG on bump, table restarts empty.
-5. **One bump per sync cycle**. Multi-fix decomposes into N entries. Reverts document as 🔄. Pre-release via `--pre-release <alpha|beta|rc>` (resets to `.pre.1`, no counter). Optional `--verify-tests` runs `pnpm test` (pnpm-only).
-6. **§Pendiente matching respects tier** — 🔴 matches Alta/Media, 🟡 any, 🟢 only Baja.
-7. **CHANGELOG language is heuristic** — auto-detected from last 5 entries (majority `es` vs `en`, default `es`). User can edit post-sync.
-8. **CHANGELOG validation** — pre-sync checks whole file per Keep a Changelog 1.1.0. Post-sync checks new entry format. ASK if either fails.
-9. **Out of scope for v1.x**: race conditions between parallel cycles, monorepo, auto-detect of completed §Pendiente without keyword match, multi-package-manager test commands, pre-release counter, language override flag.
+1. **Run before the final commit.** Documentation produced by this skill belongs in the same task/commit as the implementation whenever possible.
+2. **Never auto-release.** Recommend an action and let the user authorize it unless the user already supplied the decision.
+3. **Ask only for missing decisions.** Never repeat a question already answered in the task context.
+4. **Ask at most one question at a time.** Stop after asking.
+5. **No patch bump table or severity thresholds.**
+6. **ROADMAP is pending-only.** Never add `[x]` markers or completed-history entries. Remove a matched pending item only after user confirmation.
+7. **No commit SHA requirement.** Pre-commit documentation must not require a SHA that does not exist yet.
+8. **CHANGELOG is selective, not a git log.** Trivial/internal work may skip it.
+9. **BUMP always includes release notes.** Existing relevant `Unreleased` content is promoted into the new version entry.
+10. **Pre-release train is sticky.** `X.Y.Z-alpha.N`, `beta.N`, or `rc.N` targets stable `X.Y.Z` until the user explicitly starts another base version.
+11. Optional `--verify-tests` runs `pnpm test`. If it fails, ask whether to continue or abort.
+12. Validate CHANGELOG against the Gymflow convention defined in `references/conventions.md`, which is based on Keep a Changelog and includes project extensions.
 
-## Decision Gates
+## Minimal Decision Flow
 
-| Condition | Action |
-|---|---|
-| `feat:` / `BREAKING CHANGE:` | ASK: MINOR puro or MAJOR? If MINOR/MAJOR, ASK: pre-release? |
-| `fix:`, criteria not MET | Add to table; ASK: force-bump with audit, or wait? |
-| `fix:`, criteria MET | PATCH bump (4-file sync) |
-| `fix:` with multi-`fix:` body | ASK: count + per-line severity |
-| `revert: ...` | ASK: 🔄 in CHANGELOG? (no patch bump table) |
-| Match to §Pendiente item (tier-filtered) | ASK before removing |
-| `docs:`, `chore:`, `refactor:`, `test:`, `style:`, `perf:` | No sync |
-| `--verify-tests` + tests fail | ASK: continue anyway or abort? |
+### A. Read state
 
-## Execution Steps
+Read only what is needed:
 
-### 1. Read state
+- intended commit subject/body;
+- `git status --short`;
+- staged diff if present, otherwise relevant working-tree diff;
+- `package.json` version;
+- top/recent entries of `openspec/CHANGELOG.md`;
+- pending items and optional `_Version:_` metadata from `openspec/ROADMAP.md`;
+- README version text/badge if present.
 
-`package.json` version, latest `git log -1` + `--stat`, top of `openspec/CHANGELOG.md`, header + `## 🐛 Pending fixes` table + `## ⏳ Pendiente` items (Alta/Media/Baja) + `_Version:_` line from `openspec/ROADMAP.md`, version badge from `README.md`.
+Do not scan unrelated project files unless needed to understand the change.
 
-**Pre-sync validation**: parse `openspec/CHANGELOG.md` for Keep a Changelog 1.1.0 format. If malformed, ASK.
+### B. Assess impact
 
-### 2. Detect & classify
+Infer the likely release impact from the actual change and intended commit:
 
-- `revert: ...` → ASK: 🔄 in CHANGELOG? (Step 5D, no bump)
-- `fix:` → scan body for additional `fix:` lines. If 1 → ASK severity. If N → ASK count + per-line.
-- `feat:` → ASK: MINOR puro or includes `BREAKING CHANGE:`? If MINOR, ASK: pre-release?
-- `BREAKING CHANGE:` → MAJOR (ASK: pre-release?)
+- `fix:` → usually PATCH-worthy if behavior, correctness, security, data integrity, or user-visible functionality materially changed.
+- `feat:` → usually MINOR-worthy on a stable version.
+- `BREAKING CHANGE:` → usually MAJOR-worthy on a stable version.
+- `revert:` → evaluate the effect organically; it may be BUMP, Unreleased-only, or trivial.
 
-### 3. §Pendiente matching
+For small fixes, distinguish:
 
-Match subject + body against `- [ ] ...` lines, tier-filtered per Rule 6. Jaccard + keyword count. ASK before removing. See `references/conventions.md`.
+- **release-worthy** → recommend `BUMP`;
+- **noteworthy but not release-worthy** → recommend `NO_BUMP + CHANGELOG`;
+- **trivial/internal** → recommend `NO_BUMP + SKIP_CHANGELOG`.
 
-### 4. Patch bump table (fix: only)
+Give the recommendation in one short sentence.
 
-Add entries. Count accumulated: 🔴≥1 OR 🟡≥2 OR 🟢≥3 → PATCH bump. Otherwise ASK: force-bump with audit, or wait?
+### C. Ask for authorization
 
-### 5. 4-file sync (PATCH/MINOR/MAJOR)
+If the user has not already decided, ask one question only.
 
-**Pre-sync** (if `--verify-tests`): `pnpm test` (hardcoded — project is pnpm-only). If fail, ASK.
+Example:
 
-**A. `package.json`** — bump per semver. Pre-release: edit manually (`X.Y.Z-alpha.N`).
+```text
+Recomendación: NO_BUMP + CHANGELOG — corrige una conducta visible, pero no justifica publicar una versión nueva.
+¿Lo dejamos así?
+```
 
-**B. `README.md`** — update version badge.
+If the user chooses `BUMP` and a version/pre-release transition is still unresolved, ask that as the next single question.
 
-**C. `openspec/CHANGELOG.md`** — prepend new entry (hybrid: 🔴/🟡 detailed, 🟢 grouped, 🔄 for reverts, force-bump audit). See `assets/changelog-template.md`. Pre-release: `X.Y.Z-pre.1` (always reset).
+### D. Resolve pre-release transition
 
-**Post-sync validation**: parse the new entry for format (heading, version `X.Y.Z[-pre.N]`, date, sections). If malformed, ASK.
+Follow `references/conventions.md`.
 
-**D. `openspec/ROADMAP.md`**:
-1. Update header `_Version: X.Y.Z_` (or `X.Y.Z-pre.N`).
-2. Add entry to §Completado.
-3. Clear patch bump table → placeholder row.
-4. Update "Criterio de bump" version reference.
-5. Update "Estado actual" to "Tabla vacía. Esperando el primer `fix:` del próximo ciclo."
+Key behavior:
 
-### 6. Verify
+- `1.2.0-alpha.3` + continue alpha → `1.2.0-alpha.4`
+- `1.2.0-alpha.3` + promote to beta → `1.2.0-beta.1`
+- `1.2.0-alpha.3` + promote to rc → `1.2.0-rc.1`
+- `1.2.0-rc.2` + stable → `1.2.0`
+- A `fix:` while on `1.2.0-beta.2` does **not** automatically become `1.2.1-*`.
+- A `feat:` while on `1.2.0-alpha.3` does **not** automatically become `1.3.0-*`.
+- Start a new base version only when the user explicitly chooses a new release train.
 
-All 4 files updated. No `[x]` added. ROADMAP table empty. Criteria version updated.
+### E. Apply documentation
+
+#### `BUMP`
+
+1. `package.json`
+   - Apply the authorized stable or pre-release transition.
+
+2. `README.md`
+   - Update existing version text/badge if the project has one.
+   - Do not invent a new badge solely for Docs-Guardian.
+
+3. `openspec/CHANGELOG.md`
+   - Promote relevant `## [Unreleased]` content into the new release entry.
+   - Include the current release-worthy change.
+   - Keep an empty `## [Unreleased]` heading at the top for future noteworthy no-bump work.
+   - Use templates from `assets/changelog-template.md`.
+
+4. `openspec/ROADMAP.md`
+   - If `_Version:_` metadata exists, update it to the new package version.
+   - Remove a completed pending item only after user confirmation.
+   - Never add §Completado history, patch tables, bump criteria, or `[x]` markers.
+
+#### `NO_BUMP + CHANGELOG`
+
+1. Keep `package.json` unchanged.
+2. Keep README version unchanged.
+3. Add the noteworthy change under the appropriate section of `## [Unreleased]`.
+4. Remove a confirmed completed ROADMAP pending item if applicable.
+5. Do not create a fake versioned release entry.
+
+#### `NO_BUMP + SKIP_CHANGELOG`
+
+1. Keep package version, README, and CHANGELOG unchanged.
+2. Remove a confirmed completed ROADMAP pending item if applicable.
+3. Make no other release-documentation changes.
+
+#### `BYPASS`
+
+Make no changes.
+
+### F. Verify
+
+Check only the files touched by the selected action:
+
+- package and README versions agree when a bump occurred;
+- CHANGELOG version agrees with package version for a release;
+- `## [Unreleased]` remains available for future no-bump notes;
+- no SHA placeholder exists;
+- ROADMAP contains pending work only;
+- no patch bump table/threshold bookkeeping was introduced;
+- no user decision was silently overridden.
+
+## CHANGELOG Language
+
+Match the established language of recent CHANGELOG entries.
+
+- Prefer the language of the most recent comparable entry.
+- If recent entries clearly have a majority language, use it.
+- On a true tie, keep the language of the most recent entry.
+- If the CHANGELOG has no meaningful precedent, default to English.
+- Section headings remain in English.
+
+Do not ask about language unless the user explicitly requests an override.
 
 ## Output Contract
 
+Keep the final output short:
+
+```text
+docs-guardian — resolved
+Action: BUMP | NO_BUMP + CHANGELOG | NO_BUMP + SKIP_CHANGELOG | BYPASS
+Recommendation: <one sentence>
+Version: <old> → <new> | unchanged
+CHANGELOG: release <version> | Unreleased | skipped
+ROADMAP: <item removed> | unchanged
+Files: <changed files or none>
+Ready for final commit: yes
 ```
-docs-guardian — sync completado
-Versión: 1.0.2 → 1.0.3 (PATCH)
-Trigger: 🔴 1 hotfix (criterio MET) [or: forzado]
-Multi-fix: N parsed [or: 1] | Reverts: 0 [or: M 🔄] | Pre-release: no [or: alpha.1]
-§Pendiente: 1 removido / 0 matcheados | Test verification: skipped [or: passed | failed]
-Archivos: package.json, openspec/CHANGELOG.md, openspec/ROADMAP.md, README.md
+
+For recovery after an already-landed commit, replace the last line with:
+
+```text
+Recovery sync: completed; documentation still needs to be committed.
 ```
+
+Do not automatically amend, reset, rebase, or rewrite git history.
 
 ## References
 
-- `assets/changelog-template.md` — hybrid 🔴/🟡/🟢/🔄 entry format
-- `references/conventions.md` — severity, bump criteria, tier-filtered §Pendiente matching, multi-fix parsing, revert detection, pre-release, force-bump audit, ASK prompts
+- `references/conventions.md` — organic release decisions, pre-release trains, Unreleased behavior, ROADMAP matching, validation, prompts.
+- `assets/changelog-template.md` — versioned and Unreleased CHANGELOG templates.
 
 ## Supersedes
 
-`readme-guardian` (deprecated 2026-06-21). v1.0: reads patch bump table, removes items instead of `[x]`, clears table per cycle, explicit severity, matches §Pendiente, asks before non-trivial decisions. v1.1: multi-fix, reverts, pre-release, optional tests, tier filtering, force-bump audit. v1.2: heuristic language, pre+post CHANGELOG validation, hardcoded pnpm, pre-release reset.
+`readme-guardian` (deprecated 2026-06-21).
+
+- v1.0–v1.2 used severity thresholds, a patch bump table, post-commit sync, SHA-oriented release notes, and pre-release reset behavior.
+- v1.3 replaces that model with pre-commit resolution, user-authorized organic versioning, `BUMP` / `NO_BUMP` / `BYPASS`, selective `Unreleased` notes, and release-train-aware pre-release semantics.

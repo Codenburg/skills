@@ -1,70 +1,178 @@
 # CHANGELOG entry templates
 
-Use these templates as the literal shape for new entries. The hybrid format is the project's convention (not strict Keep a Changelog).
+Templates for `docs-guardian` v1.3.
 
-## PATCH bump (typical `fix:` cycle)
+The project convention is based on Keep a Changelog, with optional `Breaking`, `Reverted`, and `Notes` extensions.
+
+Commit SHAs are not required because Docs-Guardian normally runs before the final commit.
+
+## Persistent Unreleased heading
 
 ```markdown
+## [Unreleased]
+```
+
+Add subsections only when they contain entries.
+
+## NO_BUMP + CHANGELOG
+
+```markdown
+## [Unreleased]
+
+### Fixed
+- Corrected the empty state shown when a plan has no published price.
+```
+
+Mixed example:
+
+```markdown
+## [Unreleased]
+
+### Added
+- Added an admin filter for active memberships.
+
+### Fixed
+- Prevented stale validation errors from remaining after cancelling an edit.
+```
+
+## PATCH release
+
+```markdown
+## [Unreleased]
+
 ## [X.Y.Z] - YYYY-MM-DD
 
 ### Fixed
-- 🔴 `<sha>` — `<commit subject>` — `<brief rationale>`
-- 🟡 `<sha>` — `<commit subject>` — `<brief rationale>`
-- 🟢 N fixes accumulated:
-  - `<sha>` — `<commit subject>`
-  - `<sha>` — `<commit subject>`
-  - `<sha>` — `<commit subject>`
+- <meaningful user/product outcome>
 
 ### Notes
-- This is a **PATCH** bump per semver. The X criterion was MET by `<sha>` (N fixes accumulated).
+- PATCH release.
 ```
 
-## MINOR bump (`feat:` cycle)
+## MINOR release
 
 ```markdown
+## [Unreleased]
+
 ## [X.Y.0] - YYYY-MM-DD
 
 ### Added
-- **`<feature name>`** — `<one-line summary>`. `<brief rationale>`.
+- <new capability and its user/product value>
 
 ### Changed
-- **`<change>`** — `<one-line summary>` (if applicable).
+- <meaningful change to existing behavior, if applicable>
 
 ### Notes
-- This is a **MINOR** bump per semver (1 new feature, no breaking changes).
+- MINOR release.
 ```
 
-## MAJOR bump (`BREAKING CHANGE:`)
+## MAJOR release
 
 ```markdown
+## [Unreleased]
+
 ## [X.0.0] - YYYY-MM-DD
 
 ### Breaking
-- **`<change>`** — `<what breaks>` — `<migration path>`.
+- <what changed incompatibly and what consumers/operators must do>
 
-### Added / Changed / Fixed
-- `<standard entries>`
+### Changed
+- <other meaningful behavior changes, if applicable>
 
 ### Notes
-- This is a **MAJOR** bump per semver (breaking change). `<migration guide link if any>`.
+- MAJOR release.
 ```
 
-## Section order (per Keep a Changelog 1.1.0)
+## Pre-release
 
-For any new entry, use the sections in this order (only include sections that apply):
-1. `### Added` — new features
-2. `### Changed` — changes in existing functionality
-3. `### Deprecated` — soon-to-be removed features
-4. `### Removed` — removed features
-5. `### Fixed` — bug fixes
-6. `### Security` — vulnerability fixes (if applicable)
-7. `### Notes` — version metadata, criterion trigger, links
+Use the actual authorized release-train version:
+
+```markdown
+## [Unreleased]
+
+## [1.3.0-alpha.4] - YYYY-MM-DD
+
+### Added
+- <change included in this pre-release>
+
+### Notes
+- Pre-release for the 1.3.0 release train (alpha.4).
+```
+
+For stage promotion:
+
+```markdown
+## [Unreleased]
+
+## [1.3.0-rc.1] - YYYY-MM-DD
+
+### Changed
+- Promoted the 1.3.0 release train to release-candidate status after the latest validated changes.
+
+### Notes
+- Pre-release for the 1.3.0 release train (rc.1).
+```
+
+Do not invent a new base version merely because the current task is `fix:` or `feat:` while already inside a pre-release train.
+
+## Revert
+
+```markdown
+### Reverted
+- Reverted <change> after <brief product-facing reason>.
+```
+
+## Promotion of Unreleased content
+
+Before:
+
+```markdown
+## [Unreleased]
+
+### Fixed
+- Corrected the no-price empty state.
+- Prevented duplicate form submissions.
+```
+
+After an authorized `1.3.1` PATCH release:
+
+```markdown
+## [Unreleased]
+
+## [1.3.1] - YYYY-MM-DD
+
+### Fixed
+- Corrected the no-price empty state.
+- Prevented duplicate form submissions.
+
+### Notes
+- PATCH release.
+```
+
+Do not leave the same bullets under both headings.
+
+## Section order
+
+Include only sections that apply:
+
+1. `### Added`
+2. `### Changed`
+3. `### Deprecated`
+4. `### Removed`
+5. `### Fixed`
+6. `### Security`
+7. `### Breaking`
+8. `### Reverted`
+9. `### Notes`
 
 ## Style rules
 
-- One bullet per `🔴` or `🟡` fix (detailed).
-- Grouped sub-list for `🟢` (concise).
-- Each bullet includes the SHA (7 chars) + commit subject + brief rationale.
-- Date in ISO format (`YYYY-MM-DD`).
-- Section headers in English; bullet text can be Spanish (project convention).
-- The "Notes" section should mention the bump type (PATCH/MINOR/MAJOR) and the criterion that triggered it.
+- Describe outcomes, not file edits.
+- Keep bullets concise.
+- Do not require commit SHAs.
+- Use ISO release dates (`YYYY-MM-DD`).
+- Section headings are English.
+- Bullet language follows recent CHANGELOG precedent.
+- Do not create release entries for `NO_BUMP`.
+- Do not put trivial/internal changes in `Unreleased`.
+- `BUMP` promotes relevant `Unreleased` content into the new versioned entry.
