@@ -4,7 +4,7 @@ Templates for `docs-guardian` v1.3.
 
 The project convention is based on Keep a Changelog, with optional `Breaking`, `Reverted`, and `Notes` extensions.
 
-Commit SHAs are not required because Docs-Guardian normally runs before the final commit.
+Commit SHAs are not required because Docs-Guardian normally runs before the final commit. When receipt-driven review is enabled, CHANGELOG changes produced from these templates must be included before the final exact candidate is frozen and reviewed.
 
 ## Persistent Unreleased heading
 

@@ -81,12 +81,14 @@ When **writing collaboration comments** (PR feedback, reviews, Slack, GitHub com
 
 ### Project Maintenance
 
-**HARD RULE — `docs-guardian` resolution before the final `fix:` / `feat:` commit:**
+**HARD RULE — `docs-guardian` resolution before the final immutable review and final `fix:` / `feat:` commit:**
 
 The `docs-guardian` skill (`~/skills/docs-guardian/SKILL.md`, v1.3) is mandatory when completed work is about to be committed as `fix:` / `feat:`, contains `BREAKING CHANGE:`, is a `revert:`, or an SDD cycle is about to archive.
 
 **Timing:**
-- Run Docs-Guardian after implementation + verification/review, once the intended conventional commit is known, and **before creating the final commit**.
+- Run Docs-Guardian after implementation + ordinary verification, once the intended conventional commit is known, and **before freezing or starting any final receipt-driven/immutable review target**.
+- When receipt-driven review is enabled, resolve Docs-Guardian first so version, README, CHANGELOG, and ROADMAP bytes are already part of the exact candidate that receives the final owner-issued receipt.
+- Earlier exploratory or implementation review may happen before Docs-Guardian, but it does not replace the final exact-candidate review required for commit/push gates.
 - Documentation changes belong to the same task/commit whenever possible.
 - Post-commit Docs-Guardian is recovery-only when a qualifying commit landed without a prior resolution.
 - `sdd-archive` verifies that Docs-Guardian already resolved the task; it must not force a new post-commit sync when the orchestrator has a valid `BUMP`, `NO_BUMP`, or user-authorized `BYPASS` outcome.

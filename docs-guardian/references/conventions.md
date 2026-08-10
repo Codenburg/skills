@@ -29,13 +29,17 @@ Preferred sequence:
 
 ```text
 implementation
-→ verification/review
+→ ordinary verification (tests/typecheck/lint as applicable)
 → intended conventional commit known
 → docs-guardian resolution
-→ docs changes
+→ docs/version changes
+→ stage/freeze the complete final candidate
+→ final receipt-driven/immutable review (when enabled)
 → one final commit containing task + docs
-→ archive/next task
+→ push/archive/next task
 ```
+
+An earlier exploratory or implementation review may happen before Docs-Guardian, but any receipt that gates commit/push must be issued for the post-Docs-Guardian final candidate. This avoids `review → docs change → review again` loops.
 
 Post-commit sync exists only as recovery.
 

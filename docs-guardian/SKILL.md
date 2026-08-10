@@ -1,6 +1,6 @@
 ---
 name: docs-guardian
-description: "Resolve release/versioning and documentation for completed Gymflow work before the final commit. Recommends BUMP, NO_BUMP, or BYPASS; maintains package version, CHANGELOG, README, and pending-only ROADMAP."
+description: "Resolve release/versioning and documentation for completed Gymflow work before the final exact-candidate review and final commit. Recommends BUMP, NO_BUMP, or BYPASS; maintains package version, CHANGELOG, README, and pending-only ROADMAP."
 license: MIT
 metadata:
   author: Codenburg
@@ -14,7 +14,7 @@ Keep Gymflow release documentation aligned with completed work without turning d
 
 ## Activation Contract
 
-Run this skill when implementation is complete, verification/review is complete, and the intended conventional commit is known, **before the final commit is created**, when any of these apply:
+Run this skill when implementation is complete, ordinary verification is complete, and the intended conventional commit is known, **before any final receipt-driven/immutable review target is frozen and before the final commit is created**, when any of these apply:
 
 - intended commit starts with `fix:` or `feat:`;
 - intended commit body contains `BREAKING CHANGE:`;
@@ -23,6 +23,8 @@ Run this skill when implementation is complete, verification/review is complete,
 - the user explicitly invokes `/docs-guardian sync`.
 
 Post-commit execution is recovery-only: use it only when a qualifying commit already landed without a Docs-Guardian resolution.
+
+When receipt-driven review is enabled, Docs-Guardian must resolve before the final exact candidate is staged/frozen. Any version, README, CHANGELOG, or ROADMAP changes produced here must be included in that final reviewed candidate. Earlier exploratory or implementation review may happen first, but it does not satisfy a gate that requires an owner-issued receipt for the final bytes.
 
 Do not trigger automatically for `docs:`, `chore:`, `refactor:`, `test:`, `style:`, or `perf:` unless the user explicitly invokes the skill or the change materially affects release documentation.
 
@@ -69,7 +71,7 @@ Skip Docs-Guardian changes for this task.
 
 ## Hard Rules
 
-1. **Run before the final commit.** Documentation produced by this skill belongs in the same task/commit as the implementation whenever possible.
+1. **Run before the final exact-candidate review and final commit.** Documentation produced by this skill belongs in the same task/commit as the implementation whenever possible and must be present before any receipt that gates commit/push is issued.
 2. **Never auto-release.** Recommend an action and let the user authorize it unless the user already supplied the decision.
 3. **Ask only for missing decisions.** Never repeat a question already answered in the task context.
 4. **Ask at most one question at a time.** Stop after asking.
@@ -218,7 +220,7 @@ Version: <old> → <new> | unchanged
 CHANGELOG: release <version> | Unreleased | skipped
 ROADMAP: <item removed> | unchanged
 Files: <changed files or none>
-Ready for final commit: yes
+Ready for final review/commit: yes
 ```
 
 For recovery after an already-landed commit, replace the last line with:
