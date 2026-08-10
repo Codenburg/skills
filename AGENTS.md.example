@@ -81,7 +81,52 @@ When **writing collaboration comments** (PR feedback, reviews, Slack, GitHub com
 
 ### Project Maintenance
 
-When **maintaining ROADMAP/CHANGELOG/package.json/README** with semver versioning (ROADMAP pending only, severity 🔴/🟡/🟢, multi-fix + reverts + pre-release + optional tests, force-bump audit, tier-filtered §Pendiente matching, heuristic language detection, CHANGELOG validation), read `~/skills/docs-guardian/SKILL.md` first. Supersedes `readme-guardian`.
+**HARD RULE — `docs-guardian` resolution before the final `fix:` / `feat:` commit:**
+
+The `docs-guardian` skill (`~/skills/docs-guardian/SKILL.md`, v1.3) is mandatory when completed work is about to be committed as `fix:` / `feat:`, contains `BREAKING CHANGE:`, is a `revert:`, or an SDD cycle is about to archive.
+
+**Timing:**
+- Run Docs-Guardian after implementation + verification/review, once the intended conventional commit is known, and **before creating the final commit**.
+- Documentation changes belong to the same task/commit whenever possible.
+- Post-commit Docs-Guardian is recovery-only when a qualifying commit landed without a prior resolution.
+- `sdd-archive` verifies that Docs-Guardian already resolved the task; it must not force a new post-commit sync when the orchestrator has a valid `BUMP`, `NO_BUMP`, or user-authorized `BYPASS` outcome.
+
+**Organic release actions:**
+- `BUMP` — change the version and create/promote a versioned CHANGELOG release.
+- `NO_BUMP + CHANGELOG` — keep the version and add a noteworthy change under `## [Unreleased]`.
+- `NO_BUMP + SKIP_CHANGELOG` — keep the version and skip trivial/internal CHANGELOG noise.
+- `BYPASS` — user-authorized skip; no Docs-Guardian file changes.
+
+Docs-Guardian recommends the action from the actual diff and commit intent; **the user decides**. Do not use fix counters, severity quotas, patch bump tables, or automatic release thresholds.
+
+**Version guidance:**
+- Stable `fix:` normally recommends PATCH.
+- Stable `feat:` normally recommends MINOR.
+- `BREAKING CHANGE:` normally recommends MAJOR.
+- Current pre-releases stay on their existing release train unless the user explicitly starts a new base version.
+- Example: `1.2.0-alpha.3` + promote to `rc` → `1.2.0-rc.1`, not `1.3.0-rc.1`.
+- Example: a `fix:` on `1.2.0-beta.2` does not automatically become `1.2.1-*`.
+- Same pre-release stage increments its counter; stage promotion resets the new stage to `.1`; stable promotion removes the suffix.
+
+**Documentation behavior:**
+- `package.json` and README version text/badge change only on `BUMP`.
+- `openspec/CHANGELOG.md` is selective release history, not a git log.
+- Noteworthy no-bump changes go under `## [Unreleased]`; trivial/internal changes may skip CHANGELOG.
+- On `BUMP`, relevant `Unreleased` content is promoted into the new versioned entry without duplication.
+- Commit SHA is not required in CHANGELOG because Docs-Guardian normally runs pre-commit.
+- `openspec/ROADMAP.md` is pending-only: never add `[x]`, §Completado history, patch bump tables, severity counters, or bump criteria bookkeeping.
+- Remove a completed ROADMAP pending item only after user confirmation.
+- If ROADMAP has `_Version:_` metadata, update it on `BUMP`.
+
+**Interaction rules:**
+- Ask only for decisions not already supplied by the user/task context.
+- Ask at most one question at a time, then STOP.
+- Optional `--verify-tests` runs `pnpm test`; if it fails, ASK whether to abort.
+- CHANGELOG validation follows the project convention defined by Docs-Guardian (based on Keep a Changelog with project extensions).
+
+**Out of scope by default:** `docs:`, `chore:`, `refactor:`, `test:`, `style:`, `perf:` do not require Docs-Guardian unless explicitly invoked or they materially affect release documentation.
+
+**Reference:** `~/skills/docs-guardian/SKILL.md` (v1.3). Supersedes the threshold-based v1.x flow and `readme-guardian`.
 
 ---
 
