@@ -2,14 +2,14 @@
 
 # Agent Skills Registry
 
-**21 specialized skills that AI agents load on demand**
+**26 specialized skills that AI agents load on demand**
 
 Drop-in `AGENTS.md` blocks · Lazy context loading · Pure markdown
 
 [Install](#install) · [Skills](#skills) · [Contributing](#contributing)
 
-![Skills](https://img.shields.io/badge/skills-21-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
-![Categories](https://img.shields.io/badge/categories-7-10b981?style=for-the-badge)
+![Skills](https://img.shields.io/badge/skills-26-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
+![Categories](https://img.shields.io/badge/categories-8-10b981?style=for-the-badge)
 ![Format](https://img.shields.io/badge/format-markdown-f59e0b?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/runtime-none-ef4444?style=for-the-badge)
 
@@ -72,20 +72,30 @@ Project AGENTS.md  →  points to skill paths  →  AI loads SKILL.md on demand
 | `expo-tailwind-setup` | NativeWind v5 + Tailwind v4.1 + Expo |
 | `frontend-design` | Production-grade interfaces, landing pages, dashboards |
 
-### Database & ORM (2)
+### Database & ORM (4)
 
 | Load this skill | When working with |
 |----------------|-------------------|
 | `prisma` | Schema design, type-safe database operations |
 | `prisma-database-setup` | PostgreSQL, MySQL, SQLite, MongoDB setup |
+| `prisma-cli` | Prisma ORM CLI commands and database workflows |
+| `prisma-migration-assistant` | Safe schema migrations, data backfills, rollback planning |
 
-### Testing (3)
+### Security & Authentication (1)
+
+| Load this skill | When working with |
+|----------------|-------------------|
+| `auth-review` | Authentication and authorization vulnerability reviews |
+
+### Testing (5)
 
 | Load this skill | When working with |
 |----------------|-------------------|
 | `playwright` | E2E tests, Page Objects, selectors |
 | `webapp-testing` | Playwright toolkit for local web apps, screenshots, logs |
 | `go-testing` | Bubbletea TUI, teatest patterns |
+| `javascript-testing-patterns` | Jest, Vitest, Testing Library, unit/integration/E2E tests |
+| `vitest` | Vitest async patterns, mocking, snapshots, performance |
 
 ### Development Workflows (1)
 

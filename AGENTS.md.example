@@ -4,7 +4,7 @@ AGENTS.md — Skill references for AI agents.
 Copy this file into any project as AGENTS.md (or merge relevant sections).
 Each block tells the AI: "when this context appears, load the matching SKILL.md first."
 Paths assume skills are cloned to ~/skills/. Adjust if using a different location.
-The Gentle AI skill references below are intentionally included because Gentle AI installs them and this template is meant to be copied into projects.
+Some Gentle AI skill references below are intentionally included because Gentle AI installs them and this template is meant to be copied into projects. The remaining references point to skills maintained in this repository.
 -->
 
 ### Frameworks & Libraries
@@ -47,9 +47,23 @@ When working with **Prisma** (type-safe database operations, schema design, Pris
 
 When working with **Prisma Database Setup** (PostgreSQL, MySQL, SQLite, MongoDB, connection config), read `~/skills/prisma-database-setup/SKILL.md` first.
 
+When working with **Prisma CLI** (ORM CLI commands, migrations, database management, validation, development workflows), read `~/skills/prisma-cli/SKILL.md` first.
+
+When planning or executing **Prisma schema migrations** (safe changes, data backfills, SQL review, rollback strategies), read `~/skills/prisma-migration-assistant/SKILL.md` first.
+
+---
+
+### Security & Authentication
+
+When **auditing authentication or authorization** (IDOR/BOLA, access control, identity breaches, endpoint inventory), read `~/skills/auth-review/SKILL.md` first.
+
 ---
 
 ### Testing
+
+When implementing **JavaScript/TypeScript testing strategies** (Jest, Vitest, Testing Library, unit/integration/E2E, mocking, TDD), read `~/skills/javascript-testing-patterns/SKILL.md` first.
+
+When working with **Vitest tests** (async patterns, setup/isolation, mocking, snapshots, performance), read `~/skills/vitest/SKILL.md` first.
 
 When working with **Playwright** (E2E tests, Page Objects, locators, test structure), read `~/skills/playwright/SKILL.md` first.
 
