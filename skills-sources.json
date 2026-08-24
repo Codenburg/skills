@@ -1,0 +1,292 @@
+{
+  "schemaVersion": 3,
+  "authority": {
+    "direction": "source-to-canonical-only",
+    "reverseSync": "forbidden",
+    "unknownPathPolicy": "stop-or-exclude",
+    "ownership": "manifest-only",
+    "supportedProvenanceKinds": [
+      "manifest-candidate",
+      "skills-lock",
+      "manifest-explicit-baseline"
+    ],
+    "auditPolicy": {
+      "recordFields": [
+        "recordId",
+        "candidateSourcePath",
+        "sourceTreeHash",
+        "manifestSha256",
+        "category"
+      ],
+      "categories": [
+        "RECOMMENDED",
+        "RECOMMENDED_WITH_NOTES",
+        "REDUNDANT",
+        "CONFLICTING",
+        "NOT_RELEVANT",
+        "UNSAFE",
+        "NEEDS_REVIEW"
+      ],
+      "copyAllowedCategories": [
+        "RECOMMENDED",
+        "RECOMMENDED_WITH_NOTES"
+      ],
+      "userApprovalMarker": "explicit-user-approval"
+    },
+    "decisionPolicy": {
+      "recordFields": [
+        "id",
+        "root",
+        "sourcePath",
+        "state",
+        "sourceTreeHash",
+        "reason",
+        "auditVerdict",
+        "evidenceRef",
+        "approvalDecisionId",
+        "userApprovalMarker"
+      ],
+      "states": [
+        "EXCLUDED",
+        "PROTECTED"
+      ],
+      "userApprovalMarker": "explicit-user-approval"
+    }
+  },
+  "roots": [
+    {
+      "id": "canonical",
+      "path": ".",
+      "role": "canonical-git-repository",
+      "readOnly": false,
+      "followSymlinks": false
+    },
+    {
+      "id": "agents-skills",
+      "path": "~/.agents/skills",
+      "role": "upstream-read-only",
+      "readOnly": true,
+      "direction": "source-to-canonical-only",
+      "followSymlinks": false
+    }
+  ],
+  "metadata": {
+    "gitTrackedState": {
+      "root": "canonical",
+      "path": ".gitignore",
+      "authority": "explicit-git-state",
+      "command": "git ls-files --stage -- <path>"
+    },
+    "gitignore": {
+      "root": "canonical",
+      "path": ".gitignore",
+      "authority": "explicit-protected-path-metadata",
+      "command": "git check-ignore -v --no-index -- <path>"
+    },
+    "skillsLock": {
+      "root": "agents-skills",
+      "path": "skills-lock.json",
+      "authority": "explicit-source-provenance-only",
+      "records": [
+        "tavily-best-practices",
+        "tavily-cli",
+        "tavily-crawl",
+        "tavily-dynamic-search",
+        "tavily-extract",
+        "tavily-map",
+        "tavily-research",
+        "tavily-search"
+      ]
+    }
+  },
+  "protectedPaths": [
+    { "root": "canonical", "path": "_shared", "reason": "canonical support protocols" },
+    { "root": "canonical", "path": "AGENTS.md.example", "reason": "canonical catalog template" },
+    { "root": "canonical", "path": "README.md", "reason": "canonical catalog and documentation" },
+    { "root": "canonical", "path": "skills-sources.json", "reason": "deterministic authority manifest" },
+    { "root": "canonical", "path": "branch-pr", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "chained-pr", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "cognitive-doc-design", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "comment-writer", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "docs-guardian", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "expo-tailwind-setup", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "find-skills", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "frontend-design", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "graphify", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "gentle-ai-bench", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "go-testing", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "issue-creation", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "judgment-day", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "next-best-practices", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "next-cache-components", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "playwright", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "prisma", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "prisma-database-setup", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "prisma-migration-assistant", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "rdd-defect-workflow", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "react-19", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "react-hook-form", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "sdd-apply", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-archive", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-design", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-explore", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-init", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-onboard", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-propose", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-spec", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-tasks", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "sdd-verify", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "shadcn", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "skill-creator", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "skill-improver", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "skill-registry", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "skills-auditor", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "skills-curator", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "systemic-issue-triage", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "tailwind-design-system", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "tanstack-table", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "typescript-advanced-types", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "typescript-react-reviewer", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "vercel-react-best-practices", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "vitest", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "webapp-testing", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "work-unit-commits", "reason": "Gentle AI governance copy" },
+    { "root": "canonical", "path": "zod-4", "reason": "canonical local copy without managed provenance" },
+    { "root": "canonical", "path": "zustand-5", "reason": "canonical local copy without managed provenance" },
+    { "root": "agents-skills", "path": "skill-improver", "reason": "Gentle AI governance source copy" },
+    { "root": "agents-skills", "path": "skill-registry", "reason": "Gentle AI governance source copy" }
+  ],
+  "excludedPaths": [
+    { "root": "canonical", "path": ".atl", "reason": "generated registry projection" },
+    { "root": "canonical", "path": ".engram", "reason": "local memory projection" },
+    { "root": "agents-skills", "path": ".claude", "reason": "Claude projection and symlink mirror" },
+    { "root": "agents-skills", "path": "agent", "reason": "nested agent mirror" },
+    { "root": "agents-skills", "path": "omarchy", "reason": "external symlink projection" },
+    { "root": "agents-skills", "path": "SKILLS-AUDIT.md", "reason": "source audit metadata, not a skill" },
+    { "root": "agents-skills", "path": "SKILLS-OWNERSHIP.md", "reason": "source routing proposal, not ownership authority" },
+    { "root": "agents-skills", "path": "skills-lock.json", "reason": "source provenance metadata" }
+  ],
+  "candidatePaths": [
+    { "sourceRoot": "agents-skills", "sourcePath": "agent-browser", "targetRoot": "canonical", "targetPath": "agent-browser", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "auth-review", "targetRoot": "canonical", "targetPath": "auth-review", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "codebase-design", "targetRoot": "canonical", "targetPath": "codebase-design", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "diagnosing-bugs", "targetRoot": "canonical", "targetPath": "diagnosing-bugs", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "enhance-prompt", "targetRoot": "canonical", "targetPath": "enhance-prompt", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "expo-tailwind-setup", "targetRoot": "canonical", "targetPath": "expo-tailwind-setup", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "find-skills", "targetRoot": "canonical", "targetPath": "find-skills", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "frontend-design", "targetRoot": "canonical", "targetPath": "frontend-design", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "javascript-testing-patterns", "targetRoot": "canonical", "targetPath": "javascript-testing-patterns", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "modern-javascript-patterns", "targetRoot": "canonical", "targetPath": "modern-javascript-patterns", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "next-best-practices", "targetRoot": "canonical", "targetPath": "next-best-practices", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "next-cache-components", "targetRoot": "canonical", "targetPath": "next-cache-components", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "next-cache-components-adoption", "targetRoot": "canonical", "targetPath": "next-cache-components-adoption", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "next-cache-components-optimizer", "targetRoot": "canonical", "targetPath": "next-cache-components-optimizer", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "nextjs-react-typescript", "targetRoot": "canonical", "targetPath": "nextjs-react-typescript", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "playwright-best-practices", "targetRoot": "canonical", "targetPath": "playwright-best-practices", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "playwright-cli", "targetRoot": "canonical", "targetPath": "playwright-cli", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "playwright-dev", "targetRoot": "canonical", "targetPath": "playwright-dev", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "playwright-explore-website", "targetRoot": "canonical", "targetPath": "playwright-explore-website", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-cli", "targetRoot": "canonical", "targetPath": "prisma-cli", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-client-api", "targetRoot": "canonical", "targetPath": "prisma-client-api", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-compute", "targetRoot": "canonical", "targetPath": "prisma-compute", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-database-setup", "targetRoot": "canonical", "targetPath": "prisma-database-setup", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-driver-adapter-implementation", "targetRoot": "canonical", "targetPath": "prisma-driver-adapter-implementation", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next", "targetRoot": "canonical", "targetPath": "prisma-next", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-build", "targetRoot": "canonical", "targetPath": "prisma-next-build", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-contract", "targetRoot": "canonical", "targetPath": "prisma-next-contract", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-debug", "targetRoot": "canonical", "targetPath": "prisma-next-debug", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-feedback", "targetRoot": "canonical", "targetPath": "prisma-next-feedback", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-migration-review", "targetRoot": "canonical", "targetPath": "prisma-next-migration-review", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-migrations", "targetRoot": "canonical", "targetPath": "prisma-next-migrations", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-queries", "targetRoot": "canonical", "targetPath": "prisma-next-queries", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-quickstart", "targetRoot": "canonical", "targetPath": "prisma-next-quickstart", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-runtime", "targetRoot": "canonical", "targetPath": "prisma-next-runtime", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-next-upgrade", "targetRoot": "canonical", "targetPath": "prisma-next-upgrade", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-patterns", "targetRoot": "canonical", "targetPath": "prisma-patterns", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-postgres", "targetRoot": "canonical", "targetPath": "prisma-postgres", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prisma-postgres-setup", "targetRoot": "canonical", "targetPath": "prisma-postgres-setup", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "prototype", "targetRoot": "canonical", "targetPath": "prototype", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "react-19", "targetRoot": "canonical", "targetPath": "react-19", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "react-dev", "targetRoot": "canonical", "targetPath": "react-dev", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "react-hook-form", "targetRoot": "canonical", "targetPath": "react-hook-form", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "react-pdf", "targetRoot": "canonical", "targetPath": "react-pdf", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "react19-source-patterns", "targetRoot": "canonical", "targetPath": "react19-source-patterns", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "react19-test-patterns", "targetRoot": "canonical", "targetPath": "react19-test-patterns", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "shadcn", "targetRoot": "canonical", "targetPath": "shadcn", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tailwind-4-docs", "targetRoot": "canonical", "targetPath": "tailwind-4-docs", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tailwind-responsive-ui", "targetRoot": "canonical", "targetPath": "tailwind-responsive-ui", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tailwind-ui-refactor", "targetRoot": "canonical", "targetPath": "tailwind-ui-refactor", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tailwind-v4-shadcn", "targetRoot": "canonical", "targetPath": "tailwind-v4-shadcn", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tailwindcss-advanced-layouts", "targetRoot": "canonical", "targetPath": "tailwindcss-advanced-layouts", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tailwindcss-mobile-first", "targetRoot": "canonical", "targetPath": "tailwindcss-mobile-first", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-best-practices", "targetRoot": "canonical", "targetPath": "tavily-best-practices", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-best-practices" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-cli", "targetRoot": "canonical", "targetPath": "tavily-cli", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-cli" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-crawl", "targetRoot": "canonical", "targetPath": "tavily-crawl", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-crawl" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-dynamic-search", "targetRoot": "canonical", "targetPath": "tavily-dynamic-search", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-dynamic-search" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-extract", "targetRoot": "canonical", "targetPath": "tavily-extract", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-extract" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-map", "targetRoot": "canonical", "targetPath": "tavily-map", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-map" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-research", "targetRoot": "canonical", "targetPath": "tavily-research", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-research" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tavily-search", "targetRoot": "canonical", "targetPath": "tavily-search", "provenance": { "kind": "skills-lock", "metadataPath": "skills-lock.json", "record": "tavily-search" } },
+    { "sourceRoot": "agents-skills", "sourcePath": "tdd", "targetRoot": "canonical", "targetPath": "tdd", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "turborepo", "targetRoot": "canonical", "targetPath": "turborepo", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "typescript-advanced-types", "targetRoot": "canonical", "targetPath": "typescript-advanced-types", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "typescript-best-practices", "targetRoot": "canonical", "targetPath": "typescript-best-practices", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "typescript-docs", "targetRoot": "canonical", "targetPath": "typescript-docs", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "typescript-pro", "targetRoot": "canonical", "targetPath": "typescript-pro", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "typescript-react-reviewer", "targetRoot": "canonical", "targetPath": "typescript-react-reviewer", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "typescript-security-review", "targetRoot": "canonical", "targetPath": "typescript-security-review", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "vercel-react-best-practices", "targetRoot": "canonical", "targetPath": "vercel-react-best-practices", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "vercel-react-native-skills", "targetRoot": "canonical", "targetPath": "vercel-react-native-skills", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "vercel-react-view-transitions", "targetRoot": "canonical", "targetPath": "vercel-react-view-transitions", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "vitest", "targetRoot": "canonical", "targetPath": "vitest", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "webapp-testing", "targetRoot": "canonical", "targetPath": "webapp-testing", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "writing-for-agents", "targetRoot": "canonical", "targetPath": "writing-for-agents", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "zod-4", "targetRoot": "canonical", "targetPath": "zod-4", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "zod-validation-utilities", "targetRoot": "canonical", "targetPath": "zod-validation-utilities", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } },
+    { "sourceRoot": "agents-skills", "sourcePath": "zustand-5", "targetRoot": "canonical", "targetPath": "zustand-5", "provenance": { "kind": "manifest-candidate", "requiresAudit": true } }
+  ],
+  "imports": [
+    {
+      "id": "import-auth-review",
+      "sourceRoot": "agents-skills",
+      "sourcePath": "auth-review",
+      "targetRoot": "canonical",
+      "targetPath": "auth-review",
+      "status": "managed",
+      "lastImportedTreeHash": "c5169a42bb0bc60683fec80bb6c3690b8f7d010bb5dbcb11e87bcc894f27586a",
+      "authority": {
+        "kind": "manifest-explicit-baseline",
+        "basis": "source and canonical trees were equal at manifest creation"
+      }
+    },
+    {
+      "id": "import-javascript-testing-patterns",
+      "sourceRoot": "agents-skills",
+      "sourcePath": "javascript-testing-patterns",
+      "targetRoot": "canonical",
+      "targetPath": "javascript-testing-patterns",
+      "status": "managed",
+      "lastImportedTreeHash": "9034404ebbcfcd213c203728e4ca5781c7708cc6a2fa8f39da6f4a45519bfa84",
+      "authority": {
+        "kind": "manifest-explicit-baseline",
+        "basis": "source and canonical trees were equal at manifest creation"
+      }
+    },
+    {
+      "id": "import-prisma-cli",
+      "sourceRoot": "agents-skills",
+      "sourcePath": "prisma-cli",
+      "targetRoot": "canonical",
+      "targetPath": "prisma-cli",
+      "status": "managed",
+      "lastImportedTreeHash": "9343401f754834e7c154b1bb79a5f9c72876b62423521a0dede27c99387af393",
+      "authority": {
+        "kind": "manifest-explicit-baseline",
+        "basis": "source and canonical trees were equal at manifest creation"
+      }
+    }
+  ],
+  "tombstones": [],
+  "auditRecords": [],
+  "decisions": []
+}

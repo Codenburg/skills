@@ -150,6 +150,12 @@ Docs-Guardian recommends the action from the actual diff and commit intent; **th
 
 When **creating new AI agent skills**, read `~/skills/skill-creator/SKILL.md` first.
 
+When explicitly invoking **`/skills-auditor`** to audit a candidate skill across the ecosystem, read `~/skills/skills-auditor/SKILL.md` first.
+
+For **`/skills-auditor nuevas`**, Graphify is an optional semantic discovery accelerator only: current files and deterministic evidence remain authoritative; it does not establish provenance, authorization, approval, or mutation, and audits do not rebuild it automatically. Maintainer setup and fallback policy: `~/skills/skills-auditor/references/graphify-integration.md`.
+
+When explicitly invoking **`/skills-curator`** to curate skills from `~/.agents/skills` into the canonical repository, read `~/skills/skills-curator/SKILL.md` first.
+
 When **searching for available skills**, read `~/skills/find-skills/SKILL.md` first.
 
 When **improving or auditing** existing AI agent skills, read `~/skills/skill-improver/SKILL.md` first.

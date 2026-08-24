@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "source": "affaan-m/ecc",
+      "sourceUrl": "https://github.com/affaan-m/ecc.git",
+      "skills": [
+        {
+          "name": "prisma-patterns",
+          "skillPath": "skills/prisma-patterns/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "alleneubank/claude-code",
+      "sourceUrl": "https://github.com/alleneubank/claude-code.git",
+      "skills": [
+        {
+          "name": "typescript-best-practices",
+          "skillPath": ".claude/skills/typescript-best-practices/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "antfu/skills",
+      "sourceUrl": "https://github.com/antfu/skills.git",
+      "skills": [
+        {
+          "name": "vitest",
+          "skillPath": "skills/vitest/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "anthropics/skills",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skills": [
+        {
+          "name": "frontend-design",
+          "skillPath": "skills/frontend-design/SKILL.md"
+        },
+        {
+          "name": "webapp-testing",
+          "skillPath": "skills/webapp-testing/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "currents-dev/playwright-best-practices-skill",
+      "sourceUrl": "https://github.com/currents-dev/playwright-best-practices-skill.git",
+      "skills": [
+        {
+          "name": "playwright-best-practices",
+          "skillPath": "playwright-best-practices/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "descope/skills",
+      "sourceUrl": "https://github.com/descope/skills.git",
+      "skills": [
+        {
+          "name": "auth-review",
+          "skillPath": "skills/auth-review/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "dotneet/claude-code-marketplace",
+      "sourceUrl": "https://github.com/dotneet/claude-code-marketplace.git",
+      "skills": [
+        {
+          "name": "typescript-react-reviewer",
+          "skillPath": "review-tool/skills/typescript-react-reviewer/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "expo/skills",
+      "sourceUrl": "https://github.com/expo/skills.git",
+      "skills": [
+        {
+          "name": "expo-tailwind-setup",
+          "skillPath": "plugins/expo/skills/expo-tailwind-setup/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "github/awesome-copilot",
+      "sourceUrl": "https://github.com/github/awesome-copilot.git",
+      "skills": [
+        {
+          "name": "playwright-explore-website",
+          "skillPath": "skills/playwright-explore-website/SKILL.md"
+        },
+        {
+          "name": "react19-source-patterns",
+          "skillPath": "skills/react19-source-patterns/SKILL.md"
+        },
+        {
+          "name": "react19-test-patterns",
+          "skillPath": "skills/react19-test-patterns/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "giuseppe-trisciuoglio/developer-kit",
+      "sourceUrl": "https://github.com/giuseppe-trisciuoglio/developer-kit.git",
+      "skills": [
+        {
+          "name": "typescript-docs",
+          "skillPath": "plugins/developer-kit-typescript/skills/typescript-docs/SKILL.md"
+        },
+        {
+          "name": "typescript-security-review",
+          "skillPath": "plugins/developer-kit-typescript/skills/typescript-security-review/SKILL.md"
+        },
+        {
+          "name": "zod-validation-utilities",
+          "skillPath": "plugins/developer-kit-typescript/skills/zod-validation-utilities/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "google-labs-code/stitch-skills",
+      "sourceUrl": "https://github.com/google-labs-code/stitch-skills.git",
+      "skills": [
+        {
+          "name": "enhance-prompt",
+          "skillPath": "plugins/stitch-utilities/skills/enhance-prompt/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "jeffallan/claude-skills",
+      "sourceUrl": "https://github.com/jeffallan/claude-skills.git",
+      "skills": [
+        {
+          "name": "typescript-pro",
+          "skillPath": "skills/typescript-pro/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "josiahsiegel/claude-plugin-marketplace",
+      "sourceUrl": "https://github.com/josiahsiegel/claude-plugin-marketplace.git",
+      "skills": [
+        {
+          "name": "tailwindcss-advanced-layouts",
+          "skillPath": "plugins/tailwindcss-master/skills/tailwindcss-advanced-layouts/SKILL.md"
+        },
+        {
+          "name": "tailwindcss-mobile-first",
+          "skillPath": "plugins/tailwindcss-master/skills/tailwindcss-mobile-first/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "lombiq/tailwind-agent-skills",
+      "sourceUrl": "https://github.com/lombiq/tailwind-agent-skills.git",
+      "skills": [
+        {
+          "name": "tailwind-4-docs",
+          "skillPath": "skills/tailwind-4-docs/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "mattpocock/skills",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skills": [
+        {
+          "name": "codebase-design",
+          "skillPath": "skills/engineering/codebase-design/SKILL.md"
+        },
+        {
+          "name": "diagnosing-bugs",
+          "skillPath": "skills/engineering/diagnosing-bugs/SKILL.md"
+        },
+        {
+          "name": "prototype",
+          "skillPath": "skills/engineering/prototype/SKILL.md"
+        },
+        {
+          "name": "tdd",
+          "skillPath": "skills/engineering/tdd/SKILL.md"
+        },
+        {
+          "name": "writing-for-agents",
+          "skillPath": "skills/productivity/writing-for-agents/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "microsoft/playwright",
+      "sourceUrl": "https://github.com/microsoft/playwright.git",
+      "skills": [
+        {
+          "name": "playwright-dev",
+          "skillPath": ".claude/skills/playwright-dev/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "microsoft/playwright-cli",
+      "sourceUrl": "https://github.com/microsoft/playwright-cli.git",
+      "skills": [
+        {
+          "name": "playwright-cli",
+          "skillPath": "skills/playwright-cli/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "mindrally/skills",
+      "sourceUrl": "https://github.com/mindrally/skills.git",
+      "skills": [
+        {
+          "name": "nextjs-react-typescript",
+          "skillPath": "nextjs-react-typescript/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "pproenca/dot-skills",
+      "sourceUrl": "https://github.com/pproenca/dot-skills.git",
+      "skills": [
+        {
+          "name": "react-hook-form",
+          "skillPath": "skills/.curated/react-hook-form/SKILL.md"
+        },
+        {
+          "name": "tailwind-responsive-ui",
+          "skillPath": "skills/.experimental/tailwind-responsive-ui/SKILL.md"
+        },
+        {
+          "name": "tailwind-ui-refactor",
+          "skillPath": "skills/.experimental/tailwind-ui-refactor/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "prisma/prisma-next",
+      "sourceUrl": "https://github.com/prisma/prisma-next.git",
+      "skills": [
+        {
+          "name": "prisma-next",
+          "skillPath": "skills/prisma-next/SKILL.md"
+        },
+        {
+          "name": "prisma-next-build",
+          "skillPath": "skills/prisma-next-build/SKILL.md"
+        },
+        {
+          "name": "prisma-next-contract",
+          "skillPath": "skills/prisma-next-contract/SKILL.md"
+        },
+        {
+          "name": "prisma-next-debug",
+          "skillPath": "skills/prisma-next-debug/SKILL.md"
+        },
+        {
+          "name": "prisma-next-feedback",
+          "skillPath": "skills/prisma-next-feedback/SKILL.md"
+        },
+        {
+          "name": "prisma-next-migration-review",
+          "skillPath": "skills/prisma-next-migration-review/SKILL.md"
+        },
+        {
+          "name": "prisma-next-migrations",
+          "skillPath": "skills/prisma-next-migrations/SKILL.md"
+        },
+        {
+          "name": "prisma-next-queries",
+          "skillPath": "skills/prisma-next-queries/SKILL.md"
+        },
+        {
+          "name": "prisma-next-quickstart",
+          "skillPath": "skills/prisma-next-quickstart/SKILL.md"
+        },
+        {
+          "name": "prisma-next-runtime",
+          "skillPath": "skills/prisma-next-runtime/SKILL.md"
+        },
+        {
+          "name": "prisma-next-upgrade",
+          "skillPath": "skills/upgrade/prisma-next-upgrade/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "prisma/skills",
+      "sourceUrl": "https://github.com/prisma/skills.git",
+      "skills": [
+        {
+          "name": "prisma-cli",
+          "skillPath": "prisma-cli/SKILL.md"
+        },
+        {
+          "name": "prisma-client-api",
+          "skillPath": "prisma-client-api/SKILL.md"
+        },
+        {
+          "name": "prisma-compute",
+          "skillPath": "prisma-compute/SKILL.md"
+        },
+        {
+          "name": "prisma-database-setup",
+          "skillPath": "prisma-database-setup/SKILL.md"
+        },
+        {
+          "name": "prisma-driver-adapter-implementation",
+          "skillPath": "prisma-driver-adapter-implementation/SKILL.md"
+        },
+        {
+          "name": "prisma-postgres",
+          "skillPath": "prisma-postgres/SKILL.md"
+        },
+        {
+          "name": "prisma-postgres-setup",
+          "skillPath": "prisma-postgres-setup/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "prowler-cloud/prowler",
+      "sourceUrl": "https://github.com/prowler-cloud/prowler.git",
+      "skills": [
+        {
+          "name": "react-19",
+          "skillPath": "skills/react-19/SKILL.md"
+        },
+        {
+          "name": "zod-4",
+          "skillPath": "skills/zod-4/SKILL.md"
+        },
+        {
+          "name": "zustand-5",
+          "skillPath": "skills/zustand-5/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "secondsky/claude-skills",
+      "sourceUrl": "https://github.com/secondsky/claude-skills.git",
+      "skills": [
+        {
+          "name": "tailwind-v4-shadcn",
+          "skillPath": "plugins/tailwind-v4-shadcn/skills/tailwind-v4-shadcn/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "shadcn-ui/ui",
+      "sourceUrl": "https://github.com/shadcn-ui/ui.git",
+      "skills": [
+        {
+          "name": "shadcn",
+          "skillPath": "skills/shadcn/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "softaworks/agent-toolkit",
+      "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
+      "skills": [
+        {
+          "name": "react-dev",
+          "skillPath": "skills/react-dev/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "tavily-ai/skills",
+      "sourceUrl": "https://github.com/tavily-ai/skills.git",
+      "skills": [
+        {
+          "name": "tavily-best-practices",
+          "skillPath": "skills/tavily-best-practices/SKILL.md"
+        },
+        {
+          "name": "tavily-cli",
+          "skillPath": "skills/tavily-cli/SKILL.md"
+        },
+        {
+          "name": "tavily-crawl",
+          "skillPath": "skills/tavily-crawl/SKILL.md"
+        },
+        {
+          "name": "tavily-dynamic-search",
+          "skillPath": "skills/tavily-dynamic-search/SKILL.md"
+        },
+        {
+          "name": "tavily-extract",
+          "skillPath": "skills/tavily-extract/SKILL.md"
+        },
+        {
+          "name": "tavily-map",
+          "skillPath": "skills/tavily-map/SKILL.md"
+        },
+        {
+          "name": "tavily-research",
+          "skillPath": "skills/tavily-research/SKILL.md"
+        },
+        {
+          "name": "tavily-search",
+          "skillPath": "skills/tavily-search/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel-labs/agent-browser",
+      "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
+      "skills": [
+        {
+          "name": "agent-browser",
+          "skillPath": "skills/agent-browser/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel-labs/agent-skills",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skills": [
+        {
+          "name": "vercel-react-best-practices",
+          "skillPath": "skills/react-best-practices/SKILL.md"
+        },
+        {
+          "name": "vercel-react-native-skills",
+          "skillPath": "skills/react-native-skills/SKILL.md"
+        },
+        {
+          "name": "vercel-react-view-transitions",
+          "skillPath": "skills/react-view-transitions/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel-labs/json-render",
+      "sourceUrl": "https://github.com/vercel-labs/json-render.git",
+      "skills": [
+        {
+          "name": "react-pdf",
+          "skillPath": "skills/react-pdf/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel-labs/openreview",
+      "sourceUrl": "https://github.com/vercel-labs/openreview.git",
+      "skills": [
+        {
+          "name": "next-best-practices",
+          "skillPath": ".agents/skills/next-best-practices/SKILL.md"
+        },
+        {
+          "name": "next-cache-components",
+          "skillPath": ".agents/skills/next-cache-components/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel-labs/skills",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skills": [
+        {
+          "name": "find-skills",
+          "skillPath": "skills/find-skills/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel/next.js",
+      "sourceUrl": "https://github.com/vercel/next.js.git",
+      "skills": [
+        {
+          "name": "next-cache-components-adoption",
+          "skillPath": "skills/next-cache-components-adoption/SKILL.md"
+        },
+        {
+          "name": "next-cache-components-optimizer",
+          "skillPath": "skills/next-cache-components-optimizer/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "vercel/turborepo",
+      "sourceUrl": "https://github.com/vercel/turborepo.git",
+      "skills": [
+        {
+          "name": "turborepo",
+          "skillPath": "skills/turborepo/SKILL.md"
+        }
+      ]
+    },
+    {
+      "source": "wshobson/agents",
+      "sourceUrl": "https://github.com/wshobson/agents.git",
+      "skills": [
+        {
+          "name": "javascript-testing-patterns",
+          "skillPath": "plugins/javascript-typescript/skills/javascript-testing-patterns/SKILL.md"
+        },
+        {
+          "name": "modern-javascript-patterns",
+          "skillPath": "plugins/javascript-typescript/skills/modern-javascript-patterns/SKILL.md"
+        },
+        {
+          "name": "typescript-advanced-types",
+          "skillPath": "plugins/javascript-typescript/skills/typescript-advanced-types/SKILL.md"
+        }
+      ]
+    }
+  ]
+}

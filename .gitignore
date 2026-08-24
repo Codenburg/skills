@@ -1,6 +1,9 @@
 # Auto-generated skill registry cache
 .atl/
 
+# Optional Graphify derived index
+graphify-out/
+
 # Skills provided by Gentle AI
 /sdd-init/
 /sdd-propose/

@@ -1,0 +1,160 @@
+{
+  "skill_name": "skills-auditor",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit the safe direct upstream candidate agents-skills:example-recommended. It has no manifest candidate mapping, but the evidence shows clear unique value and no safety issue.",
+      "expected_output": "A read-only report with Provenance: UNRESOLVED, Audit verdict: RECOMMENDED, Curation authorization: None, and a real mechanical receipt containing exactly recordId, candidateSourcePath, sourceTreeHash, manifestSha256, and category.",
+      "files": [],
+      "expectations": [
+        "Separates deterministic provenance from the semantic audit verdict",
+        "Allows RECOMMENDED for an unmapped but safe candidate",
+        "Keeps Curation authorization at None",
+        "Emits a real five-field mechanical receipt that grants no ownership, mapping, copy authorization, or user approval",
+        "Does not invent a manifest mapping or authorize a copy",
+        "States that no files or upstream content were changed"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Audit the safe direct upstream candidate agents-skills:example-redundant. It has no manifest candidate mapping and duplicates an existing canonical skill.",
+      "expected_output": "A read-only report with Provenance: UNRESOLVED, Audit verdict: REDUNDANT, Curation authorization: None, and a real five-field mechanical receipt that is separate from authority and approval.",
+      "files": [],
+      "expectations": [
+        "Reports REDUNDANT as the semantic verdict instead of forcing NEEDS_REVIEW",
+        "Keeps unresolved provenance explicit and separate from the verdict",
+        "Emits a real five-field mechanical receipt without granting mapping or copy authorization",
+        "Identifies the concrete canonical overlap",
+        "Does not authorize copying or mutate the manifest"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Audit the direct upstream candidate agents-skills:example-unsafe. It has no manifest candidate mapping and contains an unsafe command-execution or credential-handling rule.",
+      "expected_output": "A read-only report with Provenance: UNRESOLVED, Audit verdict: UNSAFE, Curation authorization: None, and a real five-field mechanical receipt that is separate from authority and approval.",
+      "files": [],
+      "expectations": [
+        "Reports UNSAFE even though provenance is unresolved",
+        "Names the concrete unsafe evidence and affected path",
+        "Emits a real five-field mechanical receipt without granting mapping or copy authorization",
+        "Keeps Curation authorization at None",
+        "Does not execute candidate commands or authorize a copy"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Audit the explicit candidate list agents-skills:example-recommended and agents-skills:example-redundant in one read-only run. One candidate is manifest-mapped and the other is not.",
+      "expected_output": "A compact per-candidate table with separate Admission, Provenance, Audit verdict, and Curation authorization fields.",
+      "files": [],
+      "expectations": [
+        "Audits exactly the requested direct candidates and no unrelated paths",
+        "Reports MAPPED for the mapped candidate and UNRESOLVED for the other",
+        "Keeps authorization independent for each row",
+        "Compares each candidate with relevant canonical alternatives",
+        "Does not write reports, manifests, or upstream content"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Run `/skills-auditor nuevas` against the current declared roots and audit the pending set after deterministic discovery. Exclude imported, protected, excluded, stale-decision, invalid, and rejected entries from the semantic pending batch.",
+      "expected_output": "A pending-batch report grounded in --discover-pending output with deterministic hashes, rejected paths, and one verdict row per audited pending candidate.",
+      "files": [],
+      "expectations": [
+        "Uses the helper's read-only pending inventory as deterministic evidence",
+        "Keeps a valid direct skill with no persisted authority as UPSTREAM + PENDING and Provenance: UNRESOLVED rather than EXCLUDED",
+        "Subtracts imported and persisted decision paths from pending candidates",
+        "Reports target protected/excluded authority and stale decision observations",
+        "Never treats discovery as curation authorization",
+        "Keeps the upstream root read-only"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Audit a large pending batch containing candidates from audit, testing, and frontend skill areas. Group candidates by semantic area and compare within relevant groups without performing an NxN deep comparison across the entire batch.",
+      "expected_output": "A grouped batch report with grouping rationale, shared evidence, nearest alternatives, and per-candidate provenance/verdict/authorization rows.",
+      "files": [],
+      "expectations": [
+        "Defines meaningful semantic groups before comparison",
+        "Does not claim or perform an NxN deep comparison",
+        "Reuses deterministic discovery/hash evidence",
+        "States cross-group ambiguity as unresolved evidence rather than ownership",
+        "Provides one final verdict per candidate"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Audit the mapped direct candidate agents-skills:example-mapped-recommended. Its semantic verdict is RECOMMENDED, its provenance mapping is exact, and the helper confirms candidate canonical target authority with target state ABSENT; prepare the report for a possible NEW/copy plan.",
+      "expected_output": "A report with Provenance: MAPPED, candidate target authority evidence, target state ABSENT, Audit verdict: RECOMMENDED, and Curation authorization: Pending curator/user gate, including only the mechanical receipt fields recordId, candidateSourcePath, sourceTreeHash, manifestSha256, and category.",
+      "files": [],
+      "expectations": [
+        "Reports MAPPED only from the exact manifest source-to-target mapping",
+        "Records deterministic candidate target authority and ABSENT target-state evidence before authorization",
+        "Reports authorization as pending a separate curator/user gate, not as approval",
+        "Includes the full source tree hash and manifest digest used as evidence",
+        "Keeps approval decision IDs and markers out of the mechanical audit receipt",
+        "Does not persist the receipt or copy the candidate",
+        "Makes clear that the helper still requires explicit approval"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Audit the exact mapped direct candidate agents-skills:example-mapped-protected. The manifest maps it to a canonical target that is explicitly protected and currently present (apply the same gate when the target is explicitly excluded). The semantic verdict is RECOMMENDED.",
+      "expected_output": "A report with Provenance: MAPPED, target authority/permission evidence `protected`, target state PRESENT, Audit verdict: RECOMMENDED, and Curation authorization: None.",
+      "files": [],
+      "expectations": [
+        "Reports MAPPED only from the exact manifest source-to-target mapping",
+        "Records the deterministic protected target authority/permission evidence and target path",
+        "Keeps Curation authorization at None despite the RECOMMENDED verdict",
+        "Does not treat Pending curator/user gate as approval or propose an automatic copy",
+        "Does not write reports, manifests, or upstream content"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Audit the exact mapped direct candidate agents-skills:example-mapped-managed. The manifest records an existing managed source-to-canonical import with lastImportedTreeHash, and the canonical target is present. The semantic verdict is RECOMMENDED; evaluate whether a NEW/import path is authorized.",
+      "expected_output": "A report with Provenance: MAPPED, target authority/permission evidence `managed`, target state PRESENT, Audit verdict: RECOMMENDED, and Curation authorization: None, directing any update through the existing UPDATED/replace flow.",
+      "files": [],
+      "expectations": [
+        "Reports MAPPED from the exact manifest source-to-target mapping",
+        "Defines managed as the existing manifest-recorded import/target, not another authority category",
+        "Keeps Curation authorization at None for NEW/copy/add-import despite the RECOMMENDED verdict",
+        "Identifies UPDATED/replace as the eligible managed mutation path",
+        "Does not treat Pending curator/user gate as approval or mutate any files"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Run `/skills-auditor nuevas` with a valid optional Graphify shortlist for one pending candidate. The shortlist names real canonical roots, but the audit must read the upstream candidate SKILL.md and bounded current canonical SKILL.md counterparts before deciding.",
+      "expected_output": "A sequential grouped pending report that labels Graphify as semantic discovery only, reports the bounded real-file counterpart count, and preserves the existing provenance, target-authority, PENDING, receipt, and authorization rules.",
+      "files": [],
+      "expectations": [
+        "Uses the deterministic discover-pending inventory as the sole PENDING authority",
+        "Treats Graphify as optional ordering evidence rather than audit or curation authority",
+        "Reads the real upstream candidate SKILL.md and only a bounded set of real canonical SKILL.md counterparts",
+        "Keeps current files as final semantic evidence and keeps authorization independent"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "Run `/skills-auditor nuevas` when graphify-out/graph.json is missing or malformed for a pending candidate.",
+      "expected_output": "A selective fallback report that states Graphify was unavailable, reads the candidate and bounded likely canonical files, and leaves deterministic discovery and authority semantics unchanged.",
+      "files": [],
+      "expectations": [
+        "Returns to indexes/catalog, the real candidate SKILL.md, likely canonical roots, and bounded deep reads",
+        "Does not read the complete canonical catalog deeply or perform NxN comparison",
+        "Does not infer provenance, ownership, mapping, approval, or target authority from fallback semantics"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Run `/skills-auditor nuevas` with a stale or noisy Graphify shortlist whose ordering conflicts with current SKILL.md evidence.",
+      "expected_output": "A report that records Graphify as advisory or falls back selectively, uses current real files for the semantic comparison, and does not alter any authority or curation conclusion because of Graphify.",
+      "files": [],
+      "expectations": [
+        "Treats graph staleness and noisy semantic signals as advisory limitations",
+        "Uses current SKILL.md content as final semantic evidence",
+        "Preserves deterministic PENDING discovery, exclusions, target authority, receipts, and authorization"
+      ]
+    }
+  ]
+}
