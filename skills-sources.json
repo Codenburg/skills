@@ -101,9 +101,9 @@
   },
   "protectedPaths": [
     { "root": "canonical", "path": "_shared", "reason": "canonical support protocols" },
-    { "root": "canonical", "path": "AGENTS.md.example", "reason": "canonical catalog template" },
     { "root": "canonical", "path": "README.md", "reason": "canonical catalog and documentation" },
     { "root": "canonical", "path": "skills-sources.json", "reason": "deterministic authority manifest" },
+    { "root": "canonical", "path": "agents-md-manager", "reason": "canonical repository-owned skill" },
     { "root": "canonical", "path": "branch-pr", "reason": "Gentle AI governance copy" },
     { "root": "canonical", "path": "chained-pr", "reason": "Gentle AI governance copy" },
     { "root": "canonical", "path": "cognitive-doc-design", "reason": "Gentle AI governance copy" },

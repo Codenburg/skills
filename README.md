@@ -2,13 +2,13 @@
 
 # Agent Skills Registry
 
-**28 canonical root-level skills that AI agents can load on demand**
+**29 canonical root-level skills that AI agents can load on demand**
 
 Drop-in `AGENTS.md` blocks · Lazy context loading · Markdown skill contracts · Optional dependency-free Node.js maintenance tooling
 
 [Install](#install) · [Architecture](#architecture) · [Skills](#skills) · [Contributing](#contributing)
 
-![Skills](https://img.shields.io/badge/skills-28-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
+![Skills](https://img.shields.io/badge/skills-29-2563eb?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+PHBhdGggZD0iTTEyIDJsMyA3aDdsLTUuNSA0LjUgMiA3LTYuNS00LjUtNi41IDQuNSAyLTctNS41LTQuNWg3eiIvPjwvc3ZnPg==)
 ![Categories](https://img.shields.io/badge/categories-8-10b981?style=for-the-badge)
 ![Format](https://img.shields.io/badge/format-markdown-f59e0b?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/runtime-markdown%20%2B%20optional%20Node.js-ef4444?style=for-the-badge)
@@ -27,10 +27,9 @@ Some skills are provided by [Gentle AI](https://github.com/Gentleman-Programming
 
 ```bash
 git clone https://github.com/Codenburg/skills ~/skills
-cp ~/skills/AGENTS.md.example my-project/AGENTS.md
 ```
 
-Keep only the relevant load instructions in the copied `AGENTS.md`. The agent reads those pointers at session start and loads matching root-level `SKILL.md` contracts on demand.
+Add only the relevant load instructions to your project's `AGENTS.md`. The agent reads those pointers at session start and loads matching root-level `SKILL.md` contracts on demand.
 
 ## New machine setup
 
@@ -85,7 +84,7 @@ The auditor answers the semantic question without writing. The curator writes on
 
 ## Skills
 
-**Verified catalog: 28 canonical root-level skills across 8 categories.** The count enumerates immediate child directories with a usable `SKILL.md` and at least one invocation channel, then excludes `_shared`, delegated-only support contracts, and Git-ignored external/Gentle AI roots. It does not count every skill installed elsewhere in the environment.
+**Verified catalog: 29 canonical root-level skills across 8 categories.** The count enumerates immediate child directories with a usable `SKILL.md` and at least one invocation channel, then excludes `_shared`, delegated-only support contracts, and Git-ignored external/Gentle AI roots. It does not count every skill installed elsewhere in the environment.
 
 | Category | Skills |
 | --- | --- |
@@ -96,7 +95,7 @@ The auditor answers the semantic question without writing. The curator writes on
 | Testing (5) | `playwright`, `webapp-testing`, `go-testing`, `javascript-testing-patterns`, `vitest` |
 | Development Workflows (1) | `typescript-react-reviewer` |
 | Project Maintenance (1) | `docs-guardian` |
-| Skill Development (3) | `find-skills`, `skills-auditor`, `skills-curator` |
+| Skill Development (4) | `agents-md-manager`, `find-skills`, `skills-auditor`, `skills-curator` |
 
 ## `skills-auditor`
 
