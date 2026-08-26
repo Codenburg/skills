@@ -1,6 +1,6 @@
 ---
 name: agents-md-manager
-description: "Manage the root AGENTS.md context-routing region with explicit init, update, and audit workflows."
+description: "Manage the root AGENTS.md region through explicit init, update, and audit workflows with evidence-backed routing and byte-safe preservation."
 disable-model-invocation: true
 user-invocable: true
 license: MIT
@@ -11,17 +11,19 @@ metadata:
 
 ## Activation Contract
 
-Use only when the user explicitly invokes `/agents-md-manager init`, `/agents-md-manager update`, or `/agents-md-manager audit`. Manage the root `AGENTS.md` lifecycle as an evidence-based context router; nested `AGENTS.md` files are read-only evidence.
+Use only when the user explicitly invokes `/agents-md-manager init`, `/agents-md-manager update`, or `/agents-md-manager audit`. Manage the root `AGENTS.md` lifecycle as an evidence-based context router; nested instruction files are read-only evidence.
 
 ## Hard Rules
 
-- Own exactly one region delimited by `<!-- agents-md-manager:managed:start -->` and `<!-- agents-md-manager:managed:end -->`.
-- The prefix through the start marker and suffix from the end marker onward must remain byte-for-byte unchanged; never reorder, normalize, rewrite, move, or delete manual content outside the single managed region.
-- `audit` is read-only. `init` creates only a missing root `AGENTS.md`. `update` mutates only a valid managed region; unmanaged adoption requires explicit approval, and malformed input stops without mutation.
-- Route only existing, evidence-backed, repository-relative sources. Read selectively; never dump Markdown recursively or copy `.env` material.
-- Use project-declared precedence when present. Otherwise report `CONFLICTING_CONTEXT` with both paths, claims, affected rule, and missing evidence, then omit uncertain guidance.
-- Keep this skill dependency-free and script-free unless a deterministic need is proven; v1 has no helper.
-- Do not create manifests, metadata, shared state, scripts, watchers, hooks, databases, Graphify updates, or generic skill catalogs.
+- Expose exactly `init`, `update`, and `audit`; manage only the root `<root>/AGENTS.md` and exactly one ordered marker pair.
+- Use Git only as narrow read-only evidence. Never stage, commit, push, reset, rebase, checkout, restore user work, amend, clean, or otherwise mutate Git state; this applies to every mode, including adoption and update.
+- Preserve the prefix through the start marker and suffix from the end marker onward byte-for-byte. Keep current valid wording and order when meaning and evidence remain current; change only evidence-affected guidance, and never perform stylistic whole-region rewrites.
+- Treat `ABSENT`, `MANAGED`, `UNMANAGED`, and `MALFORMED` as the only public lifecycle states. Report unsafe targets as a separate internal safety finding, not as a fifth lifecycle state.
+- Reject any symlink component in the supplied root path, use the canonical physical root, capture its directory identity, and fail closed on detected root or target changes. Require safe-open capabilities; never read or mutate with missing no-follow/nonblocking primitives.
+- `audit` never writes. `init` writes only `ABSENT`; `update` writes only `MANAGED`, or appends to `UNMANAGED` after explicit approval for this current workflow. `MALFORMED` always stops without mutation.
+- Route only existing, evidence-backed, repository-relative sources. Read selectively; never inspect secrets, recursively dump Markdown, scan projects semantically, enumerate skills, or create foundation/Graphify/catalog integrations.
+- Use project-declared precedence when present. Otherwise emit `CONFLICTING_CONTEXT` with both paths, claims, affected rule, and missing evidence, then omit uncertain guidance.
+- Use the stdlib-only mechanical helper at [`scripts/agents-md-region.mjs`](scripts/agents-md-region.mjs); it classifies, preserves, writes, and verifies bytes but never discovers semantic evidence.
 
 ## Decision Gates
 
@@ -29,21 +31,22 @@ Use only when the user explicitly invokes `/agents-md-manager init`, `/agents-md
 | --- | --- |
 | `init` + `ABSENT` | Inspect bounded evidence and create the root managed region only. |
 | `init` + any present state | Report the state; change nothing. |
-| `update` + `MANAGED` | Rebuild only the region interior and verify the outside is unchanged. |
-| `update` + `UNMANAGED` | Request explicit adoption approval; otherwise change nothing. |
+| `update` + `MANAGED` | Replace only the exact interior; an equivalent candidate is a no-op. |
+| `update` + `UNMANAGED` | Show the semantic proposal, then require explicit current-workflow adoption approval. |
 | `update` + `MALFORMED` or `ABSENT` | Stop and report; change nothing. |
 | `audit` + any state | Report evidence and preservation checks; change nothing. |
 
 ## Execution Steps
 
-1. Establish the worktree root, classify the root file, and load [`references/agents-md-contract.md`](references/agents-md-contract.md). Complete this classification before reading project content.
-2. Read only high-signal indexes, manifests, task runners, CI/test configuration, and task-relevant docs or source. Record routes, commands, explicit precedence, stale pointers, and unresolved conflicts.
-3. Build a concise managed region from validated relative paths and evidenced commands. Keep runtime context classes ephemeral; persist no new manifest.
-4. Apply the mode/state gate, then reclassify and compare the pre/post prefix and suffix. The only permitted project mutation is root `AGENTS.md`.
+1. Load [`references/agents-md-contract.md`](references/agents-md-contract.md) and mechanically classify the fixed root target before reading project content. If it is unsafe, do not follow or read it; report the safety finding separately from lifecycle state.
+2. Discover semantic evidence selectively: high-signal indexes, manifests, task runners, CI/test configuration, and task-relevant docs or source. Record routes, exact evidenced commands, precedence, stale pointers, and conflicts.
+3. Build a candidate payload in the applicable small conceptual order: `Project essentials`, `Commands`, `Context routing`, `Mandatory workflows`, `Source precedence`. Omit empty sections; this is an ordering aid, not a rigid template. Keep runtime context classes ephemeral.
+4. Apply the mode/state/adoption gate, then use the helper for a safe write or a no-op. Revalidate at each exposed mutation boundary, preserve regular-file mode, and use only same-directory temporary atomic replacement with cleanup where replacement is needed.
+5. Use the helper to verify target safety, one exact ordered marker pair, the complete candidate bytes, exact payload, and prefix/suffix or adoption-prefix preservation. Return the compact report only after verification; surface any temporary cleanup failure explicitly.
 
 ## Output Contract
 
-Return the mode, state, mutation result, routed sources, evidenced commands, preservation result, conflicts, and next action. State `Files changed: None` for read-only or stopped paths and name `CONFLICTING_CONTEXT` findings exactly.
+Return `Mode`, public `State`, `Mutation`, `Routes`, `Commands`, `Preservation`, `Conflicts`, and `Next action`. For read-only, stopped, or semantically idempotent results, state exactly `Mutation: none` and `Files changed: None`. Name `CONFLICTING_CONTEXT` findings exactly.
 
 ## References
 

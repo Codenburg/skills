@@ -123,6 +123,7 @@
     { "root": "canonical", "path": "prisma", "reason": "canonical repository-owned skill" },
     { "root": "canonical", "path": "prisma-database-setup", "reason": "canonical local copy without managed provenance" },
     { "root": "canonical", "path": "prisma-migration-assistant", "reason": "canonical repository-owned skill" },
+    { "root": "canonical", "path": "project-foundation-manager", "reason": "canonical repository-owned skill" },
     { "root": "canonical", "path": "rdd-defect-workflow", "reason": "Gentle AI governance copy" },
     { "root": "canonical", "path": "react-19", "reason": "canonical local copy without managed provenance" },
     { "root": "canonical", "path": "react-hook-form", "reason": "canonical local copy without managed provenance" },

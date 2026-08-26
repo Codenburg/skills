@@ -1,5 +1,7 @@
 {
   "skill_name": "agents-md-manager",
+  "evaluation_mode": "structural-only",
+  "notes": "These records describe observable contract expectations; they are not an executable semantic or model harness.",
   "evals": [
     {
       "id": 1,
@@ -168,6 +170,54 @@
         "Does not read or mutate metadata, shared state, or a coupling manifest as manager state",
         "Does not expand scope beyond root AGENTS.md",
         "May consume an existing foundation-style document only as ordinary read-only evidence when relevant"
+      ]
+    },
+    {
+      "id": 15,
+      "prompt": "Invoke `/agents-md-manager update` twice in a safe MANAGED root when the relevant evidence, valid wording/order, and candidate payload are unchanged.",
+      "expected_output": "A structural idempotence result that performs no second write and reports the exact no-op labels.",
+      "files": ["AGENTS.md", "README.md", "package.json"],
+      "expectations": [
+        "Preserves current valid manager wording and order when meaning and evidence remain current",
+        "Reports `Mutation: none` and `Files changed: None` for the equivalent candidate",
+        "Does not perform a stylistic whole-region rewrite or alter bytes outside the managed payload",
+        "Keeps the conceptual section order only for applicable nonempty sections"
+      ]
+    },
+    {
+      "id": 16,
+      "prompt": "Invoke `/agents-md-manager update` on an UNMANAGED root, show a semantic adoption proposal, then provide explicit approval for this current workflow.",
+      "expected_output": "A structural adoption result that appends one managed block only after explicit approval and preserves the prior bytes as an exact prefix.",
+      "files": ["AGENTS.md", "README.md"],
+      "expectations": [
+        "Rejects or stops before mutation without the explicit current-workflow adoption approval",
+        "Requires the mechanical adoption approval input rather than treating generic earlier update wording as approval",
+        "Appends exactly one ordered marker pair and never rewrites, wraps, or normalizes prior bytes",
+        "Uses the deterministic minimum separator policy and reports preservation verification"
+      ]
+    },
+    {
+      "id": 17,
+      "prompt": "Run `/agents-md-manager audit` against roots whose fixed `AGENTS.md` target is respectively a symlink, directory, and available special/nonregular node.",
+      "expected_output": "A structural safety result that reports an internal unsafe-target finding without reading the target or inventing a fifth public lifecycle state.",
+      "files": ["AGENTS.md"],
+      "expectations": [
+        "Derives only `<root>/AGENTS.md` and rejects arbitrary target paths or escapes",
+        "Rejects symlink, directory, FIFO, socket, device, and other nonregular targets before reading them",
+        "Keeps ABSENT, MANAGED, UNMANAGED, and MALFORMED as the only public lifecycle states",
+        "Remains read-only and states `Mutation: none` and `Files changed: None`"
+      ]
+    },
+    {
+      "id": 18,
+      "prompt": "Invoke `/agents-md-manager update` on a MANAGED root using CRLF marker lines, mixed bytes, and trailing whitespace outside the managed payload.",
+      "expected_output": "A structural byte-preservation result that replaces only the payload and proves the exact prefix and suffix remain unchanged.",
+      "files": ["AGENTS.md"],
+      "expectations": [
+        "Treats exact LF or CRLF marker lines as valid without newline or encoding normalization",
+        "Preserves mixed bytes and all trailing whitespace outside the payload byte-for-byte",
+        "Defines payload as the exact bytes between marker text, including surrounding line-ending bytes",
+        "Leaves exactly one ordered marker pair and reports exact payload and prefix/suffix verification"
       ]
     }
   ]

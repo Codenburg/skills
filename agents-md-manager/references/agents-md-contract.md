@@ -2,22 +2,38 @@
 
 This contract defines the behavior behind the three explicit modes in `SKILL.md`. It is a lifecycle and routing contract, not a documentation generator.
 
-## Managed-region contract
+## Boundary and lifecycle
 
-The only owned region is the half-open text range beginning with the exact line marker `<!-- agents-md-manager:managed:start -->` and ending with the exact line marker `<!-- agents-md-manager:managed:end -->`.
+The only production target is `<root>/AGENTS.md`; the default root is the current working directory. An explicit root is allowed for a root operation or isolated tests. The helper rejects every symlink component in the supplied root path, resolves and uses the canonical non-symlink physical root, validates containment and the fixed basename, and accepts no arbitrary target path.
 
-Classify the root `AGENTS.md` as follows:
+The only owned region is the half-open byte range beginning with the exact line marker `<!-- agents-md-manager:managed:start -->` and ending with the exact line marker `<!-- agents-md-manager:managed:end -->`.
 
 | State | Evidence |
 | --- | --- |
 | `ABSENT` | The root file does not exist. |
-| `MANAGED` | Exactly one start marker and one end marker exist, in that order, with one managed region. |
+| `MANAGED` | Exactly one start marker and one end marker exist as exact lines, in that order, with one managed region. |
 | `UNMANAGED` | The root file exists and contains neither marker. |
-| `MALFORMED` | A marker is missing, duplicated, nested, or ordered incorrectly. |
+| `MALFORMED` | A marker is missing, duplicated, nested, reversed, or present on a non-exact marker line. |
 
-Read the file without newline or encoding normalization. For a managed update, preserve the exact prefix through the start marker and exact suffix from the end marker onward; replace only the bytes between the markers. Validate that the result still contains exactly one ordered pair. A managed region is wholly owned by this skill; manual content outside it is not.
+Unsafe target findings are internal safety results, not public lifecycle states. Reject a symlink, directory, FIFO, socket, device, or any other nonregular target. A safety classification must not follow or read the target. Reject an unsafe root directory as well. Require platform `O_NOFOLLOW` and `O_NONBLOCK` capabilities; if either is unavailable, return a structured unsafe finding before target reads or mutations rather than substituting zero flags.
 
-`init` inspects a present file and reports its state without changing it. With `ABSENT`, it may inspect evidence and create only the root file. `update` with `ABSENT` reports that `init` is required. With `UNMANAGED`, ask for explicit adoption approval. After approval, append one managed region at the end while leaving the existing content untouched; never silently wrap, rewrite, or reformat it. `MALFORMED` always stops without mutation and requires manual repair before another update. `audit` never writes.
+Read regular files as bytes without newline or encoding normalization. Marker lines may use LF or CRLF; the marker text and line body must be exact. The replacement `payload` is the exact byte sequence inserted between the marker bytes. It includes all surrounding line-ending bytes between the start marker and end marker; the helper adds none, removes none, and normalizes none. The caller must provide a payload that leaves both markers on exact lines.
+
+For a managed update, preserve the exact prefix through the start marker and exact suffix from the end marker onward; replace only the payload bytes. Validate that the result still contains exactly one ordered pair. A managed region is wholly owned by this skill; manual content outside it is not.
+
+`init` inspects a present file and reports its state without changing it. With `ABSENT`, it may inspect evidence and create only the root file. `update` with `ABSENT` reports that `init` is required. With `UNMANAGED`, show the proposal and ask for explicit approval for this current workflow. After approval, append one managed region at the end while leaving the existing content untouched; never silently wrap, rewrite, or reformat it. `MALFORMED` always stops without mutation and requires manual repair before another update. `audit` never writes.
+
+## Semantic candidate and idempotence
+
+The semantic layer owns evidence discovery and meaning. It must preserve valid manager wording and order when the relevant evidence is still current, update only guidance affected by changed evidence, and avoid stylistic whole-region rewrites. The stable conceptual order, used only for applicable nonempty sections, is:
+
+1. `Project essentials`
+2. `Commands`
+3. `Context routing`
+4. `Mandatory workflows`
+5. `Source precedence`
+
+This is a small ordering aid, not a rigid template. Same relevant evidence plus the same valid state produces the same candidate bytes. An equivalent candidate is a no-op: do not write, report `Mutation: none`, and report `Files changed: None`.
 
 ## Evidence router
 
@@ -72,10 +88,25 @@ For a moved pointer, search only authoritative indexes, manifests, scripts, task
 - Never read, print, copy, or persist values from `.env` or other secret-bearing environment files. Use safe setup documentation or non-secret configuration declarations instead.
 - Do not rewrite `opencode.json`; its `instructions` entries are a separate native routing mechanism. Do not duplicate remote instructions into `AGENTS.md`.
 - OpenCode discovers skills through `SKILL.md` independently from persistent project instructions. Do not reproduce the global skill catalog in the managed region.
-- Do not make Graphify, a daemon, watcher, hook, framework, database, OpenSpec manager, or general docs manager part of this skill.
+- Use Git only for narrow, read-only evidence. Never stage, commit, push, reset, rebase, checkout, restore user work, amend, clean, or otherwise mutate Git state, including during adoption or update.
+- Do not make Graphify, a daemon, watcher, hook, framework, database, OpenSpec manager, semantic project scanner, or general docs manager part of this skill.
+
+## Mechanical helper and writes
+
+[`../scripts/agents-md-region.mjs`](../scripts/agents-md-region.mjs) is stdlib-only and mechanical. It may classify the fixed root target, replace a managed payload, append an approved adoption, create an absent target, reclassify fresh state at write boundaries, and verify the result. It never discovers README, docs, OpenSpec, Git, Graphify, network, skills, foundation, or semantic evidence.
+
+At each exposed mutation boundary, the helper reclassifies from fresh bytes and target state, captures root directory `dev`/`ino`/type, and fails closed on identity changes before temporary-file creation and immediately before final rename or create. Mutation APIs do not accept caller-owned classifications, offsets, or preservation bytes. Private immutable length-plus-SHA-256 fingerprints prove the complete internally built candidate, payload, and preserved regions; public `verifyManagedRegion(root)` reports only fresh structural verification. Replacement uses a same-directory temporary file, atomic rename, and cleanup; no transaction framework or persisted state is used.
+
+Normal callers omit the optional test-only boundary hook used by executable race regressions. Node's stdlib has no portable `openat`/dirfd-bound rename or unlink primitive, so a hostile root swap after temporary creation can strand that temp file. The helper surfaces the cleanup attempt, path, and error in structured failure details instead of claiming rollback; it uses the canonical non-symlink root, revalidates every exposed boundary, and fails closed on changes it detects. This is a proportional limitation, not an impossible-immunity claim.
+
+Adoption requires an explicit `approved: true` input for the current operation. Approval from a generic earlier “update AGENTS” instruction is not adoption approval. The prior unmanaged bytes are the exact result prefix. The deterministic minimum separator is: empty when the original file is empty or already ends in `\n`; otherwise exactly `\n\n`. The managed block is the start marker, the caller-supplied payload, and the end marker; no prior bytes are rewritten.
 
 ## Verification and report
 
-Before any permitted write, retain the original root-file content and the proposed region. Afterward verify the marker count/order, every persisted path is repository-relative and exists, every command has evidence, and the original outside-region prefix/suffix are unchanged. For adoption, verify that the prior unmanaged content is the exact prefix of the result. For `audit` and all stopped gates, state `Files changed: None` and do not report a simulated mutation.
+Before any permitted write, retain the original root-file bytes and the proposed payload. Afterward mechanically verify a safe target, exactly one ordered marker pair with no second pair, byte-for-byte equality with the complete internally built candidate, exact payload bytes, and the required prefix/suffix or adoption-prefix preservation. The semantic layer verifies that every persisted path is repository-relative and exists and every command has evidence. For `audit`, all stopped gates, and equivalent candidates, state `Mutation: none` and `Files changed: None`; do not report a simulated mutation.
 
 Return a compact report with `Mode`, `State`, `Mutation`, `Routes`, `Commands`, `Preservation`, `Conflicts`, and `Next action`. Include the relevant evidence paths and distinguish `CONFLICTING_CONTEXT` from a missing or stale source.
+
+## Activation metadata
+
+This skill keeps `disable-model-invocation: true` and `user-invocable: true` because those are established canonical explicit-only conventions in this repository. Current OpenCode native frontmatter recognizes `name`, `description`, optional `license`, `compatibility`, `metadata`, and the V2 parser also extracts `slash`; it ignores unknown fields. Explicit-only enforcement therefore comes from this Activation Contract and the host ecosystem convention, not native OpenCode enforcement of those two keys.
