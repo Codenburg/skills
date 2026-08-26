@@ -88,7 +88,7 @@ Only after review and a human decision should the curation command be invoked:
 
 ## Catalog and discovery
 
-The 30-count covers only the immediate child directories in this worktree that provide a usable root-level `SKILL.md` and an invocation channel. It excludes `_shared`, delegated-only support contracts, Git-ignored Gentle AI roots, and skills installed elsewhere. It describes the current worktree catalog; it is not an inventory of every installed skill.
+The 30-count covers only the immediate child directories in this worktree that provide a usable root-level `SKILL.md` and an invocation channel. It excludes delegated-only support contracts, Git-ignored Gentle AI roots, and skills installed elsewhere. It describes the current worktree catalog; it is not an inventory of every installed skill.
 
 ### Functional areas
 
