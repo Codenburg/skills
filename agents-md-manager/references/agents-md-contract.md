@@ -21,6 +21,8 @@ Read regular files as bytes without newline or encoding normalization. Marker li
 
 For a managed update, preserve the exact prefix through the start marker and exact suffix from the end marker onward; replace only the payload bytes. Validate that the result still contains exactly one ordered pair. A managed region is wholly owned by this skill; manual content outside it is not.
 
+A controlled full-document repair is the only exception. It is available only for a safe `MANAGED` target, requires a full candidate with exactly one valid ordered marker pair, and requires `repairApproved: true` for that operation. The semantic layer may request it only when the user explicitly asks to repair obsolete exterior content. It must not repair `ABSENT`, `UNMANAGED`, or `MALFORMED` files, and an equivalent full candidate is a no-op. This exception replaces the complete file atomically; default managed updates still preserve exterior bytes.
+
 `init` inspects a present file and reports its state without changing it. With `ABSENT`, it may inspect evidence and create only the root file. `update` with `ABSENT` reports that `init` is required. With `UNMANAGED`, show the proposal and ask for explicit approval for this current workflow. After approval, append one managed region at the end while leaving the existing content untouched; never silently wrap, rewrite, or reformat it. `MALFORMED` always stops without mutation and requires manual repair before another update. `audit` never writes.
 
 ## Semantic candidate and idempotence
@@ -33,7 +35,7 @@ The semantic layer owns evidence discovery and meaning. It must preserve valid m
 4. `Mandatory workflows`
 5. `Source precedence`
 
-This is a small ordering aid, not a rigid template. Same relevant evidence plus the same valid state produces the same candidate bytes. An equivalent candidate is a no-op: do not write, report `Mutation: none`, and report `Files changed: None`.
+This is a small ordering aid, not a rigid template. Same relevant evidence plus the same valid state produces the same candidate bytes. An equivalent payload or explicitly approved full repair candidate is a no-op: do not write, report `Mutation: none`, and report `Files changed: None`.
 
 ## Evidence router
 
@@ -93,7 +95,7 @@ For a moved pointer, search only authoritative indexes, manifests, scripts, task
 
 ## Mechanical helper and writes
 
-[`../scripts/agents-md-region.mjs`](../scripts/agents-md-region.mjs) is stdlib-only and mechanical. It may classify the fixed root target, replace a managed payload, append an approved adoption, create an absent target, reclassify fresh state at write boundaries, and verify the result. It never discovers README, docs, OpenSpec, Git, Graphify, network, skills, foundation, or semantic evidence.
+[`../scripts/agents-md-region.mjs`](../scripts/agents-md-region.mjs) is stdlib-only and mechanical. It may classify the fixed root target, replace a managed payload, append an approved adoption, create an absent target, perform an explicitly approved managed full-document repair, reclassify fresh state at write boundaries, and verify the result. It never discovers README, docs, OpenSpec, Git, Graphify, network, skills, foundation, or semantic evidence.
 
 At each exposed mutation boundary, the helper reclassifies from fresh bytes and target state, captures root directory `dev`/`ino`/type, and fails closed on identity changes before temporary-file creation and immediately before final rename or create. Mutation APIs do not accept caller-owned classifications, offsets, or preservation bytes. Private immutable length-plus-SHA-256 fingerprints prove the complete internally built candidate, payload, and preserved regions; public `verifyManagedRegion(root)` reports only fresh structural verification. Replacement uses a same-directory temporary file, atomic rename, and cleanup; no transaction framework or persisted state is used.
 
@@ -101,9 +103,11 @@ Normal callers omit the optional test-only boundary hook used by executable race
 
 Adoption requires an explicit `approved: true` input for the current operation. Approval from a generic earlier “update AGENTS” instruction is not adoption approval. The prior unmanaged bytes are the exact result prefix. The deterministic minimum separator is: empty when the original file is empty or already ends in `\n`; otherwise exactly `\n\n`. The managed block is the start marker, the caller-supplied payload, and the end marker; no prior bytes are rewritten.
 
+Full-document repair requires the distinct explicit `repairApproved: true` input. It never infers approval from ordinary update or adoption approval. Its verification proves safe target, root identity, one ordered pair, complete candidate bytes, and exact managed payload; it deliberately makes no prefix or suffix preservation claim.
+
 ## Verification and report
 
-Before any permitted write, retain the original root-file bytes and the proposed payload. Afterward mechanically verify a safe target, exactly one ordered marker pair with no second pair, byte-for-byte equality with the complete internally built candidate, exact payload bytes, and the required prefix/suffix or adoption-prefix preservation. The semantic layer verifies that every persisted path is repository-relative and exists and every command has evidence. For `audit`, all stopped gates, and equivalent candidates, state `Mutation: none` and `Files changed: None`; do not report a simulated mutation.
+Before any permitted write, retain the original root-file bytes and the proposed payload. Afterward mechanically verify a safe target, exactly one ordered marker pair with no second pair, byte-for-byte equality with the complete internally built candidate, exact payload bytes, and the required prefix/suffix or adoption-prefix preservation. An approved full-document repair instead verifies its complete candidate and payload without claiming exterior preservation. The semantic layer verifies that every persisted path is repository-relative and exists and every command has evidence. For `audit`, all stopped gates, and equivalent candidates, state `Mutation: none` and `Files changed: None`; do not report a simulated mutation.
 
 Return a compact report with `Mode`, `State`, `Mutation`, `Routes`, `Commands`, `Preservation`, `Conflicts`, and `Next action`. Include the relevant evidence paths and distinguish `CONFLICTING_CONTEXT` from a missing or stale source.
 

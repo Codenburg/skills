@@ -14,6 +14,7 @@ import {
   classifyRoot,
   getSafeOpenCapabilities,
   initAbsent,
+  repairManagedDocument,
   replaceManagedRegion,
   resolveRoot,
 } from "./agents-md-region.mjs";
@@ -181,6 +182,65 @@ test("replaces only the payload and preserves exact prefix and suffix", async ()
     assert.equal(result.verification.prefixPreserved, true);
     assert.equal(result.verification.suffixPreserved, true);
     assert.equal(result.verification.noSecondPair, true);
+  });
+});
+
+test("requires explicit opt-in before full-document repair and keeps default exterior preservation", async () => {
+  await withRoot(async (root) => {
+    const original = Buffer.concat([Buffer.from("obsolete prefix\n"), managed(Buffer.from("\nOld\n")), Buffer.from("\nobsolete suffix\n")]);
+    const repaired = Buffer.concat([Buffer.from("repaired prefix\n"), managed(Buffer.from("\nNew\n")), Buffer.from("\nrepaired suffix\n")]);
+    await writeTarget(root, original);
+
+    await assert.rejects(() => repairManagedDocument(root, repaired), (error) => error.code === "REPAIR_APPROVAL_REQUIRED");
+    assert.deepEqual(await targetBytes(root), original);
+
+    await replaceManagedRegion(root, Buffer.from("\nDefault update\n"));
+    assert.deepEqual(await targetBytes(root), Buffer.concat([Buffer.from("obsolete prefix\n"), managed(Buffer.from("\nDefault update\n")), Buffer.from("\nobsolete suffix\n")]));
+  });
+});
+
+test("repairs a managed document only with explicit approval and is idempotent", async () => {
+  await withRoot(async (root) => {
+    const original = Buffer.concat([Buffer.from("obsolete prefix\n"), managed(Buffer.from("\nOld\n")), Buffer.from("\nobsolete suffix\n")]);
+    const repaired = Buffer.concat([Buffer.from("repaired prefix\n"), managed(Buffer.from("\nNew\n")), Buffer.from("\nrepaired suffix\n")]);
+    await writeTarget(root, original);
+
+    const first = await repairManagedDocument(root, repaired, { repairApproved: true });
+    assert.equal(first.operation, "repair");
+    assert.equal(first.mutation, "full-replace");
+    assert.equal(first.verification.prefixPreserved, null);
+    assert.equal(first.verification.suffixPreserved, null);
+    assert.equal(first.verification.noSecondPair, true);
+    assert.deepEqual(await targetBytes(root), repaired);
+
+    const beforeStat = await statIdentity(resolveRoot(root).target);
+    const second = await repairManagedDocument(root, repaired, { repairApproved: true });
+    assert.equal(second.mutation, "none");
+    assert.equal(second.changed, false);
+    assert.deepEqual(await statIdentity(resolveRoot(root).target), beforeStat);
+  });
+});
+
+test("rejects malformed and unsafe targets for full-document repair", async () => {
+  await withRoot(async (root) => {
+    const document = managed(Buffer.from("\nNew\n"));
+    const invalidDocument = Buffer.from(`${START_MARKER}\n${START_MARKER}\nbody\n${END_MARKER}`);
+    const managedOriginal = managed(Buffer.from("\nOld\n"));
+    await writeTarget(root, managedOriginal);
+    await assert.rejects(() => repairManagedDocument(root, invalidDocument, { repairApproved: true }), (error) => error.code === "INVALID_DOCUMENT");
+    assert.deepEqual(await targetBytes(root), managedOriginal);
+
+    const malformed = Buffer.from(`${START_MARKER}\n${START_MARKER}\nbody\n${END_MARKER}`);
+    await writeTarget(root, malformed);
+    await assert.rejects(() => repairManagedDocument(root, document, { repairApproved: true }), (error) => error.code === "STATE_NOT_ALLOWED");
+    assert.deepEqual(await targetBytes(root), malformed);
+  });
+
+  await withRoot(async (root) => {
+    const outside = path.join(root, "outside.txt");
+    await writeFile(outside, Buffer.from("outside"));
+    await symlink(outside, resolveRoot(root).target);
+    await assert.rejects(() => repairManagedDocument(root, managed(Buffer.from("\nNew\n")), { repairApproved: true }), (error) => error.code === "UNSAFE_TARGET");
   });
 });
 

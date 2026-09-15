@@ -1,211 +1,76 @@
-<div align="center">
+# Skills para OpenCode
 
-# Codenburg Agent Skills
+Colección personal y curada de skills reutilizables para OpenCode. Reúne capacidades para desarrollo, producto, UI/UX, testing, investigación, documentación y trabajo operativo alrededor de proyectos de software.
 
-**111 curated OpenCode skills**
+## Entender la colección
 
-Personal skill collection for software development, product work, research, UI/UX and the workflows used around Codenburg projects.
+Cada skill vive en una carpeta que contiene un archivo `SKILL.md`. Ese archivo define cuándo usarla y cómo aplicarla; puede estar acompañado de referencias, scripts, ejemplos o recursos de evaluación cuando lo necesita.
 
-![Skills](https://img.shields.io/badge/skills-111-2563eb?style=for-the-badge)
-![Areas](https://img.shields.io/badge/areas-16-10b981?style=for-the-badge)
-![Format](https://img.shields.io/badge/format-SKILL.md-f59e0b?style=for-the-badge)
-![Runtime](https://img.shields.io/badge/runtime-OpenCode-ef4444?style=for-the-badge)
+La colección puede estar disponible de forma global, mientras que cada proyecto selecciona las skills pertinentes para mantener su contexto enfocado. La calidad y la utilidad real prevalecen sobre la cantidad: se conservan capacidades con una responsabilidad clara y se eliminan duplicados o solapamientos que no aporten valor.
 
-</div>
+Git es la fuente de verdad del contenido versionado. Este catálogo incluye únicamente las carpetas versionadas que contienen `SKILL.md`.
 
----
+## Usar una skill
 
-## What this repository is
+1. Identifique la necesidad del proyecto o de la tarea.
+2. Localice la capacidad correspondiente en el catálogo.
+3. Abra su `SKILL.md` y siga su contrato de activación e instrucciones.
+4. Selecciónela solo en los proyectos donde resulte útil.
 
-This repository is the canonical collection of skills I keep available to OpenCode.
+Las rutas locales ignoradas y la infraestructura de apoyo no forman parte del catálogo ni del total de skills versionadas.
 
-The collection is intentionally broad at the global level, but **skills are selected explicitly per project**. A skill stays here when it adds a distinct capability that is useful in real development or indie-SaaS work; redundant wrappers, duplicate authorities, abandoned workflows, and overly specialized tooling are removed.
+## Explorar el catálogo
 
-The canonical maintainer installation is:
+**Total versionado: 91 skills en 10 áreas funcionales.**
 
-```text
-~/.config/opencode/skills
-```
+### Ingeniería, arquitectura y TypeScript (9)
 
-A separate upstream/download area may exist at:
+[`codebase-design`](codebase-design/SKILL.md) · [`diagnosing-bugs`](diagnosing-bugs/SKILL.md) · [`domain-modeling`](domain-modeling/SKILL.md) · [`tdd`](tdd/SKILL.md) · [`turborepo`](turborepo/SKILL.md) · [`typescript-advanced-types`](typescript-advanced-types/SKILL.md) · [`typescript-best-practices`](typescript-best-practices/SKILL.md) · [`typescript-security-review`](typescript-security-review/SKILL.md) · [`wizard`](wizard/SKILL.md)
 
-```text
-~/.agents/skills
-```
+### React, Next.js y aplicaciones nativas (10)
 
-The two directories have different roles: `~/.agents/skills` can be used as an external source, while this repository represents the curated collection used day to day.
+[`next-best-practices`](next-best-practices/SKILL.md) · [`next-cache-components`](next-cache-components/SKILL.md) · [`next-cache-components-adoption`](next-cache-components-adoption/SKILL.md) · [`next-cache-components-optimizer`](next-cache-components-optimizer/SKILL.md) · [`react-dev`](react-dev/SKILL.md) · [`react19-source-patterns`](react19-source-patterns/SKILL.md) · [`react19-test-patterns`](react19-test-patterns/SKILL.md) · [`vercel-react-best-practices`](vercel-react-best-practices/SKILL.md) · [`vercel-react-native-skills`](vercel-react-native-skills/SKILL.md) · [`vercel-react-view-transitions`](vercel-react-view-transitions/SKILL.md)
 
-## Quick start
+### Implementación de interfaces (8)
 
-Clone the repository directly into the canonical OpenCode skills directory:
+[`react-hook-form`](react-hook-form/SKILL.md) · [`shadcn`](shadcn/SKILL.md) · [`tailwind-design-system`](tailwind-design-system/SKILL.md) · [`tailwind-responsive-ui`](tailwind-responsive-ui/SKILL.md) · [`tailwindcss-advanced-layouts`](tailwindcss-advanced-layouts/SKILL.md) · [`tanstack-table`](tanstack-table/SKILL.md) · [`zod-validation-utilities`](zod-validation-utilities/SKILL.md) · [`zustand-5`](zustand-5/SKILL.md)
 
-```bash
-git clone https://github.com/Codenburg/skills ~/.config/opencode/skills
-```
+### Datos y Prisma (11)
 
-Or clone it elsewhere and expose that path through an OpenCode-supported skill discovery mechanism.
+[`prisma-cli`](prisma-cli/SKILL.md) · [`prisma-client-api`](prisma-client-api/SKILL.md) · [`prisma-database-setup`](prisma-database-setup/SKILL.md) · [`prisma-patterns`](prisma-patterns/SKILL.md) · [`prisma-next-build`](prisma-next-build/SKILL.md) · [`prisma-next-contract`](prisma-next-contract/SKILL.md) · [`prisma-next-migration-review`](prisma-next-migration-review/SKILL.md) · [`prisma-next-migrations`](prisma-next-migrations/SKILL.md) · [`prisma-next-queries`](prisma-next-queries/SKILL.md) · [`prisma-next-quickstart`](prisma-next-quickstart/SKILL.md) · [`prisma-next-runtime`](prisma-next-runtime/SKILL.md)
 
-Skills are normal directories whose primary contract is a `SKILL.md`. Supporting references, scripts, examples, or evals can live beside it when the skill needs them.
+### Testing y automatización (5)
 
-## Curation rules
+[`go-testing`](go-testing/SKILL.md) · [`javascript-testing-patterns`](javascript-testing-patterns/SKILL.md) · [`playwright-best-practices`](playwright-best-practices/SKILL.md) · [`playwright-cli`](playwright-cli/SKILL.md) · [`vitest`](vitest/SKILL.md)
 
-The current collection follows a few simple rules:
+### Diseño visual y experiencia de usuario (10)
 
-- Keep a skill when it provides a distinct capability that is realistically useful.
-- Remove it when another retained skill already performs the same job well enough.
-- Prefer focused skills over broad routers or second authorities.
-- Keep technical skills even when they are project-specific if their capability is genuinely distinct.
-- Keep product skills that directly help build, launch, operate, or improve a SaaS.
-- Do not keep specialized marketing, sales, PR, channel-operations, or agency workflows without a concrete use case.
-- Gentle AI infrastructure and the SDD family are treated as coordinated systems rather than pruned as isolated skills.
-- Project configuration decides which globally available skills are active for a given codebase.
+[`brandkit`](brandkit/SKILL.md) · [`frontend-design`](frontend-design/SKILL.md) · [`image`](image/SKILL.md) · [`imagegen-frontend-mobile`](imagegen-frontend-mobile/SKILL.md) · [`microinteractions`](microinteractions/SKILL.md) · [`refactoring-ui`](refactoring-ui/SKILL.md) · [`ui-design`](ui-design/SKILL.md) · [`ui-radar`](ui-radar/SKILL.md) · [`ux-heuristics`](ux-heuristics/SKILL.md) · [`web-typography`](web-typography/SKILL.md)
 
-There is no automated auditor/curator workflow in the current setup. Changes to the collection are reviewed and applied directly.
+### Documentación, PDFs y mantenimiento de skills (7)
 
-## Catalog
+[`agents-md-manager`](agents-md-manager/SKILL.md) · [`cognitive-doc-design`](cognitive-doc-design/SKILL.md) · [`docs-guardian`](docs-guardian/SKILL.md) · [`project-foundation-manager`](project-foundation-manager/SKILL.md) · [`react-pdf`](react-pdf/SKILL.md) · [`skill-creator`](skill-creator/SKILL.md) · [`skill-improver`](skill-improver/SKILL.md)
 
-The current collection contains **111 skills** across **16 functional areas**.
+### Investigación, definición y transferencia de contexto (11)
 
-| Functional area | Count | Skills |
-| --- | ---: | --- |
-| Core / arquitectura / debugging | 7 | `codebase-design`, `domain-modeling`, `diagnosing-bugs`, `tdd`, `typescript-best-practices`, `typescript-advanced-types`, `typescript-security-review` |
-| React / Next.js | 10 | `react-dev`, `vercel-react-best-practices`, `react19-source-patterns`, `react19-test-patterns`, `vercel-react-native-skills`, `vercel-react-view-transitions`, `next-best-practices`, `next-cache-components`, `next-cache-components-adoption`, `next-cache-components-optimizer` |
-| Prisma ORM | 4 | `prisma-client-api`, `prisma-cli`, `prisma-database-setup`, `prisma-patterns` |
-| Prisma Next | 7 | `prisma-next-quickstart`, `prisma-next-build`, `prisma-next-contract`, `prisma-next-migrations`, `prisma-next-queries`, `prisma-next-runtime`, `prisma-next-migration-review` |
-| Testing | 5 | `vitest`, `playwright-best-practices`, `playwright-cli`, `javascript-testing-patterns`, `go-testing` |
-| Frontend / UI técnico | 8 | `shadcn`, `tailwind-design-system`, `tailwind-responsive-ui`, `tailwindcss-advanced-layouts`, `react-hook-form`, `zod-validation-utilities`, `zustand-5`, `tanstack-table` |
-| Diseño / UX | 10 | `ui-design`, `ui-radar`, `frontend-design`, `refactoring-ui`, `ux-heuristics`, `microinteractions`, `web-typography`, `imagegen-frontend-mobile`, `image`, `brandkit` |
-| Documentación | 4 | `cognitive-doc-design`, `docs-guardian`, `agents-md-manager`, `project-foundation-manager` |
-| Seguridad / web / SEO | 5 | `auth-review`, `schema`, `seo-audit`, `ai-seo`, `site-architecture` |
-| Producto / SaaS | 15 | `product-marketing`, `customer-research`, `copywriting`, `copy-editing`, `cro`, `ab-testing`, `analytics`, `pricing`, `signup`, `onboarding`, `paywalls`, `churn-prevention`, `emails`, `launch`, `shipping-and-launch` |
-| Research | 6 | `tavily-search`, `tavily-research`, `tavily-crawl`, `tavily-extract`, `tavily-map`, `tavily-dynamic-search` |
-| Ideación / definición | 5 | `grilling`, `prototype`, `to-questionnaire`, `enhance-prompt`, `handoff` |
-| Archivos / tooling / setup | 3 | `react-pdf`, `turborepo`, `wizard` |
-| Gestión de skills | 2 | `skill-creator`, `skill-improver` |
-| Infraestructura Gentle AI — PROTECTED | 9 | `branch-pr`, `chained-pr`, `issue-creation`, `work-unit-commits`, `systemic-issue-triage`, `rdd-defect-workflow`, `gentle-ai-bench`, `skill-registry`, `judgment-day` |
-| SDD — fuera de auditoría | 11 | `sdd-init`, `sdd-explore`, `sdd-research`, `sdd-propose`, `sdd-spec`, `sdd-design`, `sdd-tasks`, `sdd-apply`, `sdd-verify`, `sdd-archive`, `sdd-onboard` |
-| **Total** | **111** | |
+[`enhance-prompt`](enhance-prompt/SKILL.md) · [`grilling`](grilling/SKILL.md) · [`handoff`](handoff/SKILL.md) · [`prototype`](prototype/SKILL.md) · [`tavily-crawl`](tavily-crawl/SKILL.md) · [`tavily-dynamic-search`](tavily-dynamic-search/SKILL.md) · [`tavily-extract`](tavily-extract/SKILL.md) · [`tavily-map`](tavily-map/SKILL.md) · [`tavily-research`](tavily-research/SKILL.md) · [`tavily-search`](tavily-search/SKILL.md) · [`to-questionnaire`](to-questionnaire/SKILL.md)
 
-### First-party Codenburg skills
+### Seguridad, SEO y arquitectura web (5)
 
-These are the skills authored and maintained as Codenburg-specific contracts:
+[`ai-seo`](ai-seo/SKILL.md) · [`auth-review`](auth-review/SKILL.md) · [`schema`](schema/SKILL.md) · [`seo-audit`](seo-audit/SKILL.md) · [`site-architecture`](site-architecture/SKILL.md)
 
-| Skill | Purpose |
-| --- | --- |
-| [`agents-md-manager`](agents-md-manager/SKILL.md) | Manage the `AGENTS.md` lifecycle and its controlled managed region. |
-| [`docs-guardian`](docs-guardian/SKILL.md) | Keep project documentation and release/documentation decisions aligned with completed work. |
-| [`project-foundation-manager`](project-foundation-manager/SKILL.md) | Establish and maintain a durable project documentation foundation. |
+### Producto, marketing y crecimiento (15)
 
-### Gentle AI infrastructure — protected
+[`ab-testing`](ab-testing/SKILL.md) · [`analytics`](analytics/SKILL.md) · [`churn-prevention`](churn-prevention/SKILL.md) · [`copy-editing`](copy-editing/SKILL.md) · [`copywriting`](copywriting/SKILL.md) · [`cro`](cro/SKILL.md) · [`customer-research`](customer-research/SKILL.md) · [`emails`](emails/SKILL.md) · [`launch`](launch/SKILL.md) · [`onboarding`](onboarding/SKILL.md) · [`paywalls`](paywalls/SKILL.md) · [`pricing`](pricing/SKILL.md) · [`product-marketing`](product-marketing/SKILL.md) · [`shipping-and-launch`](shipping-and-launch/SKILL.md) · [`signup`](signup/SKILL.md)
 
-These skills are part of the Gentle AI workflow/infrastructure and are kept as a coordinated integration rather than judged individually during normal pruning:
+## Mantener la colección
 
-```text
-branch-pr
-chained-pr
-issue-creation
-work-unit-commits
-systemic-issue-triage
-rdd-defect-workflow
-gentle-ai-bench
-skill-registry
-judgment-day
-```
+El mantenimiento es manual y deliberado:
 
-### SDD workflow — kept as a system
+1. **Agregar:** cree una carpeta con `SKILL.md` cuando la capacidad sea distinta y útil para trabajo real.
+2. **Actualizar:** ajuste el contrato y los recursos de una skill existente cuando cambie su uso o conocimiento.
+3. **Eliminar:** retire una carpeta cuando haya quedado obsoleta o duplicada por otra capacidad más clara.
+4. **Documentar:** actualice este catálogo y sus totales en el mismo cambio.
+5. **Verificar:** revise el estado y el diff de Git para confirmar que el contenido versionado coincide con la documentación.
 
-The SDD family is intentionally preserved as a coordinated workflow and is outside normal per-skill pruning:
-
-```text
-sdd-init
-sdd-explore
-sdd-research
-sdd-propose
-sdd-spec
-sdd-design
-sdd-tasks
-sdd-apply
-sdd-verify
-sdd-archive
-sdd-onboard
-```
-
-## Main capability map
-
-The collection is concentrated around the work I actually do:
-
-- software architecture, debugging and TDD;
-- TypeScript, React, Next.js and React Native;
-- Prisma and database workflows;
-- unit, integration and E2E testing;
-- Tailwind, shadcn, forms, tables and state management;
-- UI design, UX, typography, branding and microinteractions;
-- project documentation and repository foundations;
-- authentication, security, technical SEO and structured data;
-- product marketing, customer research, pricing, onboarding, conversion, analytics and churn;
-- web research with Tavily;
-- ideation, prototyping, prompt refinement and handoffs;
-- project setup and tooling;
-- Gentle AI and SDD workflows.
-
-## Repository support directories
-
-Some directories in the working installation are infrastructure rather than invocable skills:
-
-| Path | Role |
-| --- | --- |
-| `.atl/` | Local/generated workflow state. |
-| `.engram/` | Engram state and supporting metadata. |
-| `_shared/` | Shared local contracts/support used by coordinated workflows; not an invocable skill. |
-| `.git/` | Git repository metadata. |
-
-They are not included in the 111-skill count.
-
-## Maintaining the collection
-
-When adding or removing skills:
-
-1. Prefer the canonical checkout at `~/.config/opencode/skills`.
-2. Review the candidate against the skills that already cover the same responsibility.
-3. Keep one clear authority for a responsibility unless the scopes are genuinely different.
-4. Add or remove the complete skill directory.
-5. Update the catalog and counts in this README.
-6. Review the diff, commit, and push.
-
-Example:
-
-```bash
-cd ~/.config/opencode/skills
-git status
-git diff
-git add -A
-git commit -m "chore(skills): refresh curated collection"
-git push
-```
-
-## Repository structure
-
-```text
-skills/
-├── README.md
-├── AGENTS.md
-├── <skill>/
-│   ├── SKILL.md
-│   ├── references/     # optional
-│   ├── scripts/        # optional
-│   └── evals/          # optional
-├── .engram/            # supporting state when tracked
-└── ...
-```
-
-The `SKILL.md` contract is the important boundary. Extra files exist only when the skill needs them.
-
-## Philosophy
-
-The goal is not to collect the maximum number of skills. The goal is to keep a set that is broad enough to cover real projects without making multiple skills compete to solve the same problem.
-
-Global availability is useful; **project-level selection is what keeps the runtime focused**.
-
----
-
-Maintained by [Codenburg](https://github.com/Codenburg).
+El objetivo es una colección amplia pero coherente, con una skill adecuada para cada necesidad y sin autoridades redundantes.

@@ -357,6 +357,15 @@ function replacementBytes(initial, payload) {
   return { candidate, payload: candidatePayload };
 }
 
+function repairedDocumentBytes(document) {
+  const candidate = asBytes(document, "document");
+  const parsed = classifyBytes(candidate);
+  if (parsed.state !== LIFECYCLE_STATES.MANAGED) {
+    fail("INVALID_DOCUMENT", "repair document must contain exactly one ordered managed pair", { markers: parsed.markers });
+  }
+  return { candidate, payload: parsed.payload };
+}
+
 function separatorFor(original) {
   if (original.length === 0 || original[original.length - 1] === 0x0a) return Buffer.alloc(0);
   return Buffer.from("\n\n");
@@ -578,6 +587,25 @@ export async function replaceManagedRegion(root, payload, options = {}) {
   const verification = await verifyWithToken(initial.root, token);
   assertVerified(verification);
   return resultFor("update", initial, verification, { mutation: "replace" });
+}
+
+export async function repairManagedDocument(root, document, options = {}) {
+  const initial = await operationClassification(root);
+  if (initial.state !== LIFECYCLE_STATES.MANAGED) fail("STATE_NOT_ALLOWED", "full-document repair requires MANAGED state", { state: initial.state });
+  if (options.repairApproved !== true) fail("REPAIR_APPROVAL_REQUIRED", "full-document repair requires repairApproved: true for this operation");
+
+  const repair = repairedDocumentBytes(document);
+  const token = makeVerificationToken(initial, repair.candidate, repair.payload);
+  if (bytesEqual(repair.candidate, initial.bytes)) {
+    const verification = await verifyWithToken(initial.root, token);
+    assertVerified(verification);
+    return resultFor("repair", initial, verification, { mutation: "none", changed: false, reason: "equivalent-document" });
+  }
+
+  await atomicReplace(initial, repair.candidate, options);
+  const verification = await verifyWithToken(initial.root, token);
+  assertVerified(verification);
+  return resultFor("repair", initial, verification, { mutation: "full-replace" });
 }
 
 export async function adoptUnmanaged(root, payload, options = {}) {
