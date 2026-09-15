@@ -1,55 +1,318 @@
 ---
 name: typescript-advanced-types
-description: "Master TypeScript's advanced type system including generics, conditional types, mapped types, template literals, and utility types for building type-safe applications. Use when implementing complex type logic, creating reusable type utilities, or ensuring compile-time type safety in TypeScript projects."
-license: MIT
-metadata:
-  author: Codenburg
-  version: "1.0.0"
+description: Master TypeScript's advanced type system including generics, conditional types, mapped types, template literals, and utility types for building type-safe applications. Use when implementing complex type logic, creating reusable type utilities, or ensuring compile-time type safety in TypeScript projects.
 ---
 
-## Activation Contract
+# TypeScript Advanced Types
 
-Load this skill when building type-safe libraries, generic utilities, type-driven API clients, form validation systems, strongly-typed config objects, type-safe state machines, or migrating JS codebases to TypeScript with strict typing.
+Comprehensive guidance for mastering TypeScript's advanced type system including generics, conditional types, mapped types, template literal types, and utility types for building robust, type-safe applications.
 
-## Hard Rules
+## When to Use This Skill
 
-- Prefer `unknown` over `any` — enforce type checking with type guards or assertion functions.
-- Use `interface` for object shapes (better error messages, declaration merging); use `type` for unions, intersections, conditional types, and mapped types.
-- Enable `strict: true` in `tsconfig.json` for production code.
-- Use `const` assertions (`as const`) to preserve literal types; prefer type guards over `as` type assertions.
-- Cache complex type computations; avoid deeply nested conditional types and unbounded recursion.
-- Document non-obvious types with JSDoc and verify them with type-level tests (`AssertEqual`, `Expect<Equal<...>>`).
-- Avoid over-using `any`, ignoring strict null checks, missing discriminated unions, missing `readonly` modifiers, circular type references, and unhandled edge cases (empty arrays, null values).
+- Building type-safe libraries or frameworks
+- Creating reusable generic components
+- Implementing complex type inference logic
+- Designing type-safe API clients
+- Building form validation systems
+- Creating strongly-typed configuration objects
+- Implementing type-safe state management
+- Migrating JavaScript codebases to TypeScript
 
-## Decision Gates
+## Core Concepts
 
-| Need | Construct |
-|------|-----------|
-| Reusable, type-flexible API | `<T>` generics, `T extends Constraint` for bounds |
-| Type depends on another type | Conditional types: `T extends X ? Y : Z`, `infer R` |
-| Transform every property of a type | Mapped types: `{ [K in keyof T]: ... }` |
-| Build string patterns (event names, paths) | Template literal types: `` `on${Capitalize<E>}` `` |
-| Pick / omit / readonly / partial built-ins | `Pick`, `Omit`, `Readonly`, `Partial`, `Required`, `Record`, `Exclude`, `Extract`, `NonNullable` |
-| Discriminated union narrowing | Tag field + `switch` on the tag (`type`, `status`) |
-| Type-safe event emitter / API client / form validator / builder | Worked example in `references/details.md` |
+### 1. Generics
 
-## Execution Steps
+**Purpose:** Create reusable, type-flexible components while maintaining type safety.
 
-1. Enable strict mode in `tsconfig.json`.
-2. Pick the construct from the Decision Gates table — do not invent a custom one until the standard ones are exhausted.
-3. Implement the type with a short inline example; verify with the compiler.
-4. For non-obvious behavior, add a type test (`AssertEqual<A, B>` or `Expect<Equal<A, B>>`).
-5. For advanced patterns (event emitter, API client, builder, deep readonly/partial, form validation, discriminated unions, `infer`, type guards, assertion functions), read `references/details.md` for the full worked examples.
+**Basic Generic Function:**
 
-## Output Contract
+```typescript
+function identity<T>(value: T): T {
+  return value;
+}
 
-Return:
+const num = identity<number>(42); // Type: number
+const str = identity<string>("hello"); // Type: string
+const auto = identity(true); // Type inferred: boolean
+```
 
-- The chosen construct and one-line rationale.
-- The type definition with a minimal usage example.
-- A type test (`AssertEqual` / `Expect`) when the inference is non-obvious.
-- `tsconfig` flags actually enabled (do not claim strict without verifying).
+**Generic Constraints:**
 
-## References
+```typescript
+interface HasLength {
+  length: number;
+}
 
-- [references/details.md](references/details.md) — worked examples: type-safe event emitter, API client, builder, deep `Readonly`/`Partial`, form validator, discriminated unions, `infer`, type guards, assertion functions.
+function logLength<T extends HasLength>(item: T): T {
+  console.log(item.length);
+  return item;
+}
+
+logLength("hello"); // OK: string has length
+logLength([1, 2, 3]); // OK: array has length
+logLength({ length: 10 }); // OK: object has length
+// logLength(42);             // Error: number has no length
+```
+
+**Multiple Type Parameters:**
+
+```typescript
+function merge<T, U>(obj1: T, obj2: U): T & U {
+  return { ...obj1, ...obj2 };
+}
+
+const merged = merge({ name: "John" }, { age: 30 });
+// Type: { name: string } & { age: number }
+```
+
+### 2. Conditional Types
+
+**Purpose:** Create types that depend on conditions, enabling sophisticated type logic.
+
+**Basic Conditional Type:**
+
+```typescript
+type IsString<T> = T extends string ? true : false;
+
+type A = IsString<string>; // true
+type B = IsString<number>; // false
+```
+
+**Extracting Return Types:**
+
+```typescript
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+function getUser() {
+  return { id: 1, name: "John" };
+}
+
+type User = ReturnType<typeof getUser>;
+// Type: { id: number; name: string; }
+```
+
+**Distributive Conditional Types:**
+
+```typescript
+type ToArray<T> = T extends any ? T[] : never;
+
+type StrOrNumArray = ToArray<string | number>;
+// Type: string[] | number[]
+```
+
+**Nested Conditions:**
+
+```typescript
+type TypeName<T> = T extends string
+  ? "string"
+  : T extends number
+    ? "number"
+    : T extends boolean
+      ? "boolean"
+      : T extends undefined
+        ? "undefined"
+        : T extends Function
+          ? "function"
+          : "object";
+
+type T1 = TypeName<string>; // "string"
+type T2 = TypeName<() => void>; // "function"
+```
+
+### 3. Mapped Types
+
+**Purpose:** Transform existing types by iterating over their properties.
+
+**Basic Mapped Type:**
+
+```typescript
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P];
+};
+
+interface User {
+  id: number;
+  name: string;
+}
+
+type ReadonlyUser = Readonly<User>;
+// Type: { readonly id: number; readonly name: string; }
+```
+
+**Optional Properties:**
+
+```typescript
+type Partial<T> = {
+  [P in keyof T]?: T[P];
+};
+
+type PartialUser = Partial<User>;
+// Type: { id?: number; name?: string; }
+```
+
+**Key Remapping:**
+
+```typescript
+type Getters<T> = {
+  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];
+};
+
+interface Person {
+  name: string;
+  age: number;
+}
+
+type PersonGetters = Getters<Person>;
+// Type: { getName: () => string; getAge: () => number; }
+```
+
+**Filtering Properties:**
+
+```typescript
+type PickByType<T, U> = {
+  [K in keyof T as T[K] extends U ? K : never]: T[K];
+};
+
+interface Mixed {
+  id: number;
+  name: string;
+  age: number;
+  active: boolean;
+}
+
+type OnlyNumbers = PickByType<Mixed, number>;
+// Type: { id: number; age: number; }
+```
+
+### 4. Template Literal Types
+
+**Purpose:** Create string-based types with pattern matching and transformation.
+
+**Basic Template Literal:**
+
+```typescript
+type EventName = "click" | "focus" | "blur";
+type EventHandler = `on${Capitalize<EventName>}`;
+// Type: "onClick" | "onFocus" | "onBlur"
+```
+
+**String Manipulation:**
+
+```typescript
+type UppercaseGreeting = Uppercase<"hello">; // "HELLO"
+type LowercaseGreeting = Lowercase<"HELLO">; // "hello"
+type CapitalizedName = Capitalize<"john">; // "John"
+type UncapitalizedName = Uncapitalize<"John">; // "john"
+```
+
+**Path Building:**
+
+```typescript
+type Path<T> = T extends object
+  ? {
+      [K in keyof T]: K extends string ? `${K}` | `${K}.${Path<T[K]>}` : never;
+    }[keyof T]
+  : never;
+
+interface Config {
+  server: {
+    host: string;
+    port: number;
+  };
+  database: {
+    url: string;
+  };
+}
+
+type ConfigPath = Path<Config>;
+// Type: "server" | "database" | "server.host" | "server.port" | "database.url"
+```
+
+### 5. Utility Types
+
+**Built-in Utility Types:**
+
+```typescript
+// Partial<T> - Make all properties optional
+type PartialUser = Partial<User>;
+
+// Required<T> - Make all properties required
+type RequiredUser = Required<PartialUser>;
+
+// Readonly<T> - Make all properties readonly
+type ReadonlyUser = Readonly<User>;
+
+// Pick<T, K> - Select specific properties
+type UserName = Pick<User, "name" | "email">;
+
+// Omit<T, K> - Remove specific properties
+type UserWithoutPassword = Omit<User, "password">;
+
+// Exclude<T, U> - Exclude types from union
+type T1 = Exclude<"a" | "b" | "c", "a">; // "b" | "c"
+
+// Extract<T, U> - Extract types from union
+type T2 = Extract<"a" | "b" | "c", "a" | "b">; // "a" | "b"
+
+// NonNullable<T> - Exclude null and undefined
+type T3 = NonNullable<string | null | undefined>; // string
+
+// Record<K, T> - Create object type with keys K and values T
+type PageInfo = Record<"home" | "about", { title: string }>;
+```
+
+## Detailed worked examples and patterns
+
+Detailed sections (starting with `## Advanced Patterns`) live in `references/details.md`. Read that file when the navigation summary above is insufficient.
+
+## Best Practices
+
+1. **Use `unknown` over `any`**: Enforce type checking
+2. **Prefer `interface` for object shapes**: Better error messages
+3. **Use `type` for unions and complex types**: More flexible
+4. **Leverage type inference**: Let TypeScript infer when possible
+5. **Create helper types**: Build reusable type utilities
+6. **Use const assertions**: Preserve literal types
+7. **Avoid type assertions**: Use type guards instead
+8. **Document complex types**: Add JSDoc comments
+9. **Use strict mode**: Enable all strict compiler options
+10. **Test your types**: Use type tests to verify type behavior
+
+## Type Testing
+
+```typescript
+// Type assertion tests
+type AssertEqual<T, U> = [T] extends [U]
+  ? [U] extends [T]
+    ? true
+    : false
+  : false;
+
+type Test1 = AssertEqual<string, string>; // true
+type Test2 = AssertEqual<string, number>; // false
+type Test3 = AssertEqual<string | number, string>; // false
+
+// Expect error helper
+type ExpectError<T extends never> = T;
+
+// Example usage
+type ShouldError = ExpectError<AssertEqual<string, number>>;
+```
+
+## Common Pitfalls
+
+1. **Over-using `any`**: Defeats the purpose of TypeScript
+2. **Ignoring strict null checks**: Can lead to runtime errors
+3. **Too complex types**: Can slow down compilation
+4. **Not using discriminated unions**: Misses type narrowing opportunities
+5. **Forgetting readonly modifiers**: Allows unintended mutations
+6. **Circular type references**: Can cause compiler errors
+7. **Not handling edge cases**: Like empty arrays or null values
+
+## Performance Considerations
+
+- Avoid deeply nested conditional types
+- Use simple types when possible
+- Cache complex type computations
+- Limit recursion depth in recursive types
+- Use build tools to skip type checking in production

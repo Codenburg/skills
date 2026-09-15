@@ -1,15 +1,16 @@
 ---
 name: zustand-5
-description: "Trigger: When managing React state with Zustand. Zustand 5 state management patterns with persist, immer, devtools, and slices."
+description: >
+  Zustand 5 state management patterns.
+  Trigger: When implementing client-side state with Zustand (stores, selectors, persist middleware, slices).
 license: Apache-2.0
 metadata:
-  author: Codenburg
-  version: "1.1"
+  author: prowler-cloud
+  version: "1.0"
+  scope: [root, ui]
+  auto_invoke: "Using Zustand stores"
+allowed-tools: Read, Edit, Write, Glob, Grep, Bash, WebFetch, WebSearch, Task
 ---
-
-## Activation Contract
-
-Load this skill when using Zustand for React state management, implementing stores with persist/immer/devtools middleware, or migrating from Zustand 4.
 
 ## Basic Store
 
@@ -219,8 +220,3 @@ const unsubscribe = useCounterStore.subscribe(
   (state) => console.log("Count changed:", state.count)
 );
 ```
-
-## References
-
-- [Zustand Documentation](https://github.com/pmndrs/zustand)
-- [Zustand v5 Migration Guide](https://github.com/pmndrs/zustand/blob/main/docs/reference/migrations/migrating-to-v5.md)

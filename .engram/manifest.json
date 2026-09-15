@@ -8,6 +8,14 @@
       "sessions": 9,
       "memories": 18,
       "prompts": 34
+    },
+    {
+      "id": "bda8b872",
+      "created_by": "luffy",
+      "created_at": "2026-09-15T16:53:41Z",
+      "sessions": 124,
+      "memories": 766,
+      "prompts": 157
     }
   ]
 }
