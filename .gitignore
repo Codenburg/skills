@@ -1,2 +1,29 @@
 # Local AI runtime state
 .atl/
+
+# Gentle AI managed / protected skills
+branch-pr/
+chained-pr/
+issue-creation/
+work-unit-commits/
+systemic-issue-triage/
+rdd-defect-workflow/
+gentle-ai-bench/
+skill-registry/
+judgment-day/
+
+# SDD workflow
+sdd-init/
+sdd-explore/
+sdd-research/
+sdd-propose/
+sdd-spec/
+sdd-design/
+sdd-tasks/
+sdd-apply/
+sdd-verify/
+sdd-archive/
+sdd-onboard/
+
+# Shared Gentle AI contracts
+_shared/
